@@ -181,7 +181,7 @@ hexo new page archives
 ## 5.右上角添加跳转黑色Github小图标
 
 - 首先到[GitHub Corners](http://tholman.com/github-corners/)或者[GitHub Ribbons](https://github.blog/2008-12-19-github-ribbons/)选择自己喜欢的图标，然后copy相应的代码
-- 然后将刚才复制的代码粘贴到`next/layout/_layout.swig`文件中<div class="headband"></div>下面一行
+- 然后将刚才复制的代码粘贴到`next/layout/_layout.swig`文件中`<div class="headband"></div>`下面一行
 - 再把代码中的`href`后面的值替换成你要跳转的地址，比如你的GitHub主页
 - 以下是上面的效果采用的代码
 
