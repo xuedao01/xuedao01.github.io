@@ -1,7 +1,10 @@
 ---
-title: 基于 Hexo + NexT 的静态博客配置
+title: 建站之 Hexo框架搭建静态博客
 date: 2020-09-30 22:00:00
-tags: Hexo
+tags: 
+	- Hexo
+	- 博客
+	- 建站
 ---
 
 此处为简述，在.md文件的`<!--more-- >`前面添加。
@@ -27,7 +30,7 @@ cnpm -v  //查看安装版本
 ## 3.安装 hexo 框架
 
 ```cpp
-cnpm install -g hexo-cli
+sudo cnpm install -g hexo-cli
 
 hexo -v   //查看hexo版本
 ```

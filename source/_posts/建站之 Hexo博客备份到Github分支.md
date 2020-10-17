@@ -1,7 +1,10 @@
 ---
-title: Hexo备份到Github分支上
-date: 2020-10-01 14:15:00
-tags: Hexo
+title: 建站之 Hexo博客备份到Github分支
+date: 2020-09-30 22:00:01
+tags: 
+	- Hexo
+	- 建站
+	- 博客
 ---
 
 将hexo生成的静态博客部署到Github Pages的同时，备份hexo根目录文件到Github。
