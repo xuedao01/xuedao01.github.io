@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuedao01.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="ArchLinux 打造生产力系统">
+<meta property="og:url" content="http://xuedao01.github.io/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E7%94%9F%E4%BA%A7%E5%8A%9B%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="学道之人">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3531939864,671832250&fm=26&gp=0.jpg">
+<meta property="article:published_time" content="2020-10-01T11:13:31.000Z">
+<meta property="article:modified_time" content="2020-12-28T07:15:28.000Z">
+<meta property="article:author" content="「xuedao01」">
+<meta property="article:tag" content="Arch">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3531939864,671832250&fm=26&gp=0.jpg">
+
+<link rel="canonical" href="http://xuedao01.github.io/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E7%94%9F%E4%BA%A7%E5%8A%9B%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ArchLinux 打造生产力系统 | 学道之人</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a href="https://xuedao01.github.io/gh-pages-hugo/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">学道之人</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人生舞台的大幕随时都可能拉开，关键是你愿意表演，还是选择躲避。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xuedao01.github.io/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E7%94%9F%E4%BA%A7%E5%8A%9B%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="「xuedao01」">
+      <meta itemprop="description" content="信念这玩意不是说出来的，是做出来的。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学道之人">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ArchLinux 打造生产力系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-01 19:13:31" itemprop="dateCreated datePublished" datetime="2020-10-01T19:13:31+08:00">2020-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 15:15:28" itemprop="dateModified" datetime="2020-12-28T15:15:28+08:00">2020-12-28</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>18 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3531939864,671832250&fm=26&gp=0.jpg" alt="img"></p>
+<a id="more"></a>
+
+<h2 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 WPS</span></span><br><span class="line">yay -S --noconfirm wps-office-cn wps-office-mui-zh-cn ttf-wps-fonts</span><br><span class="line"><span class="comment"># 下载工具</span></span><br><span class="line">yay -S freedownloadmanager</span><br><span class="line"><span class="comment"># 代码 &amp; 开发</span></span><br><span class="line">yay -S code </span><br><span class="line">yay -S gparted</span><br><span class="line"><span class="comment"># kde主题及一些可能需要的依赖</span></span><br><span class="line">sudo pacman -S papirus-icon-theme breeze fuse gnome-settings-daemon devilspie2 gparted kcm-fcitx</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Windows字体缺失"><a href="#Windows字体缺失" class="headerlink" title="Windows字体缺失"></a>Windows字体缺失</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/usr/</span>share/fonts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> windows</span><br></pre></td></tr></table></figure>
+
+<p>把字体复制到Windows目录下（宋体、微软雅黑）</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo mkfontscale</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo mkfontdir</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo fc-cache -fv</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fdd096030079/article/details/107928672">WPS在linux下字体缺失，或者显示有问题_fdd096030079的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.limstash.com/articles/202004/1582">Archlinux 字体美化——微软字体 | Limstash的博客</a></p>
+<h2 id="挂载分区免除输入密码"><a href="#挂载分区免除输入密码" class="headerlink" title="挂载分区免除输入密码"></a>挂载分区免除输入密码</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/polkit-1/rules.d/49-nopasswd_global.rules</span><br></pre></td></tr></table></figure>
+
+<p>[然后输入]</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/* Allow members of the wheel group to execute any actions</span><br><span class="line"> * without password authentication, similar to <span class="string">&quot;sudo NOPASSWD:&quot;</span></span><br><span class="line"> */</span><br><span class="line">polkit.addRule(<span class="keyword">function</span>(action, subject) &#123;</span><br><span class="line">    <span class="keyword">if</span> (subject.isInGroup(<span class="string">&quot;users&quot;</span>)) &#123;</span><br><span class="line">        <span class="built_in">return</span> polkit.Result.YES;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>users</code>指的是当前用户所在用户组，用<code>groups</code>命令查看。</p>
+<p>来源：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5e7726d1cb16">Leiloxee雷有情</a>、<a target="_blank" rel="noopener" href="https://tieba.baidu.com/p/6319102235?red_tag=3444949793">枕边书</a>提供方法。</p>
+<h2 id="设置默认文件管理器"><a href="#设置默认文件管理器" class="headerlink" title="设置默认文件管理器"></a>设置默认文件管理器</h2><h4 id="Nemo"><a href="#Nemo" class="headerlink" title="Nemo"></a>Nemo</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S nemo</span></span><br></pre></td></tr></table></figure>
+
+<p>在中文源中找到 <a target="_blank" rel="noopener" href="https://www.archlinux.org/packages/?q=nemo">https://www.archlinux.org/packages/?q=nemo</a> 里面有一个<code>cinnamon-translations</code></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yay -S nemo-data nemo-qt-components nemo-qt-seahorse nemo-seahorse nemo-<span class="keyword">sharre </span>nemo-<span class="keyword">share</span></span><br><span class="line"><span class="keyword">yay </span>-S cinnamon-translations 	<span class="comment"># 中文语言包</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Nautilus"><a href="#Nautilus" class="headerlink" title="Nautilus"></a>Nautilus</h4><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S nautilus</span><br><span class="line">yay -S nautilus-<span class="built_in">open</span>-<span class="keyword">any</span>-terminal    <span class="comment"># 在文件夹内打开终端插件</span></span><br></pre></td></tr></table></figure>
+
+<p>进入某一文件夹，按下<code>Ctrl+D</code>可将该文件夹添加至侧边栏收藏夹（也可拖拽添加），分区也可以添加。</p>
+<h4 id="Thunar"><a href="#Thunar" class="headerlink" title="Thunar"></a>Thunar</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S thunar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加搜索文件功能</span></span><br><span class="line">sudo pacman -S catfish</span><br><span class="line"></span><br><span class="line">thunar--&gt;编辑--&gt;配置自定义动作--&gt;添加</span><br><span class="line">	名称(必填)<span class="symbol">:</span>搜索</span><br><span class="line">	描述(非必填)<span class="symbol">:</span>搜索文件及文件夹</span><br><span class="line">	命令(必填)<span class="symbol">:catfish</span> %f</span><br><span class="line">	快捷键(非必填,文件管理器内有效)<span class="symbol">:</span></span><br><span class="line">	</span><br><span class="line">	出现条件勾选“目录”（参考终端项设置）</span><br><span class="line">	最后把它置顶才会显示（可能是Bug）</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener" href="https://cuizhe.me/201812/350.cz">https://cuizhe.me/201812/350.cz</a></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="开机自动挂载分区"><a href="#开机自动挂载分区" class="headerlink" title="开机自动挂载分区"></a>开机自动挂载分区</h2><p>摸索出来的三种方法。</p>
+<!--more-->
+
+<h4 id="方式一：修改-fstab"><a href="#方式一：修改-fstab" class="headerlink" title="方式一：修改 fstab"></a>方式一：修改 fstab</h4><p>创建想挂载到的目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo midir <span class="regexp">/mnt/</span>SSD高速盘</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>fstab</code> 文件</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>fstab</span><br></pre></td></tr></table></figure>
+
+<p>添加：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># <span class="regexp">/dev/</span>nvme0n1p5	根据实际情况修改：分区 &amp; 目录</span><br><span class="line"><span class="regexp">/dev/</span>nvme0n1p5	<span class="regexp">/mnt/</span>SSD高速盘	exfat	defaults	<span class="number">0</span>	<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>错误修正</p>
+<p>如果开机出现错误，按下 <code>Ctrl+Alt+F4</code> 进入 <code>tty</code> ，直接编辑 <code>fstab</code> 文件即可。</p>
+<p>缺点</p>
+<p>分区内存在权限问题，比如 <code>Hexo</code> 目录下无法部署。</p>
+<h4 id="方式二：自动执行脚本"><a href="#方式二：自动执行脚本" class="headerlink" title="方式二：自动执行脚本"></a>方式二：自动执行脚本</h4><p>创建service：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">auto_run</span>.<span class="title">service</span></span></span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=<span class="string">&quot;Run /etc/auto_run.local on Startup&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">ExecStart</span>=/etc/auto_run.local start</span><br><span class="line"><span class="attr">TimeoutSec</span>=<span class="number">0</span></span><br><span class="line"><span class="attr">StandardInput</span>=tty</span><br><span class="line"><span class="attr">RemainAfterExit</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">SysVStartPriority</span>=<span class="number">99</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>创建脚本：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>auto_run.local</span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh -e</span></span><br><span class="line"><span class="comment"># 将 username 修改成你的用户名</span></span><br><span class="line"><span class="regexp">/bin/</span>su - username -c <span class="string">&quot;udisksctl mount --block-device=/dev/nvme0n1p5&quot;</span></span><br><span class="line"><span class="keyword">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>启用服务：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="builtin-name">enable</span> auto_run.service</span><br></pre></td></tr></table></figure>
+
+<p>注意：若不添加<code>/bin/su - username -c</code> ，分区将被挂载到<code>/run/media/root</code>下。</p>
+<p>提供参考：<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Autostarting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Autostarting-WiKi</a> 之 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php?title=Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&printable=yes">systemd/User</a> 、 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33810302/article/details/92117030">su 用法</a> 。</p>
+<h4 id="方式三：创建-Desktop-启动器"><a href="#方式三：创建-Desktop-启动器" class="headerlink" title="方式三：创建 Desktop 启动器"></a>方式三：创建 Desktop 启动器</h4><p>创建AutoStart启动器：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.config/<span class="built_in">auto</span>start/<span class="built_in">auto</span>-mount.desktop</span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Encoding</span>=UTF-<span class="number">8</span></span><br><span class="line"><span class="attr">Name</span>=auto-mount</span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Exec</span>=udisksctl mount --block-device=/dev/nvme0n1p5</span><br><span class="line"><span class="attr">Hidden</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Categories</span>=Application<span class="comment">;</span></span><br><span class="line"><span class="attr">Icon</span>=applications-system</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/394320/what-command-does-nemo-use-to-mount-drives#comment703482_394320">https://unix.stackexchange.com/questions/394320/what-command-does-nemo-use-to-mount-drives#comment703482_394320</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Udisks_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Udisks_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)</a></p>
+</blockquote>
+<blockquote>
+<p>开机启动Wiki：<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/autostarting#On_user_login_/_logout">Autostarting - ArchWiki</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Systemd/User#Service_example">systemd/User - ArchWiki</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">systemd (简体中文) - ArchWiki</a></p>
+<p><a target="_blank" rel="noopener" href="https://arashmilani.com/post?id=86">Run a script during Arch Linux boot process</a></p>
+</blockquote>
+<h2 id="写博客——Hexo"><a href="#写博客——Hexo" class="headerlink" title="写博客——Hexo"></a>写博客——Hexo</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S nodejs</span><br><span class="line">sudo pacman -S npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面安装并使用淘宝源：</span></span><br><span class="line">sudo npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br><span class="line">sudo cnpm install -g hexo-cli </span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试：</span></span><br><span class="line">hexo server </span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署网站要用到</span></span><br><span class="line">npm install --save hexo-deployer-git (未成功)</span><br><span class="line">https://blog.csdn.net/weixin_36401046/article/details/52940313</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;邮箱&quot;</span></span><br><span class="line">cat .ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="向日葵远程控制"><a href="#向日葵远程控制" class="headerlink" title="向日葵远程控制"></a>向日葵远程控制</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S sunloginclient</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> runsunloginclient</span><br></pre></td></tr></table></figure>
+
+<p> 重启生效</p>
+<h2 id="两种虚拟机"><a href="#两种虚拟机" class="headerlink" title="两种虚拟机"></a>两种虚拟机</h2><h3 id="VMWare-Workstation"><a href="#VMWare-Workstation" class="headerlink" title="VMWare Workstation"></a>VMWare Workstation</h3><h4 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h4><p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/VMware_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%89%E8%A3%85">一定要参考这个：Arch Wiki - VMware_(简体中文)</a></p>
+<p>下载最新的 <a target="_blank" rel="noopener" href="https://www.vmware.com/go/tryworkstation">VMware Workstation Pro</a> 或<a target="_blank" rel="noopener" href="https://www.vmware.com/go/downloadplayer">Player</a> (或者<a target="_blank" rel="noopener" href="https://communities.vmware.com/community/vmtn/beta">beta</a>版，如果有的话)。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="selector-tag">sh</span> <span class="selector-tag">VMware-edition-version</span><span class="selector-class">.release</span><span class="selector-class">.architecture</span><span class="selector-class">.bundle</span></span><br></pre></td></tr></table></figure>
+
+<p>当安装程序询问 <code>System service scripts directory</code> 的设置时，输入 <code>/etc/init.d</code> 即可。</p>
+<p>安装的时候会提示：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You must manually <span class="builtin-name">add</span> the necessary links <span class="keyword">to</span> ensure that the vmware<span class="built_in"> service </span>at /etc/init.d/vmware is automatically started <span class="keyword">and</span> stopped on startup <span class="keyword">and</span> shutdown.</span><br></pre></td></tr></table></figure>
+
+<p>这是说<code>/etc/init.d/vmware</code>中的服务可以自行创建<code>Service</code>来自启，实际上也可以用<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/AUR">AUR</a>中的<a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/vmware-systemd-services/">vmware-systemd-services</a>包实现。</p>
+<h4 id="AUR安装"><a href="#AUR安装" class="headerlink" title="AUR安装"></a>AUR安装</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S vmware-workstation	# 一键搞定,但是不知道 <span class="regexp">/etc/i</span>nit.d/vmware 被放到了在哪里</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="出现vmmon内核模块问题"><a href="#出现vmmon内核模块问题" class="headerlink" title="出现vmmon内核模块问题"></a>出现vmmon内核模块问题</h4><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/vmware start</span><br></pre></td></tr></table></figure>
+
+<p>如果这条命令执行有失败，则</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vmware-modconfig --console --install-all</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xujin0/article/details/84985305">https://blog.csdn.net/xujin0/article/details/84985305</a></p>
+</blockquote>
+<h4 id="在macOS平台VMFusion下的使用"><a href="#在macOS平台VMFusion下的使用" class="headerlink" title="在macOS平台VMFusion下的使用"></a>在macOS平台VMFusion下的使用</h4><p>关闭虚拟机，进入设置，显示器设置，取消勾选Retina高分辨率屏，否则字体会渲染很小。</p>
+<p>关闭虚拟机，进入设置，高级，禁用侧通道缓解，降低安全性、提高性能。</p>
+<h4 id="安装Windows-7"><a href="#安装Windows-7" class="headerlink" title="安装Windows 7"></a>安装Windows 7</h4><ul>
+<li>32位不支持UEFI</li>
+<li>安装增强工具——设备菜单下</li>
+<li>开启Aero效果：设置-&gt;显示-&gt;启用3D，显存设置成128MB</li>
+</ul>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014025444/article/details/94151354">archlinux安装virtualbox_星兮博客-这个靠谱</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/164571424">在Arch Linux上安装VMware Workstation - 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/VMware_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97">VMware (简体中文) - ArchWiki</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pannubi/article/details/107886538">VMware vmmon问题-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangshaojian/p/3702247.html">修复：”Failed to start Load Kernel Modules” - 张绍建 - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xujin0/article/details/84985305">在ubuntu16.04中安装、卸载Vmware14，以及遇到的问题_xujin0的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://computingforgeeks.com/install-vmware-workstation-on-arch-linux-manjaro/">How to Install VMware Workstation on Arch Linux / Manjaro | ComputingForGeeks</a></p>
+<h3 id="VirtualBox"><a href="#VirtualBox" class="headerlink" title="VirtualBox"></a>VirtualBox</h3><p>安装VirtualBox</p>
+<p>1、安装基本包</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S virtualbox</span> </span><br></pre></td></tr></table></figure>
+
+<p>选择<code>virtualbox-host-modules-arch</code>模块</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S virtualbox-guest-iso</span></span><br></pre></td></tr></table></figure>
+
+<p>2、加载 VirtualBox 内核模块</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo modprobe vboxdrv vboxnetadp vboxnetflt</span></span><br></pre></td></tr></table></figure>
+
+<p><code>vboxdrv</code>驱动模块<br><code>vboxnetadp</code> 桥接网络<br><code>vboxnetflt</code>host-only 网络<br><code>vboxpci</code>：若要让虚拟机使用主体机的 PCI 设备，那么就需要这个模块。</p>
+<p>3、安装扩展包</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S virtualbox-ext-oracle</span></span><br></pre></td></tr></table></figure>
+
+<p>4、把当前用户组添加到vboxusers里面</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -G vboxusers -<span class="keyword">a</span> 用户名</span><br></pre></td></tr></table></figure>
+
+<p>来源：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u014025444/article/details/94151354">https://blog.csdn.net/u014025444/article/details/94151354</a></p>
+<h2 id="安装QuartusⅡ"><a href="#安装QuartusⅡ" class="headerlink" title="安装QuartusⅡ"></a>安装QuartusⅡ</h2><p>下载、sudo安装</p>
+<p>安装证书License：使用Windows证书、加以修改网卡地址即可。</p>
+<p>创建快捷方式</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>quartus.desktop</span><br><span class="line">[Desktop Entry]</span><br><span class="line">Type=Application</span><br><span class="line">Name=Quartus II <span class="number">18.0</span> (<span class="number">64</span>-bit)</span><br><span class="line">Comment=Quartus II <span class="number">18.0</span> (<span class="number">64</span>-bit)</span><br><span class="line">Icon=<span class="regexp">/usr/</span>local<span class="regexp">/quartus-18.0/</span>quartus<span class="regexp">/adm/</span>quartusii.png</span><br><span class="line">Exec=sudo <span class="regexp">/usr/</span>local<span class="regexp">/quartus-18.0/</span>quartus<span class="regexp">/bin/</span>quartus --<span class="number">64</span>bit      </span><br><span class="line">Terminal=<span class="keyword">false</span>  </span><br><span class="line">Path=<span class="regexp">/usr/</span>local/quartus-<span class="number">18.0</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S libpng12		<span class="comment"># 启动依赖</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xforce_zuoxiang/article/details/24530329">https://blog.csdn.net/xforce_zuoxiang/article/details/24530329</a></p>
+</blockquote>
+<p>安装Devices</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/usr/</span>local<span class="regexp">/quartus-18.0/</span>quartus<span class="regexp">/common/</span>devinfo/dev_install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以root权限</span></span><br><span class="line">sudo ./dev_install.run</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Altera_Design_Software#Launching_Quartus_Prime">Altera Design Software - ArchWiki</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xforce_zuoxiang/article/details/24530329">ubuntu14.04 64bit 安装 &amp;&amp; 破解quartus13.0 记录_liangzuoxiang的专栏-CSDN博客</a></p>
+<h2 id="安装MATLAB"><a href="#安装MATLAB" class="headerlink" title="安装MATLAB"></a>安装MATLAB</h2><h3 id="安装过程略"><a href="#安装过程略" class="headerlink" title="安装过程略"></a>安装过程略</h3><h3 id="创建快捷方式"><a href="#创建快捷方式" class="headerlink" title="创建快捷方式"></a>创建快捷方式</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/M</span>atlab.desktop</span><br><span class="line">[Desktop Entry]</span><br><span class="line">Type=Application</span><br><span class="line">Name=Matlab</span><br><span class="line">GenericName=Matlab R2018a</span><br><span class="line">Comment=Matlab:The Language of Technical Computing</span><br><span class="line">Exec=sh <span class="regexp">/usr/</span>local<span class="regexp">/MATLAB/</span>R2018a<span class="regexp">/bin/m</span>atlab -desktop</span><br><span class="line">Icon=<span class="regexp">/usr/</span>local<span class="regexp">/MATLAB/</span>R2018a<span class="regexp">/bin/g</span>lnxa64<span class="regexp">/cef_resources/m</span>atlab_icon.png</span><br><span class="line">Terminal=<span class="keyword">false</span></span><br><span class="line">sudo ln -s <span class="regexp">/usr/M</span>ATLAB<span class="regexp">/R2018a/</span>bin<span class="regexp">/matlab /u</span>sr<span class="regexp">/local/</span>bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a>中文乱码</h3><p>Matlab中文乱码的原因是它的图形界面是用java写的，换句话说，我们要做的实际上就是搞定java的中文显示。</p>
+<ol>
+<li><p>首先找到并进入自己的<code>JRE</code>目录。</p>
+<p>我自己的是：/usr/local/matlab/sys/java/jre/glnx86/jre/，大家需要根据自己的安装目录和matlab版本来确定。</p>
+</li>
+<li><p>在/usr/local/matlab/sys/java/jre/glnx86/jre/lib/fonts/目录下建立新的文件夹fallback。</p>
+</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> fallback</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>把字体复制或链接到fallback目录：</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/fonts/</span>truetype<span class="regexp">/wpy/</span>wqy-zenhei.ttc . </span><br></pre></td></tr></table></figure>
+
+<p>我用的是Win的微软雅黑，你也可以用别的支持中文的字体</p>
+<blockquote>
+<p>注：如果下载字体不太方面，也比较推荐Ubuntu自带的文泉驿正黑，默认存放路径是<code>/usr/share/fonts/truetype/wpy/wqy-zenhei.ttc</code></p>
+</blockquote>
+<ol>
+<li><p>进入fallback目录，执行 <code>mkfontscale</code> 命令</p>
+<p>这时候可以使用<code>ls</code>命令，可以看到/fonts/目录下除了刚才拷进来的/msyh.ttf以外，还多了一个名叫fonts.scale的文件，我们下面要对她动手脚了。</p>
+</li>
+<li><p>字体的最终配置</p>
+<p>将上一步生成的文件[就是那个fonts.scale]添加到 <code>lib/fonts/fonts.dir</code>文件中，可用以下命令完成，当然也可以用编辑器复制粘贴</p>
+</li>
+</ol>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cat</span> fallback/fonts.scale &gt;&gt; fonts.<span class="keyword">dir</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>至此Matlab的Java环境中文支持安装完了。</p>
+</li>
+<li><p>进入Matlab，选择 General 菜单下最下方二选一项中的中文，然后载 File&gt;&gt;Preferences&gt;&gt;Fonts 选择安装的中文字体，至此Matlab应该可以正常显示中文了。</p>
+<blockquote>
+<p>如果下拉框里没有相应的字体，请把fallback下的字体加上可读属性：$ chmod a+r fallback/*</p>
+</blockquote>
+</li>
+<li><p>在 <code>字体</code> 设置项中可以把自己想要的字体调大，比默认设置看得更清晰。</p>
+</li>
+</ol>
+<blockquote>
+<p>来源：<a target="_blank" rel="noopener" href="https://www.douban.com/note/277522539/">linux matlab中文乱码</a></p>
+</blockquote>
+<h3 id="快捷键失效问题"><a href="#快捷键失效问题" class="headerlink" title="快捷键失效问题"></a>快捷键失效问题</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">预设` - `键盘` - 最上方设置项由`Emacs默认集`改成`Windows默认集</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37775034/article/details/80876362">linux安装MATLAB R2018a步骤</a></p>
+<p><a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/5225f26ba786fbe6fa09088b.html">matlab怎样设置中文界面-百度经验</a></p>
+</blockquote>
+<h2 id="ios设备文件传输"><a href="#ios设备文件传输" class="headerlink" title="ios设备文件传输"></a>ios设备文件传输</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S ifuse libimobiledevice-git</span><br></pre></td></tr></table></figure>
+
+<p>连接 iPad ，选择“信任”，然后在 Arch 文件管理器即可看到 iPad 的相册和文件。</p>
+<h2 id="蓝牙图形化管理"><a href="#蓝牙图形化管理" class="headerlink" title="蓝牙图形化管理"></a>蓝牙图形化管理</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S blueman</span><br></pre></td></tr></table></figure>
+
+<p>应用程序菜单会出现“蓝牙”，里面可以传输文件之类。</p>
+<h2 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h2><h4 id="Gnome自带"><a href="#Gnome自带" class="headerlink" title="Gnome自带"></a>Gnome自带</h4><p>​    gnome-screenshot配合Gnome快捷键使用，nice！</p>
+<h4 id="Scrot截屏工具"><a href="#Scrot截屏工具" class="headerlink" title="Scrot截屏工具"></a><strong>Scrot截屏工具</strong></h4><p>1.默认截下整个桌面保存到当前目录</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">scrot</span></span><br></pre></td></tr></table></figure>
+
+<p>2.指定保存目标文件夹和截图文件名。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrot ~<span class="regexp">/Pictures/my</span>_desktop.png</span><br></pre></td></tr></table></figure>
+
+<p>3.截取特定窗口或矩形区域</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">scrot -s</span></span><br></pre></td></tr></table></figure>
+
+<p>4.将截取的截屏传递给其它命令</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrot -e ‘<span class="keyword">mv</span> <span class="built_in">$f</span> ~/screenshots’</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="OCR-识别——tesseract"><a href="#OCR-识别——tesseract" class="headerlink" title="OCR 识别——tesseract"></a>OCR 识别——tesseract</h2><p>1.安装</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S tesseract</span><br></pre></td></tr></table></figure>
+
+<p>2.安装中文字库</p>
+<p>​    对应语言的字库下载地址：<a target="_blank" rel="noopener" href="https://github.com/tesseract-ocr/tessdata">https://github.com/tesseract-ocr/tessdata</a></p>
+<p>​    下载完成之后把.traineddata字库文件放到tessdata目录下，默认路径是/usr/share/tesseract-ocr/4.00/tessdata</p>
+<p>3.使用方法（待补充）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">man</span> <span class="string">tesseract</span></span><br><span class="line"><span class="number">627</span>  <span class="string">yay</span> <span class="string">-S</span> <span class="string">xclip</span></span><br><span class="line"><span class="number">628</span>  <span class="string">xclip</span></span><br><span class="line"><span class="number">629</span>  <span class="string">tesseract</span></span><br><span class="line"><span class="number">630</span>  <span class="string">tesseract</span> <span class="string">a.png</span> <span class="string">~/Desktop</span> <span class="string">&amp;&gt;</span> <span class="string">/dev/null</span> <span class="string">-l</span> <span class="string">eng+chi1</span></span><br><span class="line"><span class="number">631</span>  <span class="string">tesseract</span> <span class="string">a.png</span> <span class="string">~/Desktop/a.txt</span></span><br><span class="line"><span class="number">632</span>  <span class="string">tesseract</span> <span class="string">b.png</span> <span class="string">~/Desktop/b.txt</span> <span class="string">-l</span> <span class="string">chi1</span></span><br><span class="line"><span class="number">633</span>  <span class="string">ls</span> <span class="string">/usr/share/tessdata</span></span><br><span class="line"><span class="number">634</span>  <span class="string">tesseract</span> <span class="string">b.png</span> <span class="string">~/Desktop/b.txt</span> <span class="string">-l</span> <span class="string">chi_sim</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mc-r/p/11371590.html">ArchLinux安装截图工具 - 看不见的R - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40451749/article/details/83866327">安装深度截图</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.qq.com/doc/DWGtmV1RuSG9IY0V6">Ubuntu-OCR</a></p>
+</blockquote>
+<h2 id="科学上网-clash-core"><a href="#科学上网-clash-core" class="headerlink" title="科学上网 clash-core"></a>科学上网 clash-core</h2><h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S clash</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h4><p>安装好后，shell运行clash，会在<code>/home/当前用户ID/.config/clash</code>文件夹，生成两个文件 <code>config.yml</code> 和 <code>Country.mmdb</code>。</p>
+<p>把<code>config.yml</code>干掉，在Shell里面运行<code>clash -d &quot;~/.config/clash&quot;</code>，会提示<code>Can&#39;t find config, create a initial config file</code>，然后可以发现一个新的<code>config.yaml</code>。</p>
+<p>把BridgeV的配置文件copy过来，复制全部，粘贴到刚创建的配置文件里。看里面的设置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">port:</span> <span class="number">7890</span>					<span class="comment"># http代理端口</span></span><br><span class="line"><span class="attr">socks-port:</span> <span class="number">7891</span>			<span class="comment"># socks5端口</span></span><br><span class="line"><span class="attr">allow-lan:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">mode:</span> <span class="string">rule</span></span><br><span class="line"><span class="attr">log-level:</span> <span class="string">info</span></span><br><span class="line"><span class="attr">external-controller:</span> <span class="string">&#x27;127.0.0.1:9090&#x27;</span>	<span class="comment"># 外部控制端口</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器进入<a target="_blank" rel="noopener" href="http://clash.razord.top/%EF%BC%8C%E8%BE%93%E5%85%A59090%EF%BC%8C%E5%AF%86%E9%92%A5%E4%B8%8D%E7%94%A8%EF%BC%8C%E8%BF%9B%E5%85%A5%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E3%80%82">http://clash.razord.top/，输入9090，密钥不用，进入控制面板。</a></p>
+<p>浏览器ProxySwitchyOmega添加情景模式：<code>socks5：127.0.0.1：7891</code>正常使用</p>
+<p>问题：http端口不知被谁占用了</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERRO[0000] Start HTTP<span class="built_in"> server </span>error: listen tcp 127.0.0.1:7890: bind:<span class="built_in"> address </span>already <span class="keyword">in</span> use </span><br><span class="line"><span class="builtin-name">INFO</span>[0000]<span class="built_in"> SOCKS proxy </span>listening at: 127.0.0.1:7891     </span><br><span class="line"><span class="builtin-name">INFO</span>[0000] RESTful API listening at: 127.0.0.1:9090</span><br></pre></td></tr></table></figure>
+
+<p>用<code>lsof -i:7890</code>命令也没查出是哪个程序，估计是安装了clashy、Clash-Pro又卸载掉了的缘故。</p>
+<p>重启后这个问题解决了，而且创建启动图标后开机自动启动（估计是之前<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1f711db26f34">创建</a>并开启了systenctl enable clash.service）。</p>
+<h4 id="3-创建应用程序启动图标"><a href="#3-创建应用程序启动图标" class="headerlink" title="3.创建应用程序启动图标"></a>3.创建应用程序启动图标</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>clash.desktop</span><br></pre></td></tr></table></figure>
+
+<p>写入如下：（自行修改，比如图标可以自己下载一个放到想要的目录）</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Encoding</span>=UTF-<span class="number">8</span></span><br><span class="line"><span class="attr">Version</span>=<span class="number">1.1</span>.<span class="number">0</span></span><br><span class="line"><span class="attr">Name</span>=Clash</span><br><span class="line"><span class="attr">Comment</span>=A rule-based tunnel in Go</span><br><span class="line"><span class="attr">Exec</span>=/usr/bin.clash</span><br><span class="line"><span class="attr">Icon</span>=applications-system</span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Categories</span>=Network</span><br></pre></td></tr></table></figure>
+
+<p>然后打开启动器，搜索clash，就可以看见clash的图标了。</p>
+<h3 id="快速查找文件-or-程序"><a href="#快速查找文件-or-程序" class="headerlink" title="快速查找文件 or 程序"></a>快速查找文件 or 程序</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay</span> -S mcloate		<span class="comment"># 安装locate</span></span><br><span class="line">sudo updatedb 		<span class="comment"># 更新数据库</span></span><br><span class="line">lotate xxx			<span class="comment"># 查找（速度很快）</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S catfish</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="KDE-Connect-设备互联"><a href="#KDE-Connect-设备互联" class="headerlink" title="KDE Connect 设备互联"></a>KDE Connect 设备互联</h3><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S kdeconnect</span><br></pre></td></tr></table></figure>
+
+<p>手机在 <code>Google-Play</code> 安装，记得进入APP后开启权限。</p>
+<p>手机传送到Linux下的文件会出存在<code>/下载</code>文件夹。</p>
+<p>期待 MFiles 出 Linux 版~</p>
+<h3 id="出现missing-firmware错误"><a href="#出现missing-firmware错误" class="headerlink" title="出现missing firmware错误"></a>出现<code>missing firmware</code>错误</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">==&gt; WARNING: Possibly missing<span class="built_in"> firmware </span><span class="keyword">for</span> module: wd719x</span><br><span class="line">==&gt; WARNING: Possibly missing<span class="built_in"> firmware </span><span class="keyword">for</span> module: aic94xx</span><br><span class="line">==&gt; WARNING: Possibly missing<span class="built_in"> firmware </span><span class="keyword">for</span> module: xhci_pci</span><br></pre></td></tr></table></figure>
+
+<p>解决办法来自：<a target="_blank" rel="noopener" href="https://tieba.baidu.com/p/5256219016?red_tag=1188799096">https://tieba.baidu.com/p/5256219016?red_tag=1188799096</a></p>
+<p>这些驱动程序不是运行系统所必需的，在某些时候它们被排除在内核之外。</p>
+<p>如果这些你有强迫症，那么可以从aur下载安装它们。</p>
+<p><code>wd719x</code> 是 <code>“Western Digital WD7193，WD7197和WD7296 SCSI卡”</code> 的驱动程序<br><code>aic94xx </code>是 <code>“Adaptec SAS 44300,48300,58300 Sequencer” </code>的驱动程序。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yaourt</span> -S aic<span class="number">94</span>xx-firmware wd<span class="number">719</span>x-firmware</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.limstash.com/articles/202004/1582">https://www.limstash.com/articles/202004/1582</a>)</p>
+<h2 id="指纹尝试"><a href="#指纹尝试" class="headerlink" title="指纹尝试"></a>指纹尝试</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S usbutils</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://ywnz.com/linuxjc/5122.html">https://ywnz.com/linuxjc/5122.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29343201/article/details/79832442">https://blog.csdn.net/qq_29343201/article/details/79832442</a></p>
+<p><a target="_blank" rel="noopener" href="https://ywnz.com/linuxjc/4518.html">https://ywnz.com/linuxjc/4518.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Fprint">https://wiki.archlinux.org/index.php/Fprint</a></p>
+<p><a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/libfprint-2-tod1-xps9300-bin/">https://aur.archlinux.org/packages/libfprint-2-tod1-xps9300-bin/</a></p>
+<p><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1182758/how-to-use-27c6538d-goodix-fingerprint-dell-inspiron-5490-dell-vostro-5590">https://askubuntu.com/questions/1182758/how-to-use-27c6538d-goodix-fingerprint-dell-inspiron-5490-dell-vostro-5590</a></p>
+<h2 id="附：常用软件"><a href="#附：常用软件" class="headerlink" title="附：常用软件"></a>附：常用软件</h2><hr>
+<p>title: ArchLinux 番外之常用软件分类清单<br>date: 2020-11-18 12:35:59<br>tags:<br>    - Arch<br>    - Linux</p>
+<hr>
+<p>仅供参考</p>
+<!--more-->
+
+<h3 id="1-硬件相关"><a href="#1-硬件相关" class="headerlink" title="1.硬件相关"></a>1.硬件相关</h3><p>exfat-utils</p>
+<p>apfs-fuse-git</p>
+<p>broadcom-wl-dkms</p>
+<p>ntfs-3g</p>
+<p>filelight    磁盘使用情况</p>
+<p>vulkan-intel    显卡驱动</p>
+<p>nvidia    nvidia-settings</p>
+<p>partitionmanager    KDE分区管理器</p>
+<p>gparted</p>
+<p>wpa_supplicant</p>
+<h3 id="2-国产软件"><a href="#2-国产软件" class="headerlink" title="2.国产软件"></a>2.国产软件</h3><p>baidunetdisk-bin</p>
+<p>deepin-wine-wechat</p>
+<p>deepin.com.qq.im</p>
+<p>deepin.com.qq.im.light</p>
+<p>deepin.com.qq.office</p>
+<p>wps-office-cn    wps-office-mui-zh-cn</p>
+<p>360zip（AUR）</p>
+<h3 id="3-系统工具-amp-运行环境"><a href="#3-系统工具-amp-运行环境" class="headerlink" title="3.系统工具 &amp; 运行环境"></a>3.系统工具 &amp; 运行环境</h3><p>zsh</p>
+<p>ark</p>
+<p>cairo-dock</p>
+<p>conky</p>
+<p>latte-dock</p>
+<p>ocs-url</p>
+<p>deepin-screenshot</p>
+<p>deepin-wine</p>
+<p>deepin-wine5</p>
+<p>docker</p>
+<p>gtk-engine-murrine<br>gtk-engines</p>
+<p>fcitx<br>fcitx-cloudpinyin<br>fcitx-configtool<br>fcitx-googlepinyin<br>fcitx-qt5<br>fcitx-sogouimebs</p>
+<p>gnome-settings-daemon</p>
+<p>git</p>
+<p>nautilus    nautilus-open-any-terminal</p>
+<p>nemo    nemo-qt-components    nemo-seahorse    nemo-share</p>
+<h3 id="4-代码编辑器"><a href="#4-代码编辑器" class="headerlink" title="4.代码编辑器"></a>4.代码编辑器</h3><p>atom</p>
+<p>code</p>
+<p>gedit</p>
+<p>nano</p>
+<p>pycharm-community-edition</p>
+<h3 id="5-科学上网"><a href="#5-科学上网" class="headerlink" title="5.科学上网"></a>5.科学上网</h3><p>clash<br>v2ray<br>qv2ray</p>
+<h3 id="6-下载器"><a href="#6-下载器" class="headerlink" title="6.下载器"></a>6.下载器</h3><p>uget</p>
+<p>wget</p>
+<p>motrix-git    </p>
+<p>freedownloadmanager</p>
+<h3 id="7-神器"><a href="#7-神器" class="headerlink" title="7.神器"></a>7.神器</h3><p>flameshot 火焰截图</p>
+<p>gpicview   图片查看</p>
+<p>freefilesync-bin    文件备份</p>
+<p>imwheel    鼠标优化</p>
+<p>kdeconnect    设备互联</p>
+<p>scrot    截图</p>
+<p>neofetch    screenfetch        系统信息，装B</p>
+<p>hugo    博客</p>
+<p>konsole    终端</p>
+<p>netease-cloud-music    网易云</p>
+<p>numlockx    小键盘</p>
+<p>spotify    听音乐</p>
+<p>teamviewer    远程</p>
+<p>thunar    文件管理器</p>
+<p>thunderbird    thunderbird-i18n-zh-cn    邮件</p>
+<p>tilix    终端</p>
+<p>typora    写作</p>
+<p>virtualbox    虚拟机</p>
+<h3 id="8-媒体"><a href="#8-媒体" class="headerlink" title="8.媒体"></a>8.媒体</h3><p>mpv<br>vlc</p>
+<h3 id="9-浏览器"><a href="#9-浏览器" class="headerlink" title="9.浏览器"></a>9.浏览器</h3><p>microsoft-edge-dev-bin</p>
+<p>google-chrome</p>
+<p>firefox    firefox-i18n-zh-cn</p>
+<h3 id="10-AUR助手"><a href="#10-AUR助手" class="headerlink" title="10.AUR助手"></a>10.AUR助手</h3><p>yaourt<br>yay</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>「xuedao01」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xuedao01.github.io/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E7%94%9F%E4%BA%A7%E5%8A%9B%E7%B3%BB%E7%BB%9F/" title="ArchLinux 打造生产力系统">http://xuedao01.github.io/2020/10/01/ArchLinux-打造生产力系统/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Arch/" rel="tag"># Arch</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E5%87%86%E7%B3%BB%E7%BB%9F/" rel="prev" title="ArchLinux 打造准系统">
+      <i class="fa fa-chevron-left"></i> ArchLinux 打造准系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/01/%E5%B0%86Gnome%E6%A1%8C%E9%9D%A2%E6%8D%8F%E6%88%90%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%E5%BD%A2%E7%8A%B6/" rel="next" title="将Gnome桌面捏成我喜欢的形状">
+      将Gnome桌面捏成我喜欢的形状 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">安装常用软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows%E5%AD%97%E4%BD%93%E7%BC%BA%E5%A4%B1"><span class="nav-number">2.</span> <span class="nav-text">Windows字体缺失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA%E5%85%8D%E9%99%A4%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">挂载分区免除输入密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">设置默认文件管理器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nemo"><span class="nav-number">4.0.1.</span> <span class="nav-text">Nemo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nautilus"><span class="nav-number">4.0.2.</span> <span class="nav-text">Nautilus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Thunar"><span class="nav-number">4.0.3.</span> <span class="nav-text">Thunar</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA"><span class="nav-number">5.</span> <span class="nav-text">开机自动挂载分区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BF%AE%E6%94%B9-fstab"><span class="nav-number">5.0.1.</span> <span class="nav-text">方式一：修改 fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="nav-number">5.0.2.</span> <span class="nav-text">方式二：自动执行脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E5%88%9B%E5%BB%BA-Desktop-%E5%90%AF%E5%8A%A8%E5%99%A8"><span class="nav-number">5.0.3.</span> <span class="nav-text">方式三：创建 Desktop 启动器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%8D%9A%E5%AE%A2%E2%80%94%E2%80%94Hexo"><span class="nav-number">6.</span> <span class="nav-text">写博客——Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E6%97%A5%E8%91%B5%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-number">7.</span> <span class="nav-text">向日葵远程控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">8.</span> <span class="nav-text">两种虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VMWare-Workstation"><span class="nav-number">8.1.</span> <span class="nav-text">VMWare Workstation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">8.1.1.</span> <span class="nav-text">手动安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AUR%E5%AE%89%E8%A3%85"><span class="nav-number">8.1.2.</span> <span class="nav-text">AUR安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0vmmon%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E9%97%AE%E9%A2%98"><span class="nav-number">8.1.3.</span> <span class="nav-text">出现vmmon内核模块问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8macOS%E5%B9%B3%E5%8F%B0VMFusion%E4%B8%8B%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">8.1.4.</span> <span class="nav-text">在macOS平台VMFusion下的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Windows-7"><span class="nav-number">8.1.5.</span> <span class="nav-text">安装Windows 7</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VirtualBox"><span class="nav-number">8.2.</span> <span class="nav-text">VirtualBox</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Quartus%E2%85%A1"><span class="nav-number">9.</span> <span class="nav-text">安装QuartusⅡ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85MATLAB"><span class="nav-number">10.</span> <span class="nav-text">安装MATLAB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B%E7%95%A5"><span class="nav-number">10.1.</span> <span class="nav-text">安装过程略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="nav-number">10.2.</span> <span class="nav-text">创建快捷方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81"><span class="nav-number">10.3.</span> <span class="nav-text">中文乱码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98"><span class="nav-number">10.4.</span> <span class="nav-text">快捷键失效问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ios%E8%AE%BE%E5%A4%87%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93"><span class="nav-number">11.</span> <span class="nav-text">ios设备文件传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%AE%A1%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">蓝牙图形化管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE"><span class="nav-number">13.</span> <span class="nav-text">屏幕截图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Gnome%E8%87%AA%E5%B8%A6"><span class="nav-number">13.0.1.</span> <span class="nav-text">Gnome自带</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scrot%E6%88%AA%E5%B1%8F%E5%B7%A5%E5%85%B7"><span class="nav-number">13.0.2.</span> <span class="nav-text">Scrot截屏工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OCR-%E8%AF%86%E5%88%AB%E2%80%94%E2%80%94tesseract"><span class="nav-number">14.</span> <span class="nav-text">OCR 识别——tesseract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91-clash-core"><span class="nav-number">15.</span> <span class="nav-text">科学上网 clash-core</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85"><span class="nav-number">15.0.1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE"><span class="nav-number">15.0.2.</span> <span class="nav-text">2.配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E5%9B%BE%E6%A0%87"><span class="nav-number">15.0.3.</span> <span class="nav-text">3.创建应用程序启动图标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6-or-%E7%A8%8B%E5%BA%8F"><span class="nav-number">15.1.</span> <span class="nav-text">快速查找文件 or 程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KDE-Connect-%E8%AE%BE%E5%A4%87%E4%BA%92%E8%81%94"><span class="nav-number">15.2.</span> <span class="nav-text">KDE Connect 设备互联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0missing-firmware%E9%94%99%E8%AF%AF"><span class="nav-number">15.3.</span> <span class="nav-text">出现missing firmware错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E7%BA%B9%E5%B0%9D%E8%AF%95"><span class="nav-number">16.</span> <span class="nav-text">指纹尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="nav-number">17.</span> <span class="nav-text">附：常用软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="nav-number">17.1.</span> <span class="nav-text">1.硬件相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9B%BD%E4%BA%A7%E8%BD%AF%E4%BB%B6"><span class="nav-number">17.2.</span> <span class="nav-text">2.国产软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7-amp-%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">17.3.</span> <span class="nav-text">3.系统工具 &amp; 运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">17.4.</span> <span class="nav-text">4.代码编辑器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91"><span class="nav-number">17.5.</span> <span class="nav-text">5.科学上网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E4%B8%8B%E8%BD%BD%E5%99%A8"><span class="nav-number">17.6.</span> <span class="nav-text">6.下载器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E7%A5%9E%E5%99%A8"><span class="nav-number">17.7.</span> <span class="nav-text">7.神器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%AA%92%E4%BD%93"><span class="nav-number">17.8.</span> <span class="nav-text">8.媒体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">17.9.</span> <span class="nav-text">9.浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-AUR%E5%8A%A9%E6%89%8B"><span class="nav-number">17.10.</span> <span class="nav-text">10.AUR助手</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">「xuedao01」</p>
+  <div class="site-description" itemprop="description">信念这玩意不是说出来的，是做出来的。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuedao01" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuedao01" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xuedao01@hotmail.com" title="E-Mail → mailto:xuedao01@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">「xuedao01」</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:34</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

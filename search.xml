@@ -1,0 +1,1435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>ArchLinux 打造准系统</title>
+    <url>/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E5%87%86%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3531939864,671832250&fm=26&gp=0.jpg" alt="img"></p>
+<a id="more"></a>
+
+<h3 id="添加archlinuxcn源："><a href="#添加archlinuxcn源：" class="headerlink" title="添加archlinuxcn源："></a>添加archlinuxcn源：</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>pacman.conf</span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[archlinuxcn]</span></span><br><span class="line"><span class="attr">SigLevel</span> = Optional TrustAll</span><br><span class="line"><span class="attr">Server</span> = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<p>更新源：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">pacman -Sy</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S archlinuxcn-keyring</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装yaourt和yay："><a href="#安装yaourt和yay：" class="headerlink" title="安装yaourt和yay："></a>安装yaourt和yay：</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>pacman.conf</span><br></pre></td></tr></table></figure>
+
+<p>确保已经写入：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">sudo pacman -Sy</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">no_proxy</span>=<span class="string">&quot;localhost,127.0.0.1,localaddress,.localdomain.com&quot;</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">http_proxy</span>=<span class="string">&quot;http://127.0.0.1:1089&quot;</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">https_proxy</span>=<span class="variable">$http_proxy</span></span><br><span class="line">sudo pacman -Sy</span><br><span class="line">sudo pacman -S yaourt</span><br><span class="line">sudo pacman -S yay</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装基本必备软件："><a href="#安装基本必备软件：" class="headerlink" title="安装基本必备软件："></a>安装基本必备软件：</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S google-chrome git neofetch typora </span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S unzip rar p7zip zip ark</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装网络加速"><a href="#安装网络加速" class="headerlink" title="安装网络加速"></a>安装网络加速</h3><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay</span> -S qv<span class="number">2</span>ray v<span class="number">2</span>ray</span><br><span class="line"><span class="comment"># 检查内核设置</span></span><br><span class="line"><span class="attribute">which</span> v<span class="number">2</span>ray</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/">https://github.com/</a></p>
+<h3 id="安装并配置zsh："><a href="#安装并配置zsh：" class="headerlink" title="安装并配置zsh："></a>安装并配置zsh：</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo pacman -S zsh</span><br><span class="line">export http_proxy=<span class="string">&quot;http://127.0.0.1:1089&quot;</span></span><br><span class="line">export https_proxy=<span class="variable">$http_proxy</span></span><br><span class="line"></span><br><span class="line">sh -c <span class="string">&quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 zsh 为默认 $SHELL</span></span><br><span class="line">sudo chsh -s $(which zsh)</span><br><span class="line"><span class="comment"># 自动补全</span></span><br><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/zsh-users/</span>zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span><span class="regexp">/plugins/</span>zsh-autosuggestions</span><br><span class="line"><span class="comment"># 语法高亮</span></span><br><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/zsh-users/</span>zsh-syntax-highlighting <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span><span class="regexp">/plugins/</span>zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"><span class="comment"># echo &quot;source $&#123;(q-)PWD&#125;/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot; &gt;&gt; $&#123;ZDOTDIR:-$HOME&#125;/.zshrc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置主题、插件</span></span><br><span class="line">gedit ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>找到 <code>plugins=(xxx)</code>，把 <code>zsh-autosuggestions</code> 加入进去；主题改为<code>af-magic</code></li>
+<li>添加函数：</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy_off</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">unset</span> http_proxy</span><br><span class="line">    <span class="keyword">unset</span> https_proxy</span><br><span class="line">    <span class="keyword">echo</span> -e <span class="string">&quot;已关闭http代理&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy_on</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    export no_proxy=<span class="string">&quot;localhost,127.0.0.1,localaddress,.localdomain.com&quot;</span></span><br><span class="line">    export http_proxy=<span class="string">&quot;http://127.0.0.1:1089&quot;</span></span><br><span class="line">    export https_proxy=$http_proxy</span><br><span class="line">    <span class="keyword">echo</span> -e <span class="string">&quot;已开启http代理&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>最后</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>其他：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">wget https:<span class="regexp">//gi</span>thub.com<span class="regexp">/robbyrussell/</span>oh-my-zsh<span class="regexp">/raw/m</span>aster<span class="regexp">/tools/i</span>nstall.sh -O - | sh</span><br><span class="line"></span><br><span class="line">安装autojump自动跳转插件</span><br><span class="line"><span class="number">1</span>sudo pacman -S autojump</span><br><span class="line"><span class="number">2</span>echo <span class="string">&quot;. /usr/share/autojump/autojump.zsh&quot;</span> &gt;&gt; <span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zshrc</span><br><span class="line"><span class="number">3</span>source .zshrc</span><br><span class="line">安装zsh-syntax-highlighting语法高亮插件</span><br><span class="line"><span class="number">1</span>git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/zsh-users/</span>zsh-syntax-highlighting.git <span class="variable">$ZSH_CUSTOM</span><span class="regexp">/plugins/</span>zsh-syntax-highlighting</span><br><span class="line"><span class="number">2</span>echo <span class="string">&quot;source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot;</span> &gt;&gt; <span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zshrc</span><br><span class="line"><span class="number">3</span>source .zshrc</span><br><span class="line">安装zsh-autosuggestions语法历史记录插件</span><br><span class="line"><span class="number">1</span>git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/zsh-users/</span>zsh-autosuggestions.git <span class="variable">$ZSH_CUSTOM</span><span class="regexp">/plugins/</span>zsh-autosuggestions</span><br><span class="line"><span class="number">2</span>echo <span class="string">&quot;source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot;</span> &gt;&gt; <span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zshrc</span><br><span class="line"><span class="number">3</span>source .zshrc</span><br><span class="line">安装自动补全插件incr</span><br><span class="line"><span class="number">1</span>cd <span class="variable">$ZSH_CUSTOM</span>/plugins</span><br><span class="line"><span class="number">2</span>mkdir incr</span><br><span class="line"><span class="number">3</span>cd incr</span><br><span class="line"><span class="number">4</span>wget http:<span class="regexp">//mim</span>osa-pudica.net<span class="regexp">/src/i</span>ncr-<span class="number">0.2</span>.zsh</span><br><span class="line"><span class="number">5</span>echo <span class="string">&quot;source $ZSH_CUSTOM/plugins/incr/incr*.zsh&quot;</span> &gt;&gt; <span class="variable">$&#123;ZDOTDIR:-$HOME&#125;</span>/.zshrc</span><br><span class="line"><span class="number">6</span>source .zshrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装输入法："><a href="#安装输入法：" class="headerlink" title="安装输入法："></a>安装输入法：</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S fcitx fcitx-im fcitx-configtool</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S fcitx-googlepinyin</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">gedit ~/.xprofile 											# 没有新建</span></span><br></pre></td></tr></table></figure>
+
+<p>添加：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">export</span> <span class="string">LC_ALL=zh_CN.UTF-8</span></span><br><span class="line"><span class="attr">export</span> <span class="string">GTK_IM_MODULE=fcitx</span></span><br><span class="line"><span class="attr">export</span> <span class="string">QT_IM_MODULE=fcitx</span></span><br><span class="line"><span class="attr">export</span> <span class="string">XMODIFIERS=&quot;@im=fcitx&quot;</span></span><br><span class="line"><span class="comment"># 安装搜狗输入法个人版（可以官网下载安装皮肤、词库）</span></span><br><span class="line"><span class="attr">yaourt</span> <span class="string">-S qtwebkit-bin</span></span><br><span class="line"><span class="attr">yaourt</span> <span class="string">fcitx-sogoupinyin</span></span><br><span class="line"><span class="comment"># 安装搜狗输入法麒麟版</span></span><br><span class="line"><span class="attr">mkdir</span> <span class="string">~/Software/AUR</span></span><br><span class="line"><span class="attr">cd</span> <span class="string">~/Software/AUR</span></span><br><span class="line"><span class="attr">git</span> <span class="string">clone https://gitee.com/laomocode/fcitx-sogouimebs.git</span></span><br><span class="line"><span class="attr">cd</span> <span class="string">fcitx-sogouimebs</span></span><br><span class="line"><span class="attr">makepkg</span> <span class="string">-si										# 需要 base-devel</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="鼠标滚动优化"><a href="#鼠标滚动优化" class="headerlink" title="鼠标滚动优化"></a>鼠标滚动优化</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S imwheel</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">gedit ~/.imwheelrc</span></span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;.*&quot;</span></span><br><span class="line"><span class="keyword">None</span>, <span class="keyword">Up</span>, Button4, <span class="number">2</span></span><br><span class="line"><span class="keyword">None</span>, <span class="keyword">Down</span>, Button5, <span class="number">2</span></span><br><span class="line">Control_L, <span class="keyword">Up</span>, Control_L|Button4</span><br><span class="line">Control_L, <span class="keyword">Down</span>, Control_L|Button5</span><br><span class="line">Shift_L, <span class="keyword">Up</span>, Shift_L|Button4</span><br><span class="line">Shift_L, <span class="keyword">Down</span>, Shift_L|Button5</span><br></pre></td></tr></table></figure>
+
+<p>启动：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">imwheel</span></span><br></pre></td></tr></table></figure>
+
+<p>设置开机启动：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo gedit .config/autostart/imwheel.desktop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加：</span></span><br><span class="line">[Desktop Entry]</span><br><span class="line"><span class="attribute">Encoding</span>=UTF-8</span><br><span class="line"><span class="attribute">Name</span>=imwheel</span><br><span class="line"><span class="attribute">Type</span>=Application</span><br><span class="line"><span class="attribute">Exec</span>=/usr/bin/imwheel</span><br><span class="line"><span class="attribute">Hidden</span>=<span class="literal">false</span></span><br><span class="line"><span class="attribute">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attribute">Categories</span>=Application;Network;</span><br><span class="line"><span class="attribute">Icon</span>=applications-system </span><br></pre></td></tr></table></figure>
+
+<h3 id="开机启动小键盘"><a href="#开机启动小键盘" class="headerlink" title="开机启动小键盘"></a>开机启动小键盘</h3><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S numlockx</span></span><br></pre></td></tr></table></figure>
+
+<p>设置开机启动</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo gedit .config/autostart/numlockx.desktop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加：</span></span><br><span class="line">[Desktop Entry]</span><br><span class="line"><span class="attribute">Encoding</span>=UTF-8</span><br><span class="line"><span class="attribute">Name</span>=numlockx</span><br><span class="line"><span class="attribute">Type</span>=Application</span><br><span class="line"><span class="attribute">Exec</span>=/usr/bin/numlockx</span><br><span class="line"><span class="attribute">Hidden</span>=<span class="literal">false</span></span><br><span class="line"><span class="attribute">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attribute">Categories</span>=Application;Network;</span><br><span class="line"><span class="attribute">Icon</span>=applications-system</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装无线网卡驱动（BCM4352-DW1560）"><a href="#安装无线网卡驱动（BCM4352-DW1560）" class="headerlink" title="安装无线网卡驱动（BCM4352 / DW1560）"></a>安装无线网卡驱动（BCM4352 / DW1560）</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 确保你有一款管理网络的软件：NetworkManager</span></span><br><span class="line"><span class="variable">$</span> pacman <span class="literal">-S</span> networkmanager network<span class="literal">-manager</span><span class="literal">-applet</span></span><br><span class="line"><span class="variable">$</span> systemctl <span class="built_in">start</span> NetworkManager</span><br><span class="line"><span class="variable">$</span> systemctl enable NetworkManager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确保安装了linux-header</span></span><br><span class="line"><span class="variable">$</span> sudo pacman <span class="literal">-S</span> linux<span class="literal">-headers</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装博通网卡驱动</span></span><br><span class="line">yaourt <span class="literal">-S</span> broadcom<span class="literal">-wl</span><span class="literal">-dkms</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">yay</span> <span class="string">-S netease-cloud-music</span></span><br><span class="line"><span class="attr">yay</span> <span class="string">-S baidunetdisk-bin</span></span><br><span class="line"><span class="attr">yay</span> <span class="string">-S freedownloadmanager</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>至此，基本配置已经完成。进阶配置请看博文 “ArchLinux 打造生产力系统” 。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArchLinux 番外之开机自动执行脚本</title>
+    <url>/2020/10/07/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>随着systemctl的出现，开机自启动脚本rc.local从archlinux上消失了；但有的时候我们也想在开机时（尤其是有root权限时）进行一些配置。<br>我们可以把执行这样的一个脚本rc.local做成一个“服务”的形式，这样就可以同时使用systemctl和rc.local了。</p>
+<a id="more"></a>
+
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>创建rclocal.service服务，用于开机执行rc.local脚本</p>
+<p>参考：<a href="https://blog.csdn.net/listener_ri/article/details/45458119">CSDN教程</a>、<a href="https://blog.csdn.net/weixin_42573248/article/details/102822126">教程-2</a></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h4 id="1-创建一个文件-setup-sh"><a href="#1-创建一个文件-setup-sh" class="headerlink" title="1.创建一个文件 setup.sh"></a>1.创建一个文件 setup.sh</h4><h4 id="2-将下面的内容复制进-setup-sh"><a href="#2-将下面的内容复制进-setup-sh" class="headerlink" title="2.将下面的内容复制进 setup.sh"></a>2.将下面的内容复制进 setup.sh</h4><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建rc-local服务文件</span></span><br><span class="line"><span class="comment"># 有的教程是	/etc/systemd/system/rclocal.service</span></span><br><span class="line">sudo touch /usr/lib/systemd/system/rc-local.service</span><br><span class="line"><span class="built_in">echo</span> 创建服务文件成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># echo一大段代码到rc-local.service脚本</span></span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&#x27;&#x27;</span><span class="string">&#x27;[Unit]</span></span><br><span class="line"><span class="string">Description=&quot;/etc/rc.local Compatibility&quot; </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Type=forking</span></span><br><span class="line"><span class="string">ExecStart=/etc/rc.local start</span></span><br><span class="line"><span class="string">TimeoutSec=0</span></span><br><span class="line"><span class="string">StandardInput=tty</span></span><br><span class="line"><span class="string">RemainAfterExit=yes</span></span><br><span class="line"><span class="string">SysVStartPriority=99</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target&#x27;</span><span class="string">&#x27;&#x27;</span> &gt;  /usr/lib/systemd/system/rc-local.service</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> rc-local.service</span><br><span class="line"><span class="built_in">echo</span> 启用rc-local服务成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建rc.local文件</span></span><br><span class="line">sudo touch  /etc/rc.local</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#x27;</span><span class="string">&#x27;#!/bin/sh -e</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># rc.local</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># This script is executed at the end of each multiuser runlevel.</span></span><br><span class="line"><span class="string"># Make sure that the script will &quot;exit 0&quot; on success or any other</span></span><br><span class="line"><span class="string"># value on error.</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># In order to enable or disable this script just change the execution</span></span><br><span class="line"><span class="string"># bits.</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># By default this script does nothing.</span></span><br><span class="line"><span class="string"># -----------替换横杠间的内容为需要开机执行的命令---------------</span></span><br><span class="line"><span class="string">echo 123 &gt; /123.txt   # 测试rc.local文件</span></span><br><span class="line"><span class="string"># -----------替换横杠间的内容为需要开机执行的命令---------------</span></span><br><span class="line"><span class="string">exit 0&#x27;</span><span class="string">&#x27;&#x27;</span> &gt; /etc/rc.local</span><br><span class="line"><span class="built_in">echo</span> 创建rc.local文件成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 请输入密码进行授权：</span><br><span class="line">sudo chmod +x /etc/rc.local</span><br><span class="line"></span><br><span class="line"><span class="comment"># echo 测试rc.local</span></span><br><span class="line"><span class="comment"># sudo sh /etc/rc.local</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-在setup-sh的路径下打开终端"><a href="#3-在setup-sh的路径下打开终端" class="headerlink" title="3.在setup.sh的路径下打开终端"></a>3.在setup.sh的路径下打开终端</h4><h4 id="4-在终端中执行-chmod-x-setup-sh"><a href="#4-在终端中执行-chmod-x-setup-sh" class="headerlink" title="4.在终端中执行 chmod +x setup.sh"></a>4.在终端中执行 chmod +x setup.sh</h4><h4 id="5-然后-再运行脚本-setup-sh"><a href="#5-然后-再运行脚本-setup-sh" class="headerlink" title="5.然后 再运行脚本 ./setup.sh"></a>5.然后 再运行脚本 ./setup.sh</h4><blockquote>
+<p>说明：经实测，脚本执行时还是有权限问题，只能手动创建编辑。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArchLinux 番外之 wine 入门</title>
+    <url>/2020/12/02/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8Bwine%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>草稿</p>
+<a id="more"></a>
+
+<h1 id="Wine是什么"><a href="#Wine是什么" class="headerlink" title="Wine是什么"></a><strong>Wine是什么</strong></h1><p>​    Wine是 “Wine Is Not an Emulator”的递归缩写，Wine并不是一个虚拟机，而是一个Windows API实现兼容层，它将操作系统提供的各种功能封装成API，并让应用程序在隔离的环境内运行。</p>
+<p>​    Wine的目的是运行Windows上的可执行程序（PE，portable executable）。</p>
+<p>​    我们知道，可执行程序的本质其实就是按照某一规则排列的机器码，而机器码是指令集相关的。得益于常见的PC机一般是x86/x64的，因此Windows应用程序从指令集的角度看，是完全可以在 x86/x64的Linux机器上直接运行，而不需要硬件层模拟的。</p>
+<p>​    proton是Valve为他们的游戏弄的wine衍生版，部分steam游戏使用它；crossover是wine的一个商业应用。</p>
+<h1 id="Wine可靠吗？该不该用？"><a href="#Wine可靠吗？该不该用？" class="headerlink" title="Wine可靠吗？该不该用？"></a>Wine可靠吗？该不该用？</h1><p>wine是<strong>不可靠</strong>的，自用可以，生产环境和严格环境中千万别用。</p>
+<p>一般越旧的Windows程序wine越容易模拟运行成功（或部分功能成功）。请先在官方<a href="https://appdb.winehq.org/">wine Application Database</a>上查你想运行的程序的别人的模拟结果（官方搜索不好用，可以用Google加<code> site:appdb.winehq.org</code>），看Test Results：</p>
+<ul>
+<li>Rating一列由运行结果好到坏为Platinum、Gold、Silver、Bronze、Garbage</li>
+<li>看他们当时所用的wine版本和程序版本。有些是用很旧的wine测试的结果不好，新版本wine或许已不一样</li>
+<li>结果好的，你打算做，那么点击此条结果，看提交者所描述的正常功能、不可用功能、未测试功能，及他所留的建立过程和操作方法</li>
+<li>无近期结果或近期仍然Silver以下的就放弃吧。也可以自己尝试，但这对普通人来说，顺利则已，不顺利则是一大大大坑</li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a><strong>安装</strong></h1><p>下面的开发环境都以Deepin为例进行说明。</p>
+<p>首先获取代码。Wine官方代码仓库地址为<a href="git://source.winehq.org/git/wine.git">git://source.winehq.org/git/wine.git</a></p>
+<p>如果你想方便打包给别人使用，又不太想折腾打包的一些细节，可以用各个发行版自己维护的Wine。比如Debian维护的Wine仓库地址为：<a href="https://salsa.debian.org/wine-team/wine.git">https://salsa.debian.org/wine-team/wine.git</a></p>
+<p>这里以官方的Wine为例，<code>git clone git://source.winehq.org/git/wine.git</code>。然后安装开发的依赖。为了简单起见，我们只编译32位的Wine，因为64位的Wine只支持64位的PE程序，而目前Windows上仍有大量的程序只提供了32位的版本。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2QzMzNmOGRkMjM1YjQ3OGE5YTZmZDA2ZmM0MmMwZDJh" alt="Wine开发系列之——入门"></p>
+<p>接着运行脚本，<code>./configure --with-gnutls --without-hal --without-oss</code>，根据不同的 Wine版本，此时可能会提示不同的feature支持情况。我们可以根据需求，对上面的依赖库和传入的参数进行调整，具体可以查看configure.ac的内容。</p>
+<p>Wine的源码比较大，编译有些耗时，可以根据CPU情况增加并行参数，比如<code>make -j8</code>，进行编译。编译完成后，运行 <code>./wine --version</code>可以查看版本号。如果想安装到系统，可以运行<code>sudo make install</code>。</p>
+<p>注意，安装后可能会修改一些文件的默认打开方式。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a><strong>使用</strong></h1><p>运行 <code>./wine winecfg</code>可以对默认容器进行设置，默认的容器位于home 目录下的.wine，环境变量<code>WINEPREFIX</code>用来修改当前的容器路径。</p>
+<p>比如有一个叫<code>demo.exe</code> 的可执行文件，我们想测试能否正常运行。可以运行<code>WINEPREFIX=~/.demo_exe ./wine demo.exe</code>，home目录下的<code>demo_exe</code> 就会作为其容器目录。</p>
+<h3 id="WINEARCH环境变量（architect）"><a href="#WINEARCH环境变量（architect）" class="headerlink" title="WINEARCH环境变量（architect）"></a>WINEARCH环境变量（architect）</h3><p>这个<code>WINEARCH</code> 决定了你模拟的Windows是32位或是64位的x86。对应的值为<code>win32</code>及<code>win64</code>，如果你的Unix系统是64位的它就默认是<code>win64</code>。</p>
+<p>发行版所提供的wine一般都有32位及64位两个包，直接对应所模拟的Windows位数，包里面的Unix二进制及运行库也都是对应位数。以我的经验来看，使用32位更容易成功。</p>
+<h3 id="语言设置为英文"><a href="#语言设置为英文" class="headerlink" title="语言设置为英文"></a>语言设置为英文</h3><p>有时尝试了多次都失败，而<code>export LANG=en_US.utf8</code>后就成功了。其中有些Windows程序安装时需要把语言设置成英文，运行时又可以用中文运行。神奇吧 !-_-!</p>
+<h3 id="WINEPREFIX环境变量（Prefix）"><a href="#WINEPREFIX环境变量（Prefix）" class="headerlink" title="WINEPREFIX环境变量（Prefix）"></a>WINEPREFIX环境变量（Prefix）</h3><p><code>WINEPREFIX</code>是很重要的，默认值为<code>~/.wine</code>。</p>
+<p>wine会在它所指定的路径下创建<code>drive_c/</code>等几个文件（夹），其中包含了Windows环境配置、它的C盘文件等等。</p>
+<p>建议把你<strong>安装的不同的Windows程序分给不同的WINEPREFIX</strong>，便于打包和隔离。当你要启动这个Windows程序前也记得要设置WINEPREFIX。</p>
+<blockquote>
+<p>在你用一个空WINEPREFIX目录第一次启动wine时，它会问你是否下载mono和gecko。一般情况选否即可。</p>
+</blockquote>
+<h3 id="启动Windows程序及路径处理"><a href="#启动Windows程序及路径处理" class="headerlink" title="启动Windows程序及路径处理"></a>启动Windows程序及路径处理</h3><p>命令<code>wine 路径/xxx.exe 参数（可以是文件路径）</code>就可以通过wine运行<code>exe</code>。路径可以是Unix路径，也可以是（在有WINEPREFIX情况下的）Windows路径，wine会自动判断。</p>
+<p>以WINEPREFIX是默认值情况下为例：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">wine notepad.<span class="keyword">exe</span> <span class="keyword">c</span>:/<span class="keyword">abc</span>.txt</span><br><span class="line">wine notepad.<span class="keyword">exe</span> ~/.wine/drive_c/<span class="keyword">abc</span>.txt</span><br></pre></td></tr></table></figure>
+
+<p>上面两条命令效果一样。</p>
+<p>对wine来说，你Unix系统里的其他文件（即模拟的C盘之外的文件）的Windows路径都以Z盘开头：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">wine notepad.exe z:<span class="regexp">/home/u</span>sername<span class="regexp">/.wine/</span>drive_c/abc.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>wine也提供了<code>winepath</code>这个命令来转换Unix和Windows之前的路径，但一般用不上。</p>
+</blockquote>
+<h3 id="安装Windows程序及之后"><a href="#安装Windows程序及之后" class="headerlink" title="安装Windows程序及之后"></a>安装Windows程序及之后</h3><p>要安装一个Windows程序，一般就是在设置好<code>WINEPREFIX</code>和<code>WINEARCH</code>后，运行安装包</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">wine 安装包<span class="string">.exe</span></span><br><span class="line">wine msiexec <span class="string">/i</span> 安装包<span class="string">.msi</span></span><br></pre></td></tr></table></figure>
+
+<p>安装好后，安装程序所生成的Windows开始菜单项会被自动加入你的Linux系统的启动器中。<code>.desktop</code>文件里已经有了<code>WINEPREFIX</code>和<code>WINEARCH</code>。安装程序所产生的文件扩展名关联、图标等等<strong>“垃圾”</strong>也会进入Linux中。</p>
+<blockquote>
+<p>如果你不喜欢垃圾，可以清理，参考<a href="https://wiki.winehq.org/FAQ#How_do_I_clean_the_Open_With_List.3F">官方FAQ</a><br>甚至你可以在安装前就禁止它在Unix中产生任何菜单、文件关联等物件（参考<a href="https://wiki.winehq.org/FAQ#How_can_I_prevent_Wine_from_changing_the_filetype_associations_on_my_system_or_adding_unwanted_menu_entries.2Fdesktop_links.3F">这里</a>）：<br>export WINEDLLOVERRIDES=winemenubuilder.exe=d wine setup.exe</p>
+</blockquote>
+<p>我自己是总把垃圾清理掉的。如果你也清理了，没有了安装程序创建的菜单和文件关联，可以按如下方法自己弄：</p>
+<p>写一个自己的脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取得此bash脚本所在路径</span></span><br><span class="line">script=$(readlink -f <span class="string">&quot;<span class="variable">$0</span>&quot;</span>)</span><br><span class="line">scriptpath=$(dirname <span class="string">&quot;<span class="variable">$script</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里设置好WINEPREFIX</span></span><br><span class="line"><span class="built_in">export</span> WINEPREFIX=<span class="string">&quot;<span class="variable">$scriptpath</span>&quot;</span></span><br><span class="line"></span><br><span class="line">wine <span class="string">&quot;c:\Program Files\xxxx\xxxx.exe&quot;</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>把这个脚本放在WINEPREFIX目录下使用。</p>
+<p>自己确定好此WINEPREFIX目录放在何处后，可以手动将文件后缀与这个脚本关联，具体可以参考我写的另一篇《<a href="https://www.cnblogs.com/garyw/p/12769264.html">Linux关联文件扩展名和打开程序</a>》。</p>
+<h3 id="winecfg"><a href="#winecfg" class="headerlink" title="winecfg"></a>winecfg</h3><p><code>winecfg</code>命令会打开一个GUI的、<strong>应对此WINEPREFIX</strong>的wine环境配置。</p>
+<p>里面可以设置要模拟的Windows版本。</p>
+<p>还可以设置某个<strong>DLL文件</strong>使用内建、原装、内建先于原装、原装先于内建、停用之中的哪种。默认情况下都是使用内建的。如果想使用原装，则必须把真正的Windows DLL放入WINERPEFIX的系统目录中，其中大部分是用<code>winetricks</code>来搞。</p>
+<p>这个对于一个程序是否能成功模拟比较关键，但需要一些技术知识，本篇不细谈。官方wine Application Database中，提交者一般会给出他们所使用的设置。</p>
+<h3 id="winetricks"><a href="#winetricks" class="headerlink" title="winetricks"></a>winetricks</h3><p>有官方背景的一个工具。其主页位于<a href="https://github.com/Winetricks/winetricks">Github</a>。发行版也会带它，但不一定最新，最好用最新的。它能帮用户方便配置wine环境，或安装一些基本DLL，运行库如VC runtime、.NET。</p>
+<p>例如<code>winetricks dotnet45 vcrun2010</code> 。也支持一些大型应用如<code>office2007pro</code>（需要自己准备光盘或<code>iso</code>）、<code>7zip</code>、<code>qq</code>、<code>qqintl</code>（这些安装时它自己从网上下载）。可以用<code>winetricks list-all</code>来看看它支持什么。</p>
+<p>因为是老外维护的，所以winetricks有许多东西要把语言设置成英文才可以安装成功。</p>
+<p>经我试验，winetricks中许多也只能在32位或64位一种情况下，或某个wine版本之上或之下才能成功，而winetricks却不记录或提供这些信息，很奇怪。</p>
+<h3 id="wine卡死了或程序退出不彻底"><a href="#wine卡死了或程序退出不彻底" class="headerlink" title="wine卡死了或程序退出不彻底"></a>wine卡死了或程序退出不彻底</h3><p>如果在wine中运行notepad，会有以下进程在Unix中：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">23770 </span><span class="number">23765</span> notepad.exe     notepad.exe</span><br><span class="line"><span class="symbol">23774 </span><span class="number">23765</span> wineserver      /<span class="keyword">usr</span>/bin/wineserver</span><br><span class="line"><span class="symbol">23780 </span><span class="number">23765</span> services.exe    C:\windows\system32\services.exe</span><br><span class="line"><span class="symbol">23783 </span><span class="number">23765</span> winedevice.exe  C:\windows\system32\winedevice.exe</span><br><span class="line"><span class="symbol">23793 </span><span class="number">23765</span> plugplay.exe    C:\windows\system32\plugplay.exe</span><br><span class="line"><span class="symbol">23798 </span><span class="number">23765</span> winedevice.exe  C:\windows\system32\winedevice.exe</span><br><span class="line"><span class="symbol">23805 </span><span class="number">23765</span> explorer.exe    C:\windows\system32\explorer.exe /desktop</span><br></pre></td></tr></table></figure>
+
+<p>那些看似名为<code>.exe</code>结尾的进程实际上在Unix中是<code>wine-preloader</code>。每一个运行中的WINEPREFIX会有一套以上进程。</p>
+<p>正常情况下，如上例，<code>notepad.exe</code>退出后其余也会自动退出。但wine无法正常自行彻底退出是常有的。例如若用wine运行QQ，常常出现<code>QQ.exe</code>退出但<code>TXPlatform.exe</code>死活不自己退出的情况，甚至可能你点击了QQ界面上的叉，只是界面消失，实际的exe进程都卡住不退。卡住不退的情况也属于所模拟的程序功能仅部分正常。</p>
+<p>使用<code>wineserver -k</code>来告诉wine杀死本WINEPREFIX的所有进程。但这招有时也不灵，那么需要手动清理，比较麻烦。</p>
+<h1 id="一些国内常用Windows软件的现成资源"><a href="#一些国内常用Windows软件的现成资源" class="headerlink" title="一些国内常用Windows软件的现成资源"></a>一些国内常用Windows软件的现成资源</h1><ol>
+<li>winetricks_zh（<a href="https://github.com/hillwoodroc/winetricks-zh">https://github.com/hillwoodroc/winetricks-zh</a> ）是一个国人维护的winetricks。想装国内软件时可以先来这里看看，比官方winetricks更符合国内情况。支持QQ、微信、同花顺、大智慧等等。</li>
+<li>深度（Deepin）是国内的Linux发行版，它已经装备好了一些wine好的国内软件。但许多是不能直接拿到其他发行版上来用的。深度会自己修改wine的源代码，他们提供的wine好的东西许多是基于他们的wine。</li>
+<li>别人打包的AppImage，例如这个打包好的QQ（<a href="https://github.com/askme765cs/Wine-QQ-TIM)%E3%80%82%E8%AE%B8%E5%A4%9A%E4%BA%BA%E6%98%AF%E6%8B%BF%E6%B7%B1%E5%BA%A6%E6%89%80%E5%81%9A%E7%9A%84%E6%89%93%E5%8C%85%E6%88%90AppImage%E3%80%82%E8%87%AA%E8%A1%8C%E5%9C%A8%E7%BD%91%E4%B8%8A%E6%90%9C%E7%B4%A2%E4%B8%80%E4%B8%8B%E4%BC%9A%E6%9C%89%EF%BC%8C%E4%BD%86%E5%88%AB%E4%BA%BA%E6%89%93%E5%8C%85%E7%9A%84%E6%B0%B4%E5%B9%B3%E6%9C%89%E9%AB%98%E6%9C%89%E4%BD%8E%EF%BC%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E6%9C%89%E5%A5%BD%E6%9C%89%E5%9D%8F%E3%80%82%E5%8F%AF%E9%9D%A0%E5%BA%A6%E5%92%8C%E9%A3%8E%E9%99%A9%E8%87%AA%E8%A1%8C%E8%AF%84%E4%BC%B0%E3%80%82">https://github.com/askme765cs/Wine-QQ-TIM)。许多人是拿深度所做的打包成AppImage。自行在网上搜索一下会有，但别人打包的水平有高有低，兼容性有好有坏。可靠度和风险自行评估。</a></li>
+</ol>
+<h1 id="手动下载wine的各个版本"><a href="#手动下载wine的各个版本" class="headerlink" title="手动下载wine的各个版本"></a>手动下载wine的各个版本</h1><p>wine已经广泛被各个发行版仓库收录了，但有些情况下需要手动下载wine的各种版本：</p>
+<ol>
+<li>发行版提供的wine太旧</li>
+<li>某些东西在旧版本中正常，新版本反而不正常（有时这可以通过调整配置解决，但这也是坑）</li>
+</ol>
+<p>可以下载各个版本的wine的发行版通用二进制的地方：</p>
+<ul>
+<li>为wine用户提供便捷的PlayOnLinux（<a href="https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/">https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/</a> ）</li>
+<li>做Linux游戏主题的Lutris <a href="https://lutris.net/files/runners/">https://lutris.net/files/runners/</a> 有1.7到3.9版本的wine，好像不更新了</li>
+<li>Github上的一个提供portable wine的人Kron4ek <a href="https://github.com/Kron4ek/Wine-Builds/releases">https://github.com/Kron4ek/Wine-Builds/releases</a> 及 <a href="https://github.com/Kron4ek/wine-portable-executable/releases">https://github.com/Kron4ek/wine-portable-executable/releases</a> 可靠程度不明</li>
+</ul>
+<p>经我测试，下载后解包，不要改变目录关系，使用里面的<code>wine</code>二进制即可以，一般是比较portable的。</p>
+<p>下载时注意是32位还是64位的x86。不是根据你的真实cpu位数来，而是根据你需要模拟的Windows位数来。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>wine是坑！能用则用，不能用别留恋。</p>
+<blockquote>
+<p>Copy自：<a href="https://blog.csdn.net/houlangqianxing/article/details/99303657">https://blog.csdn.net/houlangqianxing/article/details/99303657</a></p>
+<p><a href="https://www.cnblogs.com/garyw/p/13468491.html">https://www.cnblogs.com/garyw/p/13468491.html</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>wine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArchLinux 番外之微信&amp;QQ</title>
+    <url>/2020/10/08/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BE%AE%E4%BF%A1&amp;QQ/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>/opt/deepinwine/apps/Deepin-QQ</code> 是启动用的目录；</p>
+<p><code>~/.deepinwine/Deepin-QQ/</code> 是exe程序安装目录。</p>
+<p>重新安装：删除已安装的QQ目录 <code>rm -rf ~/.deepinwine/Deepin-QQ</code>之后，再点击启动器图标即可。</p>
+<h1 id="wine环境配置"><a href="#wine环境配置" class="headerlink" title="wine环境配置"></a>wine环境配置</h1><h2 id="安装wine"><a href="#安装wine" class="headerlink" title="安装wine"></a>安装wine</h2><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S wine</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安装deepin-wine"><a href="#安装deepin-wine" class="headerlink" title="安装deepin-wine"></a>安装deepin-wine</h2><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S deepin-wine</span></span><br></pre></td></tr></table></figure>
+
+<p>注：deepin-wine 包已被移除</p>
+<h2 id="安装deepin-wine5"><a href="#安装deepin-wine5" class="headerlink" title="安装deepin-wine5"></a>安装deepin-wine5</h2><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay</span> -S deepin-wine<span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong></p>
+<p><code>deepin-wine-wechat</code>依赖<code>Multilib</code>仓库中的<code>wine</code>，<code>wine-gecko</code>和<code>wine-mono</code>，Archlinux默认没有开启<code>Multilib</code>仓库，需要编辑<code>/etc/pacman.conf</code>，取消对应行前面的注释(<a href="https://wiki.archlinux.org/index.php/Official_repositories#multilib">Archlinux wiki</a>):</p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta"># If you want to run 32 bit applications on your x86_64 system,</span></span><br><span class="line"><span class="meta"># enable the multilib repositories as required here.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#[multilib-testing]</span></span><br><span class="line"><span class="meta">#Include = /etc/pacman.d/mirrorlist</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="Spark版"><a href="#Spark版" class="headerlink" title="Spark版"></a>Spark版</h1><h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S com.qq.weixin.spark</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">env WINEPREFIX=<span class="string">&quot;$HOME/.deepinwine/Spark-WeChat&quot;</span> <span class="regexp">/usr/</span>bin/deepin-wine5 winecfg</span><br></pre></td></tr></table></figure>
+
+<p>基于 <code>deepin-wine5</code></p>
+<h2 id="TIM"><a href="#TIM" class="headerlink" title="TIM"></a>TIM</h2><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">com</span><span class="selector-class">.qq</span><span class="selector-class">.tim</span><span class="selector-class">.spark</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="微信-1"><a href="#微信-1" class="headerlink" title="微信"></a>微信</h1><h2 id="从AUR安装"><a href="#从AUR安装" class="headerlink" title="从AUR安装"></a>从AUR安装</h2><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S deepin-wine-wechat</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改启动脚本："><a href="#修改启动脚本：" class="headerlink" title="修改启动脚本："></a>修改启动脚本：</h2><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-WeChat/run.sh</span><br></pre></td></tr></table></figure>
+
+<p>将<code>WINE_CMD=&quot;wine&quot;</code>修改成：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">WINE_CMD</span>=<span class="string">&quot;deepin-wine5&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>删除文件夹<code>~/.deepinwine/Deepin-WeChat</code>，重新安装使用。</p>
+<blockquote>
+<p>经实测，在KDE下，微信2.9.5.56版本 完美运行（中文字体、无拖影、内置浏览器等）</p>
+</blockquote>
+<h2 id="另一版本（推荐）："><a href="#另一版本（推荐）：" class="headerlink" title="另一版本（推荐）："></a>另一版本（推荐）：</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S com.qq.tim.spark</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="QQ-amp-TIM"><a href="#QQ-amp-TIM" class="headerlink" title="QQ &amp; TIM"></a>QQ &amp; TIM</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="QQ和TIM有两个版本。"><a href="#QQ和TIM有两个版本。" class="headerlink" title="QQ和TIM有两个版本。"></a>QQ和TIM有两个版本。</h3><p>①<code>deepin-wine-qq</code>，地址：<a href="https://github.com/countstarlight/deepin-wine-qq-arch">https://github.com/countstarlight/deepin-wine-qq-arch</a></p>
+<p>②<code>deepin.com.qq.im</code>，地址：<a href="https://aur.archlinux.org/packages/deepin.com.qq.im/">https://aur.archlinux.org/packages/deepin.com.qq.im/</a></p>
+<h3 id="非-GNOME-桌面需要额外依赖"><a href="#非-GNOME-桌面需要额外依赖" class="headerlink" title="非 GNOME 桌面需要额外依赖"></a>非 GNOME 桌面需要额外依赖</h3><p>需要安装 <code>xsettingsd</code>：</p>
+<p>1.根据 <a href="https://github.com/countstarlight/deepin-wine-wechat-arch/issues/36#issuecomment-612001200">deepin-wine-wechat-arch#36</a>，由<a href="https://github.com/Face-Smile">Face-Smile</a>提供的方法：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S xsettingsd</span></span><br></pre></td></tr></table></figure>
+
+<p>2.根据<a href="https://blog.csdn.net/qq_41050631/article/details/102538649">Bothins</a>提供的方法（更靠谱）：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S gnome-settings-daemon</span></span><br></pre></td></tr></table></figure>
+
+<p>并在 <code>/opt/deepinwine/apps/Deepin-WeChat/run.sh</code> 文件开头插入一行</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">gsd</span>-<span class="title">xsettings</span> &amp;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="中文字体方框解决："><a href="#中文字体方框解决：" class="headerlink" title="中文字体方框解决："></a><strong>中文字体方框解决</strong>：</h3><p>把<code>/usr/share/fonts/wenquanyi/wqy-microhei</code>里的<code>wqy-microhei.ttc</code></p>
+<p>复制到 <code>~/.deepinwine/Deepin-QQ/drive_c/windows/Fonts</code> 文件夹即可。</p>
+<h3 id="更改分辨率-DPI-："><a href="#更改分辨率-DPI-：" class="headerlink" title="更改分辨率(DPI)："></a><strong>更改分辨率(DPI)：</strong></h3><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">env WINEPREFIX=<span class="string">&quot;$HOME/.deepinwine/Deepin-TIM&quot;</span> winecfg</span><br><span class="line">dpi` 改为`100` 或者 `120</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="deepin-wine-qq"><a href="#deepin-wine-qq" class="headerlink" title="deepin-wine-qq"></a>deepin-wine-qq</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>对于<code>deepin-wine-qq</code> ，根据提供的<a href="https://github.com/countstarlight/deepin-wine-qq-arch#%E5%85%BC%E5%AE%B9%E6%80%A7%E8%AE%B0%E5%BD%95">兼容性列表</a>，推荐使用手动安装旧版本。</p>
+<p>旧版<code>deepin-wine-qq-9.3.7.27301-1-x86_64.pkg.tar.zst</code> 的 <a href="https://github.com/countstarlight/deepin-wine-qq-arch/releases/tag/v9.3.7.27301-1">下载地址</a>。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo</span> pacman -U	<span class="comment">#下载的包名</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改启动脚本（可跳过）"><a href="#修改启动脚本（可跳过）" class="headerlink" title="修改启动脚本（可跳过）"></a>修改启动脚本（可跳过）</h3><p>修改 <code>/opt/deepinwine/apps/Deepin-TIM/run.sh</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 更改</span></span><br><span class="line"><span class="string">WINE_CMD=&quot;deepin-wine5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="string">RunApp()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">if</span> [[ <span class="string">-z</span> <span class="string">&quot;$(ps -e | grep -o xsettingsd)&quot;</span> ]]</span><br><span class="line"> 	<span class="string">then</span></span><br><span class="line"> 		<span class="string">/usr/bin/xsettingsd</span> <span class="string">&amp;</span></span><br><span class="line"> 	<span class="string">fi</span></span><br><span class="line"> 		<span class="string">if</span> [ <span class="string">-d</span> <span class="string">&quot;$WINEPREFIX&quot;</span> ]<span class="string">;</span> <span class="string">then</span></span><br><span class="line"> 			<span class="string">UpdateApp</span></span><br><span class="line"> 		<span class="string">else</span></span><br><span class="line"> 			<span class="string">DeployApp</span></span><br><span class="line"> 		<span class="string">fi</span></span><br><span class="line"> 		<span class="string">CallApp</span> <span class="string">$1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="deepin-com-qq-im（推荐）"><a href="#deepin-com-qq-im（推荐）" class="headerlink" title="deepin.com.qq.im（推荐）"></a>deepin.com.qq.im（推荐）</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.im</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置说明"><a href="#2-配置说明" class="headerlink" title="2.配置说明"></a>2.配置说明</h3><p><strong>理论上也可以修改启动脚本</strong>：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-QQ/run.sh</span><br></pre></td></tr></table></figure>
+
+<p>但是这个<code>run.sh</code>文件貌似引用的<code>/opt/deepinwine/tools/run_v2.sh</code>，所以修改后者为<code>deepin-wine5</code>理论上可行。只是经实测，无需修改即可正常运行。</p>
+<h3 id="3-本机编译安装方法"><a href="#3-本机编译安装方法" class="headerlink" title="3.本机编译安装方法"></a>3.本机编译安装方法</h3><p><a href="https://aur.archlinux.org/packages/deepin.com.qq.im/">AUR – deepin.com.qq.im</a> 提供了 Deepin-QQ 安装脚本</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/Software/AUR</span><br><span class="line">git clone http<span class="variable">s:</span>//aur.archlinux.org/deepin.<span class="keyword">com</span>.qq.<span class="keyword">im</span>.git</span><br><span class="line"><span class="keyword">cd</span> deepin.<span class="keyword">com</span>.qq.<span class="keyword">im</span></span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a href="https://www.limstash.com/articles/202004/1591">https://www.limstash.com/articles/202004/1591</a></p>
+</blockquote>
+<blockquote>
+<p>确保系统已安装<code>linux-headers</code> 和 <code>base-devel</code></p>
+</blockquote>
+<h2 id="TIM-1"><a href="#TIM-1" class="headerlink" title="TIM"></a>TIM</h2><p>与<code>deepin.com.qq.im</code>的安装完全类似。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.office</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>手动安装 TIM：</strong></p>
+<p><a href="https://aur.archlinux.org/packages/deepin.com.qq.office/">AUR – deepin.com.qq.office</a> 提供了 Deepin-TIM 安装脚本</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/Software/AUR</span><br><span class="line">git clone http<span class="variable">s:</span>//aur.archlinux.org/deepin.<span class="keyword">com</span>.qq.office.git</span><br><span class="line"><span class="keyword">cd</span> deepin.<span class="keyword">com</span>.qq.office</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
+
+<h1 id="中文字体方框"><a href="#中文字体方框" class="headerlink" title="中文字体方框"></a>中文字体方框</h1><p>把<code>/usr/share/fonts/wenquanyi/wqy-microhei</code>里的<code>wqy-microhei.ttc</code></p>
+<p>复制到 <code>~/.deepinwine/Deepin-QQ/drive_c/windows/Fonts</code> 文件夹即可。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>一些参考链接：</p>
+<p><a href="https://blog.csdn.net/qq_41050631/article/details/102538649">https://blog.csdn.net/qq_41050631/article/details/102538649</a></p>
+<p><a href="https://blog.csdn.net/qq_33831360/article/details/90615494">https://blog.csdn.net/qq_33831360/article/details/90615494</a></p>
+<p><a href="https://www.bilibili.com/video/BV12p4y1i7XJ">https://www.bilibili.com/video/BV12p4y1i7XJ</a></p>
+<p><a href="https://blog.csdn.net/qq_33831360/article/details/90615494">解决manjaro-kde下deepin-wine qq/wechat字体发虚问题_REWINE-CSDN博客</a></p>
+]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArchLinux 的灵魂 - PKGBUILD</title>
+    <url>/2020/11/23/ArchLinux-%E7%9A%84%E7%81%B5%E9%AD%82-PKGBUILD/</url>
+    <content><![CDATA[<p>这学期开始真正使用 Archlinux ，由于最近AUR移除了deepin-wine这个包，对我安装QQ&amp;WeChat造成了些许困扰，因此不得不真正研究一下PKGBUILD。</p>
+<p>首先声明一下，这文章大部分是抄的，再加上自己的理解与修改，形成此文。来源已标明。</p>
+<a id="more"></a>
+
+<h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><p><a href="https://wiki.archlinux.org/index.php/PKGBUILD_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">PKGBUILD（简体中文）</a></p>
+<p><a href="https://linuxtoy.org/archives/archlinux-pkgbuild-aur-and-abs.html">Archlinux 的灵魂──PKGBUILD、AUR 和 ABS（一）</a></p>
+<p><a href="https://linuxtoy.org/archives/archlinux-pkgbuild-aur-and-abs-2.html">Archlinux 的灵魂──PKGBUILD、AUR 和 ABS（二）</a></p>
+<h1 id="PKGBUILD"><a href="#PKGBUILD" class="headerlink" title="PKGBUILD"></a>PKGBUILD</h1><p><a href="https://wiki.archlinux.org/index.php/PKGBUILD">https://wiki.archlinux.org/index.php/PKGBUILD</a></p>
+<h2 id="第一部分：Linux如何安装软件（包）"><a href="#第一部分：Linux如何安装软件（包）" class="headerlink" title="第一部分：Linux如何安装软件（包）"></a>第一部分：Linux如何安装软件（包）</h2><p>其实，各种 Linux 发行版在本质上没有什么不一样。大家使用的软件都是要<strong>从源代码编译生成可以运行的二进制码</strong>。如果没有 rpm、apt-get 或者 pacman，我们也是可以快乐生活的。只不过，我们的生活会变得麻烦一些。如果要从源码安装一个软件，我们通常是要做如下的步骤：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">wget http://somewhere.org/<span class="built_in">source</span>/package.tar.gz	<span class="comment"># 下载源代码</span></span><br><span class="line">tar xvzf package.tar.gz 	<span class="comment"># 解压缩</span></span><br><span class="line"><span class="built_in">cd</span> package 					<span class="comment"># 进入源代码目录 </span></span><br><span class="line">./configure 	<span class="comment"># 设定 </span></span><br><span class="line">make			<span class="comment"># 编译 </span></span><br><span class="line">make install 	<span class="comment"># 安装</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们要像这样安装一个两个软件是没有什么问题的。但是如果我们要对付成百上千的软件/类库的话，这样的土办法是行不通的。</p>
+<p>不同的 Linux 发行版之间的区别只是在于如何管理成百上千的软件，特别是不同软件/类库之间互相依存的关系，也就是 dependency 的问题。这其中又分 Redhat（还有 SUSE、Fedora 等）、Debian（还有 Ubuntu、PCLinux 等）和 Slackware 阵营。</p>
+<p>为了解决管理大量软件包的问题，这些发行版采取了这样一个办法。他们找了一群大牛程序员来作 <strong>Maintainer</strong>，这些 Maintainer 负责把源代码编译成二进制码，加上一些控制信息（比如如何安装、dependency 等），然后一起打包放在服务器上。所以，最终用户根本不用接触源代码。如果你有兴趣的话，你可以抓一个 Debian 的 DEB 文件下来研究一下：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">wget http://somewhare.org/package.deb</span><br><span class="line">ar vx package.deb</span><br></pre></td></tr></table></figure>
+
+<p>你会发现你多了三个文件：<br><code>debian-binary</code>、<code>control.tar.gz</code>、<code>data.tar.gz</code></p>
+<p>然后再用 <code>tar tzvf</code> 命令看一看 control.tar.gz 和 data.tar.gz 里面有什么东东，你就明白神奇的 dpkg/apt-get 是怎么一回事情了。</p>
+<p>二进制包固然是很方便，但是这种办法有一个很大的问题。那就是最终用户受到 Maintainer 很大的控制。比如说，我们并不知道 Maintainer 在编译的过程中是如何设定的（./configure）。如果我们要用不同的设定，就要自己从源代码从头开始。另外，如果某一个 Maintainer 心术不正，在二进制包里面加了木马程序（最简单的比如：<code>rm -rf /home</code>，你就完蛋了，所以慎用<code>sudo</code>），我们这些最终用户是很难查觉的。还有，设想一下如果某一个 Maintainer 外出休假了，那么你的软件也就不能及时更新了。</p>
+<h2 id="第二部分：PKGBUILD-和-makepkg"><a href="#第二部分：PKGBUILD-和-makepkg" class="headerlink" title="第二部分：PKGBUILD 和 makepkg"></a>第二部分：PKGBUILD 和 makepkg</h2><p><strong>Archlinux 如何解决从源代码到二进制码的问题呢？</strong></p>
+<p>Archlinux 使用了 makepkg 这样一个工具。makepkg 会按照 PKGBUILD 文件生成一个二进制包。有些时候，makepkg 还需要 install 文件（主要用来显示提示信息、备份用户设置等）和其他的配置文件。</p>
+<p>那么 PKGBUILD 是什么呢？PKGBUILD 包含了安装使用一个软件需要的所有信息（从哪里下载源代码、如何编译、如何安装还有 Dependency 的问题等）。之后，按照 PKGBUILD 文件的指示编译、安装一个软件。</p>
+<p>这样做的好处是，用户可以一目了然地了解每一个软件的编译、安装的过程。如果需要的话，用户可以修改 PKGBUILD ，按照自己的需要编译一个软件。</p>
+<p>下面是 dwm（一个非常非常简捷、高效的窗口管理器）的 PKGBUILD 文件：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Contributor: Dag Odenhall &lt;dag.odenhall@gmail.com&gt;</span></span><br><span class="line"><span class="comment"># Contributor: Grigorios Bouzakis &lt;grbzks@gmail.com&gt; # 是谁写了这个 PKGBUILD</span></span><br><span class="line">pkgname=dwm 		<span class="comment"># 软件名称</span></span><br><span class="line">pkgver=4.7                                  </span><br><span class="line">pkgrel=1 			<span class="comment"># 版本信息</span></span><br><span class="line">pkgdesc=<span class="string">&quot;A dynamic window manager for X&quot;</span>            </span><br><span class="line">url=<span class="string">&quot;http://www.suckless.org/wiki/dwm&quot;</span> 		<span class="comment"># 软件说明和网站</span></span><br><span class="line">arch=(<span class="string">&#x27;i686&#x27;</span> <span class="string">&#x27;x86_64&#x27;</span>) 				<span class="comment"># 适用平台</span></span><br><span class="line">license=(<span class="string">&#x27;MIT&#x27;</span>) 					<span class="comment"># 版权</span></span><br><span class="line">depends=(<span class="string">&#x27;libx11&#x27;</span>) 					<span class="comment"># Dependency  </span></span><br><span class="line">install=dwm.install install 		<span class="comment"># 文件</span></span><br><span class="line"><span class="built_in">source</span>=(http://www.suckless.org/download/<span class="variable">$pkgname</span>-<span class="variable">$pkgver</span>.tar.gz   </span><br><span class="line">   config.h) 						<span class="comment"># 要下载的源文件</span></span><br><span class="line">md5sums=(<span class="string">&#x27;827b128514a3edb87e208e84fee0eb3f&#x27;</span></span><br><span class="line">         <span class="string">&#x27;395e9a25f65605c4891e74c644b91530&#x27;</span>) 	<span class="comment"># md5 验证码</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">build</span></span>() &#123;										<span class="comment"># 编译的过程</span></span><br><span class="line">  <span class="built_in">cd</span> <span class="variable">$startdir</span>/src/<span class="variable">$pkgname</span>-<span class="variable">$pkgver</span></span><br><span class="line"></span><br><span class="line">  cp ../config.h .</span><br><span class="line"></span><br><span class="line">  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 || <span class="built_in">return</span> 1</span><br><span class="line">  make PREFIX=/usr DESTDIR=<span class="variable">$startdir</span>/pkg install || <span class="built_in">return</span> 1</span><br><span class="line"></span><br><span class="line">  install -m644 -D LICENSE <span class="variable">$startdir</span>/pkg/usr/share/licenses/<span class="variable">$pkgname</span>/LICENSE &amp;&amp; install -m644 -D README <span class="variable">$startdir</span>/pkg/usr/share/doc/<span class="variable">$pkgname</span>/README</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>在<code>build()</code>部分，很多代码都和我们在 shell 里编译的命令一样。</p>
+<p>好，我们把 <code>PKGBUILD</code>，<code>dwm.install</code> 和 <code>config.h</code>（dwm 比较特殊，config.h 包含所有的配置信息，所以要在编译之前提供。其他的软件大多依靠外部的配置文件，像是 .bashrc 等）放在一个新的目录里之后。我们执行：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">makepkg</span><br></pre></td></tr></table></figure>
+
+<p>之后，你会发现这个目录里出现了一些新的东西，包括：<br><code>dwm-4.7-1-x86_64.pkg.tar.gz dwm-4.7.tar.gz</code>，还有<code>src</code> 、<code>pkg</code>两个目录</p>
+<p>通过比较这些文件、目录里的内容和 PKGBUILD，你就会明白 makepkg 到底做了些什么：</p>
+<ol>
+<li>根据 source 里的内容下载了源代码文件 dwm-4.7.tar.gz；</li>
+<li>通过 md5 <strong>验证</strong>码确定下载的源代码文件和 PKGBUILD 的作者使用的是一致的；</li>
+<li>把源代码文件<strong>解压缩</strong>到 ./src/$pkgname-$pkgver （也就是 ./src/dwm-4.7）；</li>
+<li>按照 build() 里的内容<strong>编译</strong>源代码，并把编译好的内容放在 ./pkg 里；</li>
+<li>在 ./pkg 里加上其他的一些信息，包括 .PKGINFO 和 .INSTALL，也就是 dwm.install 的拷贝；</li>
+<li>把 ./pkg 里面的内容<strong>打包</strong>形成 dwm-4.7-1-x86_64.pkg.tar.gz。</li>
+</ol>
+<p>那么，我们有了一个 .pkg.tar.gz 这样一个二进制包之后，我们要如何安装呢？我们要使用这样一个命令：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">pacman -U dwm-4.7-1-x86_64.pkg.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>这个命令又完成了那些事情呢？</p>
+<ol>
+<li>首先，二进制包被解压缩；</li>
+<li>按照 .INSTALL 的内容执行一定的命令；</li>
+<li>二进制包里面的内容会被拷贝到相应的目录（你注意到二进制包内的目录结构了吗？）；</li>
+<li>在 /var/lib/pacman/local 这个目录中建立 dwm-4.7-1 这样一个目录，包含了四个文件 depends、desc、files 和 install;</li>
+<li>这个目录里depends 记录了 dependency，desc 是软件说明，files 记录了每一个安装到系统上的文件的路径，install 就是 .INSTALL 的拷贝。</li>
+</ol>
+<p>从这以后，pacman 正是通过检查 /var/lib/pacman/local 里的内容来管理软件包的。比如说，在执行 <code>pacman -R dwm</code> 的过程中，pacman 首先在 /var/lib/pacman/local 找到了 dwm-4.7-1 这个目录，然后根据 files 的内容删除已安装的内容。Dependency 也是通过 depends 计算的。</p>
+<p>OK！我已经解释了 PKGBUILD 的基本结构和 makepkg 的过程。基本上是两步：从 PKGBUILD 到 .pkg.tar.gz 包，再从二进制包安装到系统。</p>
+<p>这个不得了，十几年前的Arch博文了：<br>“打造完美的Linux桌面”：<a href="https://i.linuxtoy.org/files/pdf/ArchlinuxGuide.pdf">https://i.linuxtoy.org/files/pdf/ArchlinuxGuide.pdf</a></p>
+<h1 id="以安装deepin-wine与QQ为例"><a href="#以安装deepin-wine与QQ为例" class="headerlink" title="以安装deepin-wine与QQ为例"></a>以安装deepin-wine与QQ为例</h1><p>我们可以从AUR里克隆下来PKGBUILD：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://aur.archlinux.org/deepin-wine		<span class="comment"># 前提没有被移除</span></span><br></pre></td></tr></table></figure>
+
+<p>进入这个文件夹，其中仅有一个文件——<code>PKGBUILD</code></p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Maintainer: wszqkzqk &lt;wszqkzqk@gmail.com&gt;</span></span><br><span class="line"><span class="comment"># Maintainer: Skywol &lt;skywol@qq.com&gt;</span></span><br><span class="line"><span class="comment"># Maintainer: luosoy &lt;249799588@qq.com&gt;			# 软件包的维护者（们）</span></span><br><span class="line"></span><br><span class="line">pkgname=deepin-wine		<span class="comment"># 名字</span></span><br><span class="line">pkgvers=2.18-24~rc3		<span class="comment"># 版本（作为变量）</span></span><br><span class="line">pkgver=2.18_24			<span class="comment"># 版本</span></span><br><span class="line">pkgrel=3</span><br><span class="line">epoch=</span><br><span class="line">pkgdesc=<span class="string">&quot;Deepin Wine&quot;</span>	<span class="comment"># 软件包的描述</span></span><br><span class="line">arch=(<span class="string">&#x27;i686&#x27;</span> <span class="string">&#x27;x86_64&#x27;</span>)</span><br><span class="line">url=<span class="string">&quot;http://www.deepin.org&quot;</span>	<span class="comment"># 软件网址（版权？）</span></span><br><span class="line">license=(<span class="string">&#x27;Proprietary&#x27;</span>)		<span class="comment"># 证书</span></span><br><span class="line">groups=()					<span class="comment"># 属于哪个“组”，比如 gnome-extra，包含许多软件</span></span><br><span class="line">depends=(<span class="string">&#x27;deepin-wine32&#x27;</span> <span class="string">&#x27;deepin-wine32-preloader&#x27;</span> <span class="string">&#x27;deepin-wine32-tools&#x27;</span>  <span class="string">&#x27;deepin-wine-binfmt&#x27;</span> <span class="string">&#x27;deepin-wine-helper&#x27;</span> <span class="string">&#x27;deepin-fonts-wine&#x27;</span> <span class="string">&#x27;deepin-libwine&#x27;</span> <span class="string">&#x27;deepin-wine-uninstaller&#x27;</span> <span class="string">&#x27;deepin-udis86&#x27;</span> <span class="string">&#x27;lib32-gettext&#x27;</span> <span class="string">&#x27;lib32-libxcursor&#x27;</span> <span class="string">&#x27;lib32-fontconfig&#x27;</span>  <span class="string">&#x27;lib32-mesa&#x27;</span> <span class="string">&#x27;lib32-lcms2&#x27;</span> <span class="string">&#x27;lib32-libjpeg6&#x27;</span> <span class="string">&#x27;lib32-libpulse&#x27;</span> <span class="string">&#x27;lib32-alsa-plugins&#x27;</span> <span class="string">&#x27;lib32-libxml2&#x27;</span> <span class="string">&#x27;lib32-libxrandr&#x27;</span>  <span class="string">&#x27;lib32-libxi&#x27;</span>  <span class="string">&#x27;lib32-glu&#x27;</span>  <span class="string">&#x27;lib32-libldap&#x27;</span> <span class="string">&#x27;p7zip&#x27;</span>)		<span class="comment"># 依赖</span></span><br><span class="line">makedepends=(<span class="string">&#x27;tar&#x27;</span>)		<span class="comment"># 编译所需依赖？</span></span><br><span class="line">checkdepends=()</span><br><span class="line">optdepends=(<span class="string">&#x27;lib32-freetype2-infinality-ultimate: for better deepin-wine fonts performance&#x27;</span>)</span><br><span class="line">provides=()</span><br><span class="line">conflicts=()</span><br><span class="line">replaces=()</span><br><span class="line">backup=()</span><br><span class="line">options=()</span><br><span class="line">install=				<span class="comment"># 应该是 .install 文件</span></span><br><span class="line">changelog=</span><br><span class="line"><span class="built_in">source</span>=(<span class="string">&quot;https://community-packages.deepin.com/deepin/pool/main/d/<span class="variable">$&#123;pkgname&#125;</span>/<span class="variable">$&#123;pkgname&#125;</span>_<span class="variable">$&#123;pkgvers&#125;</span>_all.deb&quot;</span>)	<span class="comment"># 所需安装包，这里是 `deepin-wine_版本_all.deb`，deb格式的安装包待研究</span></span><br><span class="line">noextract=(<span class="string">&quot;<span class="variable">$&#123;pkgname&#125;</span>_<span class="variable">$&#123;pkgvers&#125;</span>_all.deb&quot;</span>)		<span class="comment"># 暂未知</span></span><br><span class="line">md5sums=(<span class="string">&#x27;b3b3161ebe73dc1c90334dec26d0eeb3&#x27;</span>)	<span class="comment"># 验证</span></span><br><span class="line">validpgpkeys=()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">prepare</span></span>() &#123;	</span><br><span class="line">	ar -x <span class="variable">$&#123;pkgname&#125;</span>_<span class="variable">$&#123;pkgvers&#125;</span>_all.deb		<span class="comment"># 解deb包，会出现 data.tar.xz</span></span><br><span class="line">	mkdir <span class="variable">$&#123;pkgname&#125;</span>-<span class="variable">$&#123;pkgvers&#125;</span>		</span><br><span class="line">	tar -xf data.tar.xz --directory=<span class="string">&quot;<span class="variable">$&#123;pkgname&#125;</span>-<span class="variable">$&#123;pkgvers&#125;</span>&quot;</span>	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">package</span></span>() &#123;</span><br><span class="line">	<span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$&#123;pkgname&#125;</span>-<span class="variable">$&#123;pkgvers&#125;</span>&quot;</span></span><br><span class="line">	cp ./lib ./usr/ -rf			<span class="comment"># 把lib文件夹复制到/usr</span></span><br><span class="line">	rm ./lib -rf</span><br><span class="line">	cp -r ./ <span class="variable">$&#123;pkgdir&#125;</span>/			<span class="comment"># $&#123;pkgdir&#125;——不知道干嘛的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 缺少 build() 函数，应该是有了deb，就无需编译，只需从deb提取出二进制包重新打包</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="研究deb包"><a href="#研究deb包" class="headerlink" title="研究deb包"></a>研究deb包</h1><p><a href="https://blog.csdn.net/qq_32760901/article/details/93305488">https://blog.csdn.net/qq_32760901/article/details/93305488</a></p>
+<p>deb其实是一个ar档，所以使用ar解压。</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">ar vx xxxx.deb</span><br></pre></td></tr></table></figure>
+
+<p>deb 包本身有三部分组成：</p>
+<p>​    数据包（包含实际安装的程序数据，文件名为 <code>data.tar.XXX</code>）、</p>
+<p>​    安装信息及控制脚本包（包含 deb 的安装说明， 标识，脚本等，文件名为 <code>control.tar.gz</code>）、</p>
+<p>​    最后是 deb 文件的一些二进制数据（包括文件头等信息，一般看不到，在某些软件中打开可以看到）</p>
+<p>control.tar.gz 包含了一个 deb 安装的时候所需要的控制信息。</p>
+<p>一般有 5 个文件：</p>
+<p>​    control，用了记录软件标识，版本号，平 台，依赖信息等数据；</p>
+<p>​    preinst，在解包 data.tar.gz 前运行的脚本；</p>
+<p>​    postinst，在解包数据后运行的脚本；</p>
+<p>​    prerm，卸载时， 在删除文件之前运行的脚本；</p>
+<p>​    postrm，在删除文件之后运行的脚本。</p>
+<p>![2020-12-19 22-30-29 的屏幕截图](/home/jwpan/Pictures/2020-12-19 22-30-29 的屏幕截图.png)</p>
+<h2 id="解压control-tar-xz"><a href="#解压control-tar-xz" class="headerlink" title="解压control.tar.xz"></a>解压<code>control.tar.xz</code></h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">tar -Jxvf control.tar.xz</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 出现</span></span><br><span class="line">./control</span><br><span class="line">./md5sums</span><br></pre></td></tr></table></figure>
+
+<p><code>control</code>文件（记录软件标识，版本号，平 台，依赖信息等数据）：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">Package: deepin-wine</span><br><span class="line">Version: 2.18-12</span><br><span class="line">Architecture: all</span><br><span class="line">Maintainer: Debian Wine Party &lt;pkg-wine-party@lists.alioth.debian.org&gt;</span><br><span class="line">Installed-Size: 131</span><br><span class="line">Depends: deepin-wine64 (&gt;= 2.18-12) | deepin-wine32 (&gt;= 2.18-12), deepin-wine64 (&lt;&lt; 2.18-12.1~) | deepin-wine32 (&lt;&lt; 2.18-12.1~), libjpeg-turbo8:i386 | libjpeg62:i386</span><br><span class="line">Suggests: deepin-wine-binfmt, dosbox (&gt;= 0.74-4.2~)</span><br><span class="line">Built-Using: khronos-api (= 0~svn29735-1.1), unicode-data (= 9.0-1)</span><br><span class="line">Section: otherosfs</span><br><span class="line">Priority: optional</span><br><span class="line">Multi-Arch: foreign</span><br><span class="line">Homepage: http://www.winehq.org/</span><br><span class="line">Description: Windows API implementation - standard suite</span><br><span class="line"> Wine is a free MS-Windows API implementation.</span><br><span class="line"> This is still a work <span class="keyword">in</span> progress and many applications may still not work.</span><br><span class="line"> .</span><br><span class="line"> This package provides convenience tools <span class="keyword">for</span> the standard Wine components.</span><br></pre></td></tr></table></figure>
+
+<p><code>md5sums</code>（记录每个文件md5值）</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">5c82d4f02c2e9dfdc88cd2ac36d42d95  lib/udev/rules.d/ukeys.rules</span><br><span class="line">dae6d6f23e70a83ca249caf6bd379b60  usr/bin/deepin-wine</span><br><span class="line">64d0727f144ecb8a8662cdbfe9753491  usr/lib/deepin-wine/wineapploader</span><br><span class="line">0968ea0d39ccaddd2febb0d9e143abe2  usr/share/bug/deepin-wine/control</span><br><span class="line">615e80bb4c4f9bddb5003dac588c5476  usr/share/doc/deepin-wine/README.Debian</span><br><span class="line">f65e2155d3f30712a529a19687f9c059  usr/share/doc/deepin-wine/README.winedbg.gz</span><br><span class="line">ee9ca81d39a985fcb76ee80c14068826  usr/share/doc/deepin-wine/TODO.Debian</span><br><span class="line">fdf9aa97154cd8df38bf4e1ace6ae0d5  usr/share/doc/deepin-wine/changelog.Debian.gz</span><br><span class="line">eb7c252e870dbb4334d38644f1b07463  usr/share/doc/deepin-wine/changelog.gz</span><br><span class="line">b5ff054c53edb3bb9ebf7bc718d69692  usr/share/doc/deepin-wine/copyright</span><br><span class="line">7be430d537356c9e25b377d1de6af784  usr/share/man/man1/deepin-msiexec.1.gz</span><br><span class="line">f3f554a208aecf6daee7ee4a461cd94e  usr/share/man/man1/deepin-regedit.1.gz</span><br><span class="line">0f882db8289dd17889a50844b2a328f4  usr/share/man/man1/deepin-regsvr32.1.gz</span><br><span class="line">03e41ee1cddf4e3ecced93dc92ef25cb  usr/share/man/man1/deepin-wine.1.gz</span><br><span class="line">43c53db41e841bed2c3ad55d56530c8b  usr/share/man/man1/deepin-wineboot.1.gz</span><br><span class="line">412431d7ad64e663b631c61c7f132422  usr/share/man/man1/deepin-winecfg.1.gz</span><br><span class="line">df58b8d4701702b157d20db93b7dc729  usr/share/man/man1/deepin-wineconsole.1.gz</span><br><span class="line">5401af5224eb3db170e4ab4881b50d61  usr/share/man/man1/deepin-winedbg.1.gz</span><br><span class="line">60ead946a5c164c3085050bb32e3dde3  usr/share/man/man1/deepin-winefile.1.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="解压data-tar-xz（程序二进制包）"><a href="#解压data-tar-xz（程序二进制包）" class="headerlink" title="解压data.tar.xz（程序二进制包）"></a>解压<code>data.tar.xz</code>（程序二进制包）</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">tar -Jxvf data.tar.xz   </span><br></pre></td></tr></table></figure>
+
+<p>出现 lib 和 usr 两个文件夹</p>
+<p>应该是说，这两个文件夹在安装的时候就全部复制到系统对应目录</p>
+<p>比如 /usr/bin 就复制到 系统 /usr/bin</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">➜  deepin-wine git:(master) ✗ ls usr/bin/                          </span><br><span class="line">deepin-msiexec   deepin-wine      deepin-wineconsole</span><br><span class="line">deepin-regedit   deepin-wineboot  deepin-winedbg</span><br><span class="line">deepin-regsvr32  deepin-winecfg   deepin-winefile</span><br><span class="line"></span><br><span class="line">➜  deepin-wine git:(master) ✗ ls /usr/bin/ | grep deepin-wine</span><br><span class="line">deepin-wine</span><br><span class="line">deepin-wine5</span><br><span class="line">deepin-wine5gcc32</span><br><span class="line">deepin-wineboot</span><br><span class="line">deepin-winecfg</span><br><span class="line">deepin-wineconsole</span><br><span class="line">deepin-winedbg</span><br><span class="line">deepin-winefile</span><br><span class="line">deepin-winegcc32</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Arch安装RPM包"><a href="#Arch安装RPM包" class="headerlink" title="Arch安装RPM包"></a>Arch安装RPM包</h1><p><a href="https://linux265.com/news/2827.html">https://linux265.com/news/2827.html</a></p>
+<p><a href="https://eisenhao.cn/2018/09/30/howToConvert.rpmPackagesIntoArchPackages/">https://eisenhao.cn/2018/09/30/howToConvert.rpmPackagesIntoArchPackages/</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Ubuntu 新系统安装配置（草稿）</title>
+    <url>/2020/10/17/Ubuntu-%E6%96%B0%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%EF%BC%88%E8%8D%89%E7%A8%BF%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="1-更换软件源"><a href="#1-更换软件源" class="headerlink" title="1.更换软件源"></a>1.更换软件源</h2><p>链接：<a href="https://www.jianshu.com/p/eb9bd6142c71">https://www.jianshu.com/p/eb9bd6142c71</a></p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo cp <span class="regexp">/etc/</span>apt<span class="regexp">/sources.list /</span>etc<span class="regexp">/apt/</span>sources.list.bak</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>阿里源：</p>
+<pre><code>deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse</code></pre>
+<h2 id="2-语言支持不完善（安装系统断网）"><a href="#2-语言支持不完善（安装系统断网）" class="headerlink" title="2.语言支持不完善（安装系统断网）"></a>2.语言支持不完善（安装系统断网）</h2><p>提示缺少：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">fonts-arphic-uming</span><br><span class="line">libreoffice-<span class="keyword">help</span>-<span class="keyword">en</span>-gb</span><br><span class="line"><span class="keyword">language</span>-pack-gnome-zh-hans</span><br><span class="line">firefox-locale-zh-hans</span><br><span class="line">libreoffice-l10n-zh-<span class="keyword">cn</span></span><br><span class="line">libreoffice-l10n-<span class="keyword">en</span>-za</span><br><span class="line">hunspell-<span class="keyword">en</span>-<span class="keyword">ca</span></span><br><span class="line">mythes-<span class="keyword">en</span>-<span class="keyword">au</span></span><br><span class="line">hunspell-<span class="keyword">en</span>-<span class="keyword">au</span></span><br><span class="line"><span class="keyword">language</span>-pack-zh-hans</span><br><span class="line">wbritish</span><br><span class="line">hunspell-<span class="keyword">en</span>-za</span><br><span class="line">libreoffice-l10n-<span class="keyword">en</span>-gb</span><br><span class="line">hyphen-<span class="keyword">en</span>-gb</span><br><span class="line">fonts-arphic-ukai</span><br><span class="line">libreoffice-<span class="keyword">help</span>-zh-<span class="keyword">cn</span></span><br><span class="line">hunspell-<span class="keyword">en</span>-gb</span><br></pre></td></tr></table></figure>
+
+<p>先卸载<code>LibreOffice</code><br><a href="https://blog.51cto.com/168360/2407085?source=dra">https://blog.51cto.com/168360/2407085?source=dra</a></p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> <span class="builtin-name">remove</span> &lt;package name&gt; &amp;&amp; sudo apt-<span class="builtin-name">get</span> autoremove</span><br></pre></td></tr></table></figure>
+
+<p>直接在语言支持界面安装会失败，提示错误：</p>
+<p><strong>E:无法修正错误,因为您要求某些软件包保持现状,就是它们破坏了软件包间的依赖关系</strong></p>
+<p><strong>解决：</strong><a href="https://my.oschina.net/u/4306257/blog/4336331">https://my.oschina.net/u/4306257/blog/4336331</a><br>1.打开更新设置；<br>2.第一栏<code>“Ubuntu软件”</code>全部勾选（第三方源之类）；<br>3.第三栏<code>“更新”</code>选项卡中选中：<code>重要安全更新</code> 和 <code>推荐更新</code>，取消勾选 <code>提前释放、不支持</code>；</p>
+<p>4.执行<code>sudo apt-get</code> 应该不会报错了。</p>
+<h2 id="3-安装搜狗拼音输入法"><a href="#3-安装搜狗拼音输入法" class="headerlink" title="3.安装搜狗拼音输入法"></a>3.安装搜狗拼音输入法</h2><p>1.官网下载deb包，右键安装，应该是自动安装 fcitx 了。<br>2.终端中输入 <code>im-config</code>，选中 <code>fcitx</code>，点击OK 即可。</p>
+<h2 id="4-安装qv2ray"><a href="#4-安装qv2ray" class="headerlink" title="4.安装qv2ray"></a>4.安装qv2ray</h2><p>链接：<a href="https://www.jianshu.com/p/04edc67ede78">https://www.jianshu.com/p/04edc67ede78</a></p>
+<p>软件中心，搜索 Qv2ray 即可，点击安装；开始可能报错，过一会竟又安装上了。</p>
+<h2 id="5-Budige优化"><a href="#5-Budige优化" class="headerlink" title="5.Budige优化"></a>5.Budige优化</h2><p>Dock用的是Plank 0.11.89，可以添加回收站等，正在运行的应用下面的小点也很像，但是貌似没有Launcher。</p>
+<p>主题可以搜索打开Budige Themes &amp; Layouts，里面有Mojave的主题，还可以。（或者Gnome-Look看能否下载）</p>
+<p>文件管理器用的是</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nemo  4.4.2-2  amd64   File manager and graphical shell <span class="keyword">for</span> Cinnamon</span><br><span class="line">nemo-data 4.4.2-2 all File manager and graphical shell <span class="keyword">for</span> Cinnamon (data files)</span><br><span class="line">nemo-fileroller 4.4.0-2 amd64 File Roller integration <span class="keyword">for</span> Nemo</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>将Gnome桌面捏成我喜欢的形状</title>
+    <url>/2020/10/01/%E5%B0%86Gnome%E6%A1%8C%E9%9D%A2%E6%8D%8F%E6%88%90%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%E5%BD%A2%E7%8A%B6/</url>
+    <content><![CDATA[<p><img src="https://s3.ax1x.com/2020/11/26/D0r2dK.jpg" alt="img"></p>
+<h2 id="安装Gnome桌面"><a href="#安装Gnome桌面" class="headerlink" title="安装Gnome桌面"></a>安装Gnome桌面</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S xorg xorg-server xorg-xinit</span></span><br><span class="line"></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S gnome</span></span><br><span class="line"></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S gdm </span></span><br><span class="line"></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl enable gdm.service</span></span><br><span class="line"><span class="comment"># 安装必备工具，以防进入系统什么都没有</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S tilix nano</span></span><br></pre></td></tr></table></figure>
+
+<p>开机启动<code>gdm</code>后黑屏，死活不显示桌面，通过安装NVIDIA显卡驱动解决：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S nvidia</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在Gnome桌面添加图标"><a href="#在Gnome桌面添加图标" class="headerlink" title="在Gnome桌面添加图标"></a>在Gnome桌面添加图标</h2><p>Gnome 3.28 版本桌面图标无法通过 <code>gnome-tweak-tool</code> 显示；</p>
+<p>Nautilus 3.28 完全移除了桌面图标的显示</p>
+<p><strong>方法1: 使用Nemo作为默认文件管理器（推荐）</strong></p>
+<p>a) 安装<code>nemo</code></p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo pacman -S nemo</span><br><span class="line"><span class="variable">$ </span>sudo pacman -S cinnamon-translations 			<span class="comment"># 中文语言包</span></span><br></pre></td></tr></table></figure>
+
+<p>b) 添加<code>nemo-desktop</code>自启动</p>
+<p>创建nemo.desktop文件，将文件复制到~/.config/autostart目录下，内容如下：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Name</span>=Desktop Icons</span><br><span class="line"><span class="attr">Exec</span>=nemo-desktop</span><br><span class="line"><span class="attr">OnlyShowIn</span>=GNOME<span class="comment">;</span></span><br><span class="line"><span class="attr">NoDisplay</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">X-GNOME-Autostart-Phase</span>=Desktop</span><br><span class="line"><span class="attr">X-GNOME-Autostart-Notify</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">X-GNOME-AutoRestart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">X-GNOME-Provides</span>=filemanager</span><br></pre></td></tr></table></figure>
+
+<p>c) 显示桌面图标</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">安装完成，设置Nemo作为默认的文件管理器，并让 nemo 处理桌面图标：</span><br><span class="line">xdg-mime<span class="built_in"> default </span>nemo.desktop inode/directory application/x-gnome-saved-search</span><br><span class="line">gsettings <span class="builtin-name">set</span> org.gnome.desktop.background show-desktop-icons <span class="literal">false</span></span><br><span class="line">gsettings <span class="builtin-name">set</span> org.nemo.desktop show-desktop-icons <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line">恢复原来设置：</span><br><span class="line">xdg-mime<span class="built_in"> default </span>nautilus.desktop inode/directory application/x-gnome-saved-search</span><br><span class="line">gsettings <span class="builtin-name">set</span> org.nemo.desktop show-desktop-icons <span class="literal">false</span></span><br><span class="line">gsettings <span class="builtin-name">set</span> org.gnome.desktop.background show-desktop-icons <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">gsettings <span class="builtin-name">set</span> org.nemo.desktop show-desktop-icons <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>d) 注销账户重新登陆</p>
+<blockquote>
+<p>参阅 AUR 和 <a href="https://wiki.archlinux.org/index.php/Nemo#Installation">Nemo - ArchWiki</a> 。</p>
+</blockquote>
+<p><strong>方法2: 安装<code>Desktop Icons NG</code>插件</strong></p>
+<p>地址：<a href="https://extensions.gnome.org/extension/2087/desktop-icons-ng-ding/">https://extensions.gnome.org/extension/2087/desktop-icons-ng-ding/</a></p>
+<p>缺点：没有汉化。</p>
+<h2 id="安装-Gnome-Shell-插件"><a href="#安装-Gnome-Shell-插件" class="headerlink" title="安装 Gnome Shell 插件"></a>安装 Gnome Shell 插件</h2><h3 id="安装gnome-tweaks工具"><a href="#安装gnome-tweaks工具" class="headerlink" title="安装gnome-tweaks工具"></a>安装<code>gnome-tweaks</code>工具</h3><p>注意！注意！注意！</p>
+<p>重要的事情说三遍！</p>
+<p>此处应安装 <code>git</code> 版本的 <code>gnome-tweaks</code>，就可以免于标题栏按钮放到左边后本身出现问题。</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S gnome-tweaks-git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="①在线一键安装（推荐）"><a href="#①在线一键安装（推荐）" class="headerlink" title="①在线一键安装（推荐）"></a>①在线一键安装（推荐）</h3><p>通过安装<code>浏览器插件 + 本地连接器</code>来实现</p>
+<p><strong>步骤 1： 安装 浏览器附加组件</strong></p>
+<ul>
+<li>对于 Google Chrome、Chromium 和 Vivaldi： <a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep">Chrome Web 商店</a></li>
+<li>对于 Firefox： <a href="https://addons.mozilla.org/en/firefox/addon/gnome-shell-integration/">Mozilla Addons</a></li>
+<li>对于 Opera： <a href="https://addons.opera.com/en/extensions/details/gnome-shell-integration/">Opera Addons</a></li>
+</ul>
+<p><strong>步骤 2： 安装本地连接器</strong></p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">sudo pacman -S chrome-gnome-<span class="keyword">shell</span><span class="bash">					<span class="comment"># ArchLinux</span></span></span><br><span class="line">sudo apt install chrome-gnome-<span class="keyword">shell</span><span class="bash">					   <span class="comment"># Ubuntu</span></span></span><br></pre></td></tr></table></figure>
+
+<p>不要担心包名中的 “chrome” 前缀，它与 Chrome 无关，你无需再次安装 Firefox 或 Opera 的单独软件包。</p>
+<h3 id="②手动下载安装"><a href="#②手动下载安装" class="headerlink" title="②手动下载安装"></a>②手动下载安装</h3><ol>
+<li><p>去 GNOME 扩展网站下载最新版本的扩展。</p>
+</li>
+<li><p>解压下载的文件，将该文件夹复制到 <code>~/.local/share/gnome-shell/extensions</code> 目录。</p>
+<blockquote>
+<p>注：按 <code>Ctrl+H</code> 显示隐藏的文件夹</p>
+</blockquote>
+</li>
+<li><p>进入插件文件夹并打开 <code>metadata.json</code> 文件，寻找 <code>uuid</code> 的值。</p>
+</li>
+<li><p>将插件文件夹重命名为 <code>uuid</code> 的值。</p>
+</li>
+<li><p>重新启动 GNOME Shell： 按 <code>Alt+F2</code> 并输入 <code>r</code> 重新启动 GNOME Shell。</p>
+</li>
+<li><p>用<code>GNOME Tweaks Tool</code>管理手动安装的 GNOME 扩展。</p>
+<p>参考：<a href="https://linux.cn/article-9447-1.html">https://linux.cn/article-9447-1.html</a></p>
+</li>
+</ol>
+<p>查看Gnome3版本</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">gnome-<span class="keyword">shell</span><span class="bash"> --version</span></span><br></pre></td></tr></table></figure>
+
+<p>Gnome Shell Extensions 下载网站：<a href="https://extensions.gnome.org/">https://extensions.gnome.org/</a></p>
+<h2 id="真·macOS主题化"><a href="#真·macOS主题化" class="headerlink" title="真·macOS主题化"></a>真·macOS主题化</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">优化` - `外观</span><br></pre></td></tr></table></figure>
+
+<p><code>应用程序</code> <a href="https://www.opendesktop.org/p/1403328">WhiteSur-light</a></p>
+<p><code>光标</code> <a href="https://www.opendesktop.org/p/1355701">McMojave-cursors</a></p>
+<p><code>图标</code> <a href="https://www.opendesktop.org/p/1400021">Mkos-Big-Sur</a></p>
+<p><code>Shell</code> Mojave-dark（顶栏）</p>
+<p><code>声音</code> Default</p>
+<p><code>图像</code> <a href="https://tieba.baidu.com/p/6771579022">BigSur壁纸</a></p>
+<p><code>Plank-Dock</code> <a href="https://www.opendesktop.org/s/Gnome/p/1248226/">全程参考：Mojave</a></p>
+<p>另一类似主题：</p>
+<p><a href="https://www.opendesktop.org/s/Gnome/p/1399398/">https://www.opendesktop.org/s/Gnome/p/1399398/</a></p>
+<p><a href="https://www.opendesktop.org/s/Gnome/p/1408781/">https://www.opendesktop.org/s/Gnome/p/1408781/</a></p>
+<p>1.先安装Plank：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S plank</span></span><br></pre></td></tr></table></figure>
+
+<p>2.再下载Plank主题：<code>Download</code> - <code>mcOS_Mojave_BS_White.zip</code> - <code>解压 </code>- 复制解压出的文件夹到<code>~/.local/share/plank/themes</code>，就可以设置主题了</p>
+<p>3.添加最左端Launcher：<code>Download</code> - 下载第一个<code>Launchpad-ICON-for-Palnk</code> - 复制到<code>~/.local/share/applications</code>，不要关闭文件管理器，直接拖到Dock上即可。</p>
+<h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><h3 id="禁用多个工作区"><a href="#禁用多个工作区" class="headerlink" title="禁用多个工作区"></a>禁用多个工作区</h3><p>优化 - 工作区 - 静态工作区 - 数目从4设置为1</p>
+<h3 id="关闭烦人的左上触发角"><a href="#关闭烦人的左上触发角" class="headerlink" title="关闭烦人的左上触发角"></a>关闭烦人的左上触发角</h3><p><a href="https://www.zmonster.me/2014/07/26/turn-off-hot-corner-in-gnome-shell.html">https://www.zmonster.me/2014/07/26/turn-off-hot-corner-in-gnome-shell.html</a> 无效</p>
+<p>安装这个插件即可，什么都不用设置。</p>
+<p><a href="https://extensions.gnome.org/extension/1362/custom-hot-corners/">https://extensions.gnome.org/extension/1362/custom-hot-corners/</a></p>
+<h3 id="启用系统程序托盘"><a href="#启用系统程序托盘" class="headerlink" title="启用系统程序托盘"></a>启用系统程序托盘</h3><p>效果更好：<a href="https://extensions.gnome.org/extension/2890/tray-icons-reloaded/">https://extensions.gnome.org/extension/2890/tray-icons-reloaded/</a></p>
+<p>安装<code>Topicons Plus</code>插件： <a href="https://extensions.gnome.org/extension/1031/topicons/">https://extensions.gnome.org/extension/1031/topicons/</a></p>
+<p><code>优化</code> 里面设置一下位置右对齐、托盘偏移量调到4</p>
+<h3 id="截屏快捷键设置"><a href="#截屏快捷键设置" class="headerlink" title="截屏快捷键设置"></a>截屏快捷键设置</h3><p>系统设置 - 键盘快捷键 - 已经有<code>截图</code>项 - 自行更改即可</p>
+<blockquote>
+<p>参考：<a href="https://blog.csdn.net/shuaijiasanshao/article/details/51123155">https://blog.csdn.net/shuaijiasanshao/article/details/51123155</a></p>
+</blockquote>
+<h3 id="fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）"><a href="#fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）" class="headerlink" title="fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）"></a>fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）</h3><p><a href="https://blog.csdn.net/weixin_39465823/article/details/85158605">https://blog.csdn.net/weixin_39465823/article/details/85158605</a></p>
+<p>将在<code>xprofile</code>文件里的那三句加入到<code>/etc/environment</code>里面去，即：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/profile</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">GTK_IM_MODULE</span>=fcitx </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">QT_IM_MODULE</span>=fcitx </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">XMODIFIERS</span>=<span class="string">&quot;@im=fcitx&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置缩放"><a href="#设置缩放" class="headerlink" title="设置缩放"></a>设置缩放</h3><p>设置 - 显示器 里面只有100 和 200 的选项，而<code>优化</code> 工具貌似只能放大文字。</p>
+<p>根据网上的说法，Wayland可以恢复<code>1.25</code>、<code>1.50</code>、<code>1.75</code>等值，而X11不行。幸运的是，新版Gnome用的应该都是Wayland，具体可以在登录界面（密码框）右下角设置按钮，默认选择的是<code>Gnome</code>，而不是<code>Gnome on Xorg</code>。</p>
+<p>于是运行命令：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gsettings</span> <span class="selector-tag">set</span> <span class="selector-tag">org</span><span class="selector-class">.gnome</span><span class="selector-class">.mutter</span> <span class="selector-tag">experimental-features</span> &quot;<span class="selector-attr">[<span class="string">&#x27;scale-monitor-framebuffer&#x27;</span>]</span>&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>参考：</strong><a href="https://wiki.archlinux.org/index.php/HiDPI#GNOME">ArchWiki</a>、<a href="https://www.omgubuntu.co.uk/2019/06/enable-fractional-scaling-ubuntu-19-04">论坛-1</a>、<a href="https://askubuntu.com/questions/1029436/enable-fractional-scaling-for-ubuntu-18-04">论坛-2</a></p>
+<p>运行<code>xrandr --output eDP1 --scale 1.25x1.25</code>这种命令极不靠谱（强行缩放，1x1是原始、1.25x1.25是缩小）</p>
+</blockquote>
+<h2 id="附：Anarchy版Gnome桌面（参考）"><a href="#附：Anarchy版Gnome桌面（参考）" class="headerlink" title="附：Anarchy版Gnome桌面（参考）"></a>附：Anarchy版Gnome桌面（参考）</h2><p>Anarchy 用的是 <code>LightDM</code>，但是<code>gdm</code>一样好用（考虑到切换Xorg与Classic）。</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">~ » pacman -Q<span class="string">q | grep xorg-server</span></span><br><span class="line"><span class="string">xorg-server</span></span><br><span class="line"><span class="string">xorg-server-common</span></span><br><span class="line"><span class="string">xorg-server-xwayland</span></span><br><span class="line"><span class="string">~ » pacman -Qq |</span> <span class="keyword">grep</span> xf86                                                        </span><br><span class="line">libxxf86vm</span><br><span class="line">xf86-input-libinput</span><br><span class="line">xf86-video-intel</span><br><span class="line">~ » pacman -Q<span class="string">q | grep vulkan                                                      </span></span><br><span class="line"><span class="string">vulkan-icd-loader</span></span><br><span class="line"><span class="string">~ » pacman -Qq |</span> <span class="keyword">grep</span> gdm                                                          </span><br><span class="line">gdm</span><br><span class="line">libgdm</span><br><span class="line">~ » pacman -Q<span class="string">q | grep gnome-session                                                </span></span><br><span class="line"><span class="string">gnome-session</span></span><br><span class="line"><span class="string">cat ~/.xinitrc</span></span><br><span class="line"><span class="string">exec gnome-session</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+        <tag>Gnome</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将Plasma桌面捏成我喜欢的形状</title>
+    <url>/2020/10/01/%E5%B0%86Plasma%E6%A1%8C%E9%9D%A2%E6%8D%8F%E6%88%90%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%E5%BD%A2%E7%8A%B6/</url>
+    <content><![CDATA[<p><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3743581224,2520410436&fm=26&gp=0.jpg" alt="img"></p>
+<h2 id="1-安装KDE桌面"><a href="#1-安装KDE桌面" class="headerlink" title="1.安装KDE桌面"></a>1.安装KDE桌面</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显卡驱动 &amp; Xorg窗口管理器</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S xf86-video-intel</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S xorg xorg-server</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Plasma桌面 &amp; sddm登录管理器</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S plasma-meta sddm</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl enable sddm</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 中文字体</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S ttf-dejavu wqy-microhei ttf-liberation</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络 &amp; 蓝牙</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S networkmanager</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl enable NetworkManager</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl enable bluetooth</span></span><br><span class="line"></span><br><span class="line"><span class="attr">reboot</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-KDE桌面中文汉化不全"><a href="#2-KDE桌面中文汉化不全" class="headerlink" title="2.KDE桌面中文汉化不全"></a>2.KDE桌面中文汉化不全</h2><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>locale.gen</span><br><span class="line">sudo locale-gen</span><br><span class="line"></span><br><span class="line">sudo echo LANG=en_US.UTF-<span class="number">8</span> &gt; <span class="regexp">/etc/</span>locale.conf</span><br><span class="line">su</span><br><span class="line">locale</span><br><span class="line"></span><br><span class="line"><span class="comment"># 火狐中文包</span></span><br><span class="line">sudo pacman -S firefox-i18n-zh-cn</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://wiki.archlinux.org/index.php/Localization_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Simplified_Chinese_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87_locale"><strong>Localization (简体中文) - ArchWiki</strong></a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">设置 - 区域设置 - 语言: zh_CN</span><br><span class="line"></span><br><span class="line">设置 - 区域设置 - 语言添加简体中文、格式 - 区域 - 选择zh_CN（宁愿多往下翻一会儿，也别选开头的mn_CN）</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-简单配置全局主题"><a href="#3-简单配置全局主题" class="headerlink" title="3.简单配置全局主题"></a>3.简单配置全局主题</h2><p>设置好系统代理，外观-全局主题-在线安装</p>
+<p>暗色主题：<code>Layan</code> 挺好</p>
+<p>仿macOS主题：<code>WhiteSur</code></p>
+<h2 id="4-手动安装主题"><a href="#4-手动安装主题" class="headerlink" title="4.手动安装主题"></a>4.手动安装主题</h2><h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在线商店需要调用的工具</span></span><br><span class="line"><span class="attr">yay</span> <span class="string">-S ocs-url 		</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 一些第三方主题需要的依赖</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S gtk-engine-murrine gtk-engines</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S gnome-settings-daemon</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其它可能需要的依赖</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S --noconfirm breeze fuse devilspie2 kcm-fcitx</span></span><br></pre></td></tr></table></figure>
+
+<p>访问<a href="https://store.kde.org/">在线商店</a> 进行安装。</p>
+<blockquote>
+<p><strong>参考：</strong></p>
+<p><a href="https://www.cnblogs.com/luoshuitianyi/p/10587788.html">https://www.cnblogs.com/luoshuitianyi/p/10587788.html</a></p>
+<p><a href="https://blog.csdn.net/weixin_38627652/article/details/108943439">https://blog.csdn.net/weixin_38627652/article/details/108943439</a></p>
+</blockquote>
+<blockquote>
+<p><strong>附上KDE主题文件地址：</strong></p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">~<span class="regexp">/.local/</span>share<span class="regexp">/plasma/</span>look-and-feel/		<span class="comment"># 全局主题 	   - 无（不要轻易设置）</span></span><br><span class="line">~<span class="regexp">/.local/</span>share<span class="regexp">/plasma/</span>desktoptheme		<span class="comment"># plasma样式 	 - Mojave-CT</span></span><br><span class="line">/设置-应用程序风格-窗口装饰-获取新窗口装饰					<span class="comment"># 窗口装饰	   - WhiteSur_x1.25</span></span><br><span class="line">~<span class="regexp">/.local/</span>share<span class="regexp">/icons/</span>						<span class="comment"># 图标 		 - BigSur</span></span><br><span class="line">~/.icons									<span class="comment"># 光标（指针）  - macOSBigSur</span></span><br><span class="line"></span><br><span class="line">其他：</span><br><span class="line">~<span class="regexp">/.themes/</span>									<span class="comment"># GTK主题</span></span><br><span class="line">~<span class="regexp">/.local/</span>share<span class="regexp">/plasma/</span>plasmoids/ 				<span class="comment"># 插件(网速、时间等)</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="顶栏："><a href="#顶栏：" class="headerlink" title="顶栏："></a>顶栏：</h4><ul>
+<li>首先把原来的面板删掉：点击顶栏 (也许你的在下面) 的设置，然后点击 <code>更多设置</code> -&gt; <code>删除面板</code>。</li>
+<li>新建自己的面板：到桌面上右键，然后点击 <code>添加面板</code> -&gt; <code>应用程序菜单栏</code> 。此刻它在顶上，却看起来空无一物。实际上它已经有一个 <code>全局菜单</code> 的部件了，这个部件会把应用程序的菜单栏显示在顶栏上 ~ 。</li>
+<li>我们点击顶栏的设置，并点击 <code>添加部件</code> ，我们向顶栏添加如下部件，直接用鼠标拖上去就行：<code>应用程序启动器</code>、<code>锁定/注销</code>、<code>系统托盘</code>、<code>数字时钟</code>，视个人情况添加 <code>调度器</code> ，用于查看当前位于哪个工作区。</li>
+<li>然后回到顶栏设置，点击两次 <code>添加间距</code> 添加两个间距，并对其中一个右键，将 <code>设置可变大小</code> 给取消。</li>
+<li>那么部件放好了，我们还需要调整为如下布局：</li>
+<li><img src="https://gitee.com/LuoshuiTianyi/Pictures/raw/master/Blog/Kde-%3EMac/8.jpg" alt="img"></li>
+<li>即 <code>应用程序启动器</code>-<code>全局菜单</code>-<code>间隔</code>-<code>数字时钟</code>-<code>间隔</code>-<code>系统托盘</code>-<code>锁定/注销</code></li>
+<li>其中，两个大间隔分别由两个间距填充，其中右边间距为调整后的那个，我们拉动右边间距，使数字时钟位于正中间即可。</li>
+<li>顶栏必备插件：<ul>
+<li><a href="https://store.kde.org/p/1245902/">第三方时间显示(24小时制)</a>、<a href="https://store.kde.org/p/998895/">网速显示</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="Dock栏："><a href="#Dock栏：" class="headerlink" title="Dock栏："></a>Dock栏：</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">sudo</span> <span class="string">pacman</span> <span class="string">-S</span> <span class="string">latte-dock</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置</span></span><br><span class="line"><span class="number">1</span><span class="string">.调整适当大小、关闭放大效果</span></span><br><span class="line"><span class="number">2</span><span class="string">.添加实用组件：右键-添加部件-有“启动器（应用程序面板）、网速显示、显示桌面可选</span></span><br><span class="line"><span class="number">3</span><span class="string">.删除dock上的插件：右键-停靠栏目设置-弹出窗口底部“重新排列和配置小部件”</span></span><br><span class="line"><span class="number">4</span><span class="string">.`设置`-`工作空间行为`-`桌面特效`-勾选“魔灯”</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Launcher图标更换</span></span><br><span class="line"><span class="number">1</span><span class="string">.右击“应用程序面板”部件，配置应用程序面板，可以自行选择并更换图标。</span></span><br><span class="line"><span class="number">2</span><span class="string">.&quot;BigSur&quot;图标主题没有macOS原生Launcher图标，可以先切换到“Mojave-CT-Light”图标主题，根据上一行换上Lanuncher图标，再切换回“BigSur”图标主题。</span></span><br><span class="line"><span class="number">3</span><span class="string">.根本解决方法：找一个最全面的图标包安装。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="窗口按钮调到左边："><a href="#窗口按钮调到左边：" class="headerlink" title="窗口按钮调到左边："></a>窗口按钮调到左边：</h4><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">`应用程序风格`- `窗口装饰` -`按钮`，直接拖动按钮到左边、不要的删除。</span><br></pre></td></tr></table></figure>
+
+<h4 id="屏幕触发角："><a href="#屏幕触发角：" class="headerlink" title="屏幕触发角："></a>屏幕触发角：</h4><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">`设置`-`工作空间行为`-`屏幕边缘`</span><br></pre></td></tr></table></figure>
+
+<p>屏幕左上角显示桌面取消；</p>
+<p>添加右下角显示桌面，触发延迟与重新触发延迟设置成最低值。</p>
+<h4 id="终端："><a href="#终端：" class="headerlink" title="终端："></a>终端：</h4><h5 id="Konsole设置成模糊透明："><a href="#Konsole设置成模糊透明：" class="headerlink" title="Konsole设置成模糊透明："></a>Konsole设置成模糊透明：</h5><ul>
+<li>打开终端，在终端内右键，点击<code>编辑当前方案</code> -&gt; <code>外观</code> -&gt; <code>白底黑字</code> -&gt; <code>编辑</code>。</li>
+<li>在选项 <code>模糊背景</code> 前打上勾，并调整透明度至 <code>45%</code> 。点击 <code>确定</code> -&gt; <code>确定</code> 。</li>
+</ul>
+<h5 id="Konsole配色方案"><a href="#Konsole配色方案" class="headerlink" title="Konsole配色方案"></a>Konsole配色方案</h5><p>配置方案 - 新建配置方案 - 设为默认</p>
+<p>编辑这个配置方案 - 外观 - 右边“获取新的” - 安装后 - 在“外观”下找到你安装的 - 选择 - 应用</p>
+<h5 id="使用Tilix终端"><a href="#使用Tilix终端" class="headerlink" title="使用Tilix终端"></a>使用Tilix终端</h5><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo</span> pacman -S tilix   	<span class="comment"># 安装Tilix终端</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="开机登录界面"><a href="#开机登录界面" class="headerlink" title="开机登录界面"></a>开机登录界面</h4><p>设置–&gt;系统工作区–&gt;开机和关机–&gt;登录屏幕（SDDM）</p>
+<h4 id="任务切换器（Alt-Tab）"><a href="#任务切换器（Alt-Tab）" class="headerlink" title="任务切换器（Alt+Tab）"></a>任务切换器（Alt+Tab）</h4><p>窗口管理–&gt;任务切换器–&gt;可视化，切换WhiteSur</p>
+<h4 id="其他系统设置"><a href="#其他系统设置" class="headerlink" title="其他系统设置"></a>其他系统设置</h4><figure class="highlight clean"><table><tr><td class="code"><pre><span class="line">设置 - 输入设备 - 触摸板 - 轻触点按 - 应用</span><br><span class="line"></span><br><span class="line">系统设置-&gt;工作空间行为-&gt;常规行为-&gt;点击行为 - “单击选定、双击打开”</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+        <tag>KDE</tag>
+        <tag>Plasma</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建站之 CentOS学习记录（持续更新中）</title>
+    <url>/2020/10/20/%E5%BB%BA%E7%AB%99%E4%B9%8B-CentOS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p> 接触 ArchLinux 也有较长一段时间了，正好最近薅到一台 <a href="https://www.huaweicloud.com/?locale=zh-cn">华为云服务器</a>，借机学一学 Linux 服务器系统 CentOS 与网站搭建，以及 Vim 等工具的使用。</p>
+<a id="more"></a>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 计划使用 <code>LNMP</code> 结构搭建服务器，即 <code>Linux + Nginx + MariaDB + PHP</code> ，并搭建一个 <code>WordPress</code> 博客。</p>
+<p> 对于CentOS的学习，计划<code>云服务器</code>+<code>本地虚拟机</code>同步进行，在使用的过程中熟悉 yum包管理器 的使用。</p>
+<h2 id="CentOS系统"><a href="#CentOS系统" class="headerlink" title="CentOS系统"></a>CentOS系统</h2><p>系统下载： <a href="http://mirrors.aliyun.com/centos/8.2.2004/isos/x86_64/">http://mirrors.aliyun.com/centos/8.2.2004/isos/x86_64/</a> （CentOS-8.2.2004）</p>
+<p>查看系统版本：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">cat <span class="regexp">/etc/</span>redhat-release 	# 适用于CentOS<span class="regexp">/Fedora/</span>RHEL等</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSH连接"><a href="#SSH连接" class="headerlink" title="SSH连接"></a>SSH连接</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">ssh <span class="symbol">root@</span>您的IP地址 -p [指定端口号]</span><br></pre></td></tr></table></figure>
+
+<h2 id="端口开放"><a href="#端口开放" class="headerlink" title="端口开放"></a>端口开放</h2><p>务必注意云服务器端口是否开放，以免引起许多莫名其妙的错误。</p>
+<p>如华为云：<code> 更多 -- 网络设置 -- 更改安全组</code></p>
+<h2 id="更换软件源（阿里源）"><a href="#更换软件源（阿里源）" class="headerlink" title="更换软件源（阿里源）"></a>更换软件源（阿里源）</h2><h3 id="1-备份旧的配置文件"><a href="#1-备份旧的配置文件" class="headerlink" title="1. 备份旧的配置文件"></a>1. 备份旧的配置文件</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mv <span class="regexp">/etc/yum</span>.repos.d<span class="regexp">/CentOS-Base.repo /</span>etc<span class="regexp">/yum.repos.d/</span>CentOS-Base.repo.backup</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-下载阿里云提供的-CentOS-Base-repo-到-etc-yum-repos-d"><a href="#2-下载阿里云提供的-CentOS-Base-repo-到-etc-yum-repos-d" class="headerlink" title="2. 下载阿里云提供的 CentOS-Base.repo 到 /etc/yum.repos.d/"></a>2. 下载阿里云提供的 CentOS-Base.repo 到 /etc/yum.repos.d/</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">wget -O <span class="regexp">/etc/yum</span>.repos.d<span class="regexp">/CentOS-Base.repo https:/</span><span class="regexp">/mirrors.aliyun.com/</span>repo/Centos-<span class="number">8</span>.repo</span><br></pre></td></tr></table></figure>
+
+<p>并替换部分字段（<strong>非阿里云机器需要做</strong>）</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sed -i -e <span class="string">&#x27;/mirrors.cloud.aliyuncs.com/d&#x27;</span> -e <span class="string">&#x27;/mirrors.aliyuncs.com/d&#x27;</span> <span class="regexp">/etc/yum</span>.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-生成缓存"><a href="#3-生成缓存" class="headerlink" title="3.生成缓存"></a>3.生成缓存</h3><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yum makecache</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-配置完毕，正常安装软件（速度飞快）"><a href="#4-配置完毕，正常安装软件（速度飞快）" class="headerlink" title="4.配置完毕，正常安装软件（速度飞快）"></a>4.配置完毕，正常安装软件（速度飞快）</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> vim</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>来源：<a href="https://blog.csdn.net/yds8903/article/details/106099901/">https://blog.csdn.net/yds8903/article/details/106099901/</a></p>
+</blockquote>
+<p><a href="https://blog.csdn.net/yds8903/article/details/106099901/">centos8更换国内源（阿里源）_大山的博客-CSDN博客_centos8换源</a></p>
+<h2 id="一键部署UnlockNeteaseMusic服务"><a href="#一键部署UnlockNeteaseMusic服务" class="headerlink" title="一键部署UnlockNeteaseMusic服务"></a>一键部署UnlockNeteaseMusic服务</h2><p>项目地址：<a href="https://github.com/XIU2/Shell">https://github.com/XIU2/Shell</a></p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">wget -<span class="keyword">N</span> --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//<span class="keyword">shell</span>.xiu2.xyz/unblock163.<span class="keyword">sh</span></span><br><span class="line">chmod +<span class="keyword">x</span> unblock163.<span class="keyword">sh</span> &amp;&amp; bash unblock163.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+<p>同样注意端口号（例如 80 端口极有可能出现被占用的错误）。</p>
+<h2 id="LNMP服务器"><a href="#LNMP服务器" class="headerlink" title="LNMP服务器"></a>LNMP服务器</h2><p>选择了 lnmp后。</p>
+<ul>
+<li><p>nginx：选择最新版本，版本越高性能越强；</p>
+</li>
+<li><p>MySQL：5.5适合小内存服务器（低于2G）使用。5.6适合2G及更大内存的服务器使用，安装在低于2G内存服务器上会卡顿，5.7要求内存不低于6G~8G，小内存服务器不要想。大部分常见的云服务器内存是2G、4G、8G，如果程序没有特殊要求，使用 5.5或5.6都行，有特殊要求就按照要求选择版本；</p>
+</li>
+<li><p>Pure-Ftpd：当前版本即可；</p>
+</li>
+<li><p>PHP：默认5.6只适合某些老程序的需求。Wordpress一般支持最新php版本，越高性能越好，php解析能力强速度快。老魏建议选择最高版本或次高版本；</p>
+</li>
+<li><p>PhpMyAdmin：最高版本或次高版本。</p>
+<p><a href="https://mp.weixin.qq.com/s/DaWQxFyxa-ouryqF1q5Bpg">https://mp.weixin.qq.com/s/DaWQxFyxa-ouryqF1q5Bpg</a></p>
+</li>
+</ul>
+<h2 id="WordPress博客"><a href="#WordPress博客" class="headerlink" title="WordPress博客"></a>WordPress博客</h2><blockquote>
+<p><strong>参考</strong></p>
+<p><a href="https://www.cnblogs.com/mrfangd/p/LNMP-CentOS8-1.html">https://www.cnblogs.com/mrfangd/p/LNMP-CentOS8-1.html</a></p>
+<p><a href="https://www.cnblogs.com/mrfangd/p/LNMP-CentOS8-2.html">https://www.cnblogs.com/mrfangd/p/LNMP-CentOS8-2.html</a></p>
+<p><a href="https://www.cnblogs.com/mrfangd/p/LNMP-CentOS8-3.html">https://www.cnblogs.com/mrfangd/p/LNMP-CentOS8-3.html</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建站之 Hexo博客备份到Github分支</title>
+    <url>/2020/09/30/%E5%BB%BA%E7%AB%99%E4%B9%8B-Hexo%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD%E5%88%B0Github%E5%88%86%E6%94%AF/</url>
+    <content><![CDATA[<p>将hexo生成的静态博客部署到Github Pages的同时，备份hexo根目录文件到Github。</p>
+<a id="more"></a>
+
+<h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><ol>
+<li><p>创建仓库<a href="https://github.com/xuedao01/xuedao01.github.io">xuedao01.github.io</a>，如果同名仓库之前已经创建，请将之前的仓库改名，新建的仓库必须是username.github.io；</p>
+</li>
+<li><p>将刚刚创建的新仓库 <code>clone</code> 至本地，将之前的 hexo 文件夹中的 _config.yml、themes/、source/、scaffolds/、package.json 和 .gitignore 复制至 xuedao01.github.io 文件夹；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/xuedao01/xuedao01.github.io.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将 themes/next/（我用的是 NexT 主题）中的 <code>.git/</code> 删除，否则无法将主题文件夹 push；</p>
+</li>
+<li><p>在 xudao01.github.io 文件夹执行 <code>npm install</code> 和 <code>npm install hexo-deployer-git</code>（这里分支应该显示为 hexo）；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> xuedao01.github.io</span><br><span class="line">git checkout -b hexo</span><br><span class="line"></span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行 <code>git add</code>、<code>git commit -m &quot;&quot;</code>、<code>git push origin hexo</code> 来提交 hexo 网站源文件；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;&quot;</span></span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span></span><br><span class="line">git push origin hexo</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此时Github上应只有hexo分支，且hexo为默认分支（default）。</p>
+</blockquote>
+</li>
+<li><p>执行 <code>hexo g -d</code> 生成静态网页部署至 Github 上。</p>
+</li>
+</ol>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">   hexo d -g</span><br><span class="line">hexo new post <span class="string">&quot;Hexo备份到Github分支上&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此时Github有两个分支 master + hexo ，且hexo仍为默认分支；xuedao01.github.io可以正常访问</p>
+</blockquote>
+<ol start="7">
+<li><p>执行 <code>git add</code>、<code>git commit -m &quot;&quot;</code>、<code>git push origin hexo</code> 来提交 hexo 网站源文件；</p>
+</li>
+<li><p>执行 <code>hexo g -d</code> 生成静态网页部署至 Github 上。</p>
+</li>
+</ol>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>在本地对博客修改（包括修改主题样式、发布新文章等）后：</p>
+<ol>
+<li>依次执行 <code>git add</code>、<code>git commit -m &quot;&quot;</code> 和 <code>git push origin hexo</code> 来提交 hexo 网站源文件；</li>
+<li>执行 <code>hexo g -d</code> 生成静态网页部署至 Github 上。</li>
+</ol>
+<p>即重复备份的 7-8 步骤，以上两步没有严格的顺序。</p>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><p>重装电脑后，或者在其它电脑上想修改博客：</p>
+<ol>
+<li>安装 git；</li>
+<li>安装 Nodejs 和 npm；</li>
+<li>使用 <code>git clone git#github.com:WincerChan/WincerChan.github.io.git</code> 将仓库拷贝至本地；</li>
+<li>在文件夹内执行以下命令 <code>npm install hexo-cli -g</code>、<code>npm install</code>、<code>npm install hexo-deployer-git</code>。</li>
+</ol>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>这里说一下步骤 4 为什么只需要拷贝 6 个，而不需要全部：</p>
+<ol>
+<li><code>_config.yml</code>站点的配置文件，需要拷贝；</li>
+<li><code>themes/</code>主题文件夹，需要拷贝；</li>
+<li><code>source</code> 博客文章的 .md 文件，需要拷贝；</li>
+<li><code>scaffolds/</code> 文章的模板，需要拷贝；</li>
+<li><code>package.json</code> 安装包的名称，需要拷贝；</li>
+<li><code>.gitignore</code> 限定在 push 时哪些文件可以忽略，需要拷贝；</li>
+<li><code>.git/</code> 主题和站点都有，标志这是一个 git 项目，不需要拷贝；</li>
+<li><code>node_modules/</code> 是安装包的目录，在执行 <code>npm install</code> 的时候会重新生成，不需要拷贝；</li>
+<li><code>public</code> 是 <code>hexo g</code> 生成的静态网页，不需要拷贝；</li>
+<li><code>.deploy_git</code> 同上，<code>hexo g</code> 也会生成，不需要拷贝；</li>
+<li><code>db.json</code>文件，不需要拷贝。</li>
+</ol>
+<p>其实不需要拷贝的文件正是 <code>.gitignore</code> 中所忽略的。</p>
+<hr>
+<p>方法全部来自wincerchen大佬：<a href="https://blog.itswincer.com/posts/7efd2818/">https://blog.itswincer.com/posts/7efd2818/</a> ，本文只作记录，便于己用。</p>
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建站之 Hexo框架搭建静态博客</title>
+    <url>/2020/09/30/%E5%BB%BA%E7%AB%99%E4%B9%8B-Hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>此处为简述，在.md文件的<code>&lt;!--more-- &gt;</code>前面添加。</p>
+<p>如果<code>&lt;!--more-- &gt;</code>放在文章首，那就默认没有折叠效果。</p>
+<p>通过安装Hexo框架、 新建Hexo网站、安装NexT主题，并进行配置，生成静态博客网站。</p>
+<a id="more"></a>
+
+<h1 id="一、使用hexo框架搭建静态博客"><a href="#一、使用hexo框架搭建静态博客" class="headerlink" title="一、使用hexo框架搭建静态博客"></a>一、使用hexo框架搭建静态博客</h1><h2 id="1-安装好node-js-和-Git"><a href="#1-安装好node-js-和-Git" class="headerlink" title="1.安装好node.js 和 Git"></a>1.安装好node.js 和 Git</h2><p><strong>配置好Git：</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your-mail@hotmail.com&quot;</span></span><br><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="comment"># 复制到Github的SSH中去</span></span><br><span class="line"></span><br><span class="line">git config --<span class="keyword">global</span> user.name <span class="string">&quot;FIRST_NAME LAST_NAME&quot;</span></span><br><span class="line">git config --<span class="keyword">global</span> user.email <span class="string">&quot;MY_NAME@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>node.js</code>安装完毕后会自动安装<code>npm</code>管理器</p>
+<p><strong>npm设置代理</strong></p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">config</span> <span class="built_in">set</span> proxy=http:<span class="comment">//127.0.0.1:7890</span></span><br><span class="line">npm <span class="built_in">config</span> <span class="built_in">set</span> https-proxy http:<span class="comment">//127.0.0.1:7890</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>npm取消代理</strong></p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">npm<span class="built_in"> config </span>delete proxy</span><br><span class="line">npm<span class="built_in"> config </span>delete https-proxy</span><br></pre></td></tr></table></figure>
+
+<p>参考来源：<a href="https://www.cnblogs.com/luomingsong/p/10723503.html">https://www.cnblogs.com/luomingsong/p/10723503.html</a></p>
+<h2 id="2-安装淘宝的cnpm"><a href="#2-安装淘宝的cnpm" class="headerlink" title="2.安装淘宝的cnpm"></a>2.安装淘宝的cnpm</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=http:<span class="comment">//registry.npm.taobao.org</span></span><br><span class="line"></span><br><span class="line">cnpm -v  <span class="comment">//查看安装版本</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-安装-hexo-框架"><a href="#3-安装-hexo-框架" class="headerlink" title="3.安装 hexo 框架"></a>3.安装 hexo 框架</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo cnpm install -g hexo-cli</span><br><span class="line"></span><br><span class="line">hexo -v   <span class="comment">//查看hexo版本</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-新建一个博客网站"><a href="#4-新建一个博客网站" class="headerlink" title="4.新建一个博客网站"></a>4.新建一个博客网站</h2><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">init</span>  <span class="comment">//新建一个网站</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-启动服务器"><a href="#5-启动服务器" class="headerlink" title="5.启动服务器"></a>5.启动服务器</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>打开浏览器中，输入 <a href="https://links.jianshu.com/go?to=http://localhost:4000">http://localhost:4000</a> 访问博客</li>
+<li>ctrl+c 关闭服务器</li>
+</ul>
+<h2 id="6-新建一篇博客"><a href="#6-新建一篇博客" class="headerlink" title="6.新建一篇博客"></a>6.新建一篇博客</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;第一篇博客&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文件路径：<code>source/_posts/第一篇博客.md</code></li>
+<li>也可以直接在 <code>source/_posts/</code>中新建<code>.md</code>文件</li>
+<li>每个<code>.md</code>文件头都有<code>Front-matter</code>部分，注意其内容</li>
+</ul>
+<h2 id="7-清除缓存文件"><a href="#7-清除缓存文件" class="headerlink" title="7.清除缓存文件"></a>7.清除缓存文件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<p>建议每次生成站点或部署之前都用该命令清理一下缓存</p>
+<h2 id="8-生成静态文件"><a href="#8-生成静态文件" class="headerlink" title="8.生成静态文件"></a>8.生成静态文件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-再次启动服务器"><a href="#7-再次启动服务器" class="headerlink" title="7.再次启动服务器"></a>7.再次启动服务器</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>在刚才打开的浏览器博客页面刷新，出现新写的文章</p>
+<h2 id="8-简便操作（不建议）"><a href="#8-简便操作（不建议）" class="headerlink" title="8.简便操作（不建议）"></a>8.简便操作（不建议）</h2><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo d -g</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可能在generate的时候出现<code>Error</code>，建议还是<code>hexo clean</code>、 <code>hexo g</code>、 <code>hexo s</code> 一步步来。</li>
+</ul>
+<h1 id="二、站点配置文件"><a href="#二、站点配置文件" class="headerlink" title="二、站点配置文件"></a>二、站点配置文件</h1><p><strong>博客主目录下修改站点配置文件<code>_config.yml</code> 来更改基本信息</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: 学道之人</span><br><span class="line">subtitle: <span class="string">&#x27;&#x27;</span></span><br><span class="line">description: <span class="string">&#x27;信念这玩意真不是说出来的，是做出来的。&#x27;</span></span><br><span class="line">keywords:</span><br><span class="line">author: 学道之人「xuedao01」</span><br><span class="line">language: zh-CN								<span class="comment">//这里修改成zh-CN（而不是zh-Hans）是为了和NexT主题的语言包匹配</span></span><br><span class="line">timezone: <span class="string">&#x27;&#x27;</span>									<span class="comment">//默认使用计算机本地时区</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">theme: next										<span class="comment">//修改主题，默认是landscape</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment									//部署到Github Pages</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:xuedao01/xuedao01.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、主题配置文件"><a href="#三、主题配置文件" class="headerlink" title="三、主题配置文件"></a>三、主题配置文件</h1><h2 id="1-安装NexT主题"><a href="#1-安装NexT主题" class="headerlink" title="1.安装NexT主题"></a>1.安装NexT主题</h2><p>进入Hexo博客主目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next\n</span><br></pre></td></tr></table></figure>
+
+<p>修改博客配置文件<code>_config.yml</code>  ，添加next主题</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean </span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-设置NexT主题的Scheme风格"><a href="#2-设置NexT主题的Scheme风格" class="headerlink" title="2.设置NexT主题的Scheme风格"></a>2.设置NexT主题的Scheme风格</h2><ul>
+<li>Next主题有四种Scheme风格</li>
+<li>打开<code>themes/next/ _config.yml</code> ，搜索 <code>Scheme Settings</code>，设置为<code>scheme: Pisces</code>（第三个）</li>
+</ul>
+<h2 id="3-NexT设置中文语言："><a href="#3-NexT设置中文语言：" class="headerlink" title="3.NexT设置中文语言："></a>3.NexT设置中文语言：</h2><ul>
+<li><p>打开<code>站点配置文件_config.yml</code>，<code># Site</code>下的<code>language</code>设置为<code>zh-CN</code>即可。</p>
+</li>
+<li><p>到 themes - next - languages文件夹下，发现中文支持文件有<code>zh-CN.yml</code>，而不是<code>zh-Hans</code></p>
+</li>
+<li><p>故也可将zh-CN.yml文件名改成zh-Hans，再在站点配置文件<code>_config.yml</code>设置为<code>zh-Hans</code></p>
+</li>
+<li><p>参考：<a href="https://blog.csdn.net/mqdxiaoxiao/article/details/93251246">https://blog.csdn.net/mqdxiaoxiao/article/details/93251246</a></p>
+</li>
+</ul>
+<h2 id="4-menu设置"><a href="#4-menu设置" class="headerlink" title="4.menu设置"></a>4.menu设置</h2><p>主题配置文件搜索<code>Menu Settings</code>，取消对应项注释</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="symbol">menu:</span></span><br><span class="line"><span class="symbol">  home:</span> / || fa fa-home</span><br><span class="line"><span class="symbol">  about:</span> <span class="meta-keyword">/about/</span> || fa fa-user</span><br><span class="line"><span class="symbol">  tags:</span> <span class="meta-keyword">/tags/</span> || fa fa-tags</span><br><span class="line"><span class="symbol">  categories:</span> <span class="meta-keyword">/categories/</span> || fa fa-th</span><br><span class="line"><span class="symbol">  archives:</span> <span class="meta-keyword">/archives/</span> || fa fa-archive</span><br></pre></td></tr></table></figure>
+
+<p>hexo添加对应新菜单，如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page archives</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以看到在source下多了一个archives的文件夹，里面有一个index.md文件。</p>
+<p>可以自行添加，比如在<code>menu</code>添加<code>favorite</code>项，在主题的语言文件<code>zh-CN.yml</code>添加翻译<code>favorite: 收藏夹</code></p>
+<h2 id="5-右上角添加跳转黑色Github小图标"><a href="#5-右上角添加跳转黑色Github小图标" class="headerlink" title="5.右上角添加跳转黑色Github小图标"></a>5.右上角添加跳转黑色Github小图标</h2><ul>
+<li>首先到<a href="http://tholman.com/github-corners/">GitHub Corners</a>或者<a href="https://github.blog/2008-12-19-github-ribbons/">GitHub Ribbons</a>选择自己喜欢的图标，然后copy相应的代码</li>
+<li>然后将刚才复制的代码粘贴到<code>next/layout/_layout.swig</code>文件中<code>&lt;div class=&quot;headband&quot;&gt;&lt;/div&gt;</code>下面一行</li>
+<li>再把代码中的<code>href</code>后面的值替换成你要跳转的地址，比如你的GitHub主页</li>
+<li>以下是上面的效果采用的代码</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://your-url&quot;</span> <span class="attr">class</span>=<span class="string">&quot;github-corner&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;View source on GitHub&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;80&quot;</span> <span class="attr">height</span>=<span class="string">&quot;80&quot;</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 250 250&quot;</span> <span class="attr">style</span>=<span class="string">&quot;fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;&quot;</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">path</span>&gt;</span><span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;currentColor&quot;</span> <span class="attr">style</span>=<span class="string">&quot;transform-origin: 130px 106px;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;octo-arm&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">path</span>&gt;</span><span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;currentColor&quot;</span> <span class="attr">class</span>=<span class="string">&quot;octo-body&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">path</span>&gt;</span><span class="tag">&lt;/<span class="name">svg</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"><span class="selector-class">.github-corner</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.octo-arm</span>&#123;<span class="attribute">animation</span>:octocat-wave <span class="number">560ms</span> ease-in-out&#125;<span class="keyword">@keyframes</span> octocat-wave&#123;0%,100%&#123;<span class="attribute">transform</span>:<span class="built_in">rotate</span>(<span class="number">0</span>)&#125;20%,60%&#123;<span class="attribute">transform</span>:<span class="built_in">rotate</span>(-<span class="number">25deg</span>)&#125;40%,80%&#123;<span class="attribute">transform</span>:<span class="built_in">rotate</span>(<span class="number">10deg</span>)&#125;&#125;<span class="keyword">@media</span> (<span class="attribute">max-width:</span><span class="number">500px</span>)&#123;<span class="selector-class">.github-corner</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.octo-arm</span>&#123;<span class="attribute">animation</span>:none&#125;<span class="selector-class">.github-corner</span> <span class="selector-class">.octo-arm</span>&#123;<span class="attribute">animation</span>:octocat-wave <span class="number">560ms</span> ease-in-out&#125;&#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：<a href="https://blog.csdn.net/mqdxiaoxiao/article/details/93796367">https://blog.csdn.net/mqdxiaoxiao/article/details/93796367</a></p>
+<p>主题配置文件里面，貌似有类似功能（没试过）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># `Follow me on GitHub` banner in the top-right corner.</span></span><br><span class="line"><span class="attr">github_banner:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">permalink:</span> <span class="string">https://github.com/yourname</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">Follow</span> <span class="string">me</span> <span class="string">on</span> <span class="string">GitHub</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-左侧边栏社交链接"><a href="#6-左侧边栏社交链接" class="headerlink" title="6.左侧边栏社交链接"></a>6.左侧边栏社交链接</h2><p>侧栏社交链接的修改包含两个部分，第一是链接，第二是链接图标。 两者配置均在 <strong>主题配置文件</strong> 中。</p>
+<ol>
+<li><p>链接放置在 <code>social</code> 字段下，一行一个链接。其键值格式是 <code>显示文本: 链接地址</code>。</p>
+<p>配置示例</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Social links</span></span><br><span class="line">social:</span><br><span class="line">  GitHub: https:<span class="regexp">//gi</span>thub.com/your-user-name</span><br><span class="line">  Twitter: https:<span class="regexp">//</span>twitter.com/your-user-name</span><br><span class="line">  微博: http:<span class="regexp">//</span>weibo.com/your-user-name</span><br><span class="line">  豆瓣: http:<span class="regexp">//</span>douban.com<span class="regexp">/people/y</span>our-user-name</span><br><span class="line">  知乎: http:<span class="regexp">//</span>www.zhihu.com<span class="regexp">/people/y</span>our-user-name</span><br><span class="line">  <span class="comment"># 等等</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设定链接的图标，对应的字段是 <code>social_icons</code>。其键值格式是 <code>匹配键: Font Awesome 图标名称</code>， <code>匹配键</code> 与上一步所配置的链接的 <code>显示文本</code> 相同（大小写严格匹配），<code>图标名称</code> 是 Font Awesome 图标的名字（不必带 <code>fa-</code> 前缀）。 <code>enable</code> 选项用于控制是否显示图标，你可以设置成 <code>false</code> 来去掉图标。</p>
+<p>配置示例</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Social Icons</span></span><br><span class="line"><span class="attr">social_icons:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Icon Mappings</span></span><br><span class="line">  <span class="attr">GitHub:</span> <span class="string">github</span></span><br><span class="line">  <span class="attr">Twitter:</span> <span class="string">twitter</span></span><br><span class="line">  <span class="string">微博:</span> <span class="string">weibo</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>参考：<a href="http://theme-next.iissnan.com/theme-settings.html#author-sites">http://theme-next.iissnan.com/theme-settings.html#author-sites</a></li>
+</ul>
+<h2 id="7-搜索服务"><a href="#7-搜索服务" class="headerlink" title="7.搜索服务"></a>7.搜索服务</h2><ul>
+<li>添加本地自定义站点内容搜索，可以通过文字标题或文字内容关键字搜索出相应文章</li>
+</ul>
+<ol>
+<li><p>安装 <code>hexo-generator-searchdb</code>，在站点的根目录下执行以下命令：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> hexo-generator-searchdb <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑站点配置文件，新增以下内容到任意位置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑主题配置文件，启用本地搜索功能：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>参考：<a href="https://www.himmy.cn/2019/07/06/hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2next%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0local-search%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2">https://www.himmy.cn/2019/07/06/hexo个人博客next主题添加local-search本地搜索</a></li>
+<li>官方介绍：<a href="http://theme-next.iissnan.com/third-party-services.html#search-system">http://theme-next.iissnan.com/third-party-services.html#search-system</a></li>
+<li>NexT貌似自带：主题配置文件中<code># Search Services</code></li>
+</ul>
+<h2 id="8-添加文章边框阴影效果"><a href="#8-添加文章边框阴影效果" class="headerlink" title="8.添加文章边框阴影效果"></a>8.添加文章边框阴影效果</h2><p>1.在next文件夹下找到themes\next\source\css\ _common\components\post下的post.styl</p>
+<p>2.添加相应样式如下：（我怕影响到其他样式，所以将post-block样式单独拿出来写了。）</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">.use-motion &#123;						<span class="comment">//我这里是第34行</span></span><br><span class="line">		<span class="comment">//里面的第一个if&#123;&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (hexo-config(<span class="string">&#x27;motion.transition.post_block&#x27;</span>)) &#123;</span><br><span class="line">    .post-block &#123;</span><br><span class="line">      opacity: <span class="number">0</span>;</span><br><span class="line">      margin-top: <span class="number">60</span>px;</span><br><span class="line">      margin-bottom: <span class="number">60</span>px;</span><br><span class="line">      padding: <span class="number">25</span>px;</span><br><span class="line">      -webkit-box-shadow: <span class="number">0</span> <span class="number">0</span> <span class="number">5</span>px rgba(<span class="number">202</span>, <span class="number">203</span>, <span class="number">203</span>, <span class="number">.5</span>);</span><br><span class="line">      -moz-box-shadow: <span class="number">0</span> <span class="number">0</span> <span class="number">5</span>px rgba(<span class="number">202</span>, <span class="number">203</span>, <span class="number">204</span>, <span class="number">.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    .pagination, .comments&#123;</span><br><span class="line">      opacity: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.执行<code>hexo clean</code>，重新<code>hexo g</code>，即可看到效果</p>
+<ul>
+<li><p>参考-1（旧版的做法）：<a href="https://www.himmy.cn/2019/07/06/hexo%E5%8D%9A%E5%AE%A2next%E4%B8%BB%E9%A2%98%E4%B8%8B%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E8%BE%B9%E6%A1%86%E9%98%B4%E5%BD%B1%E6%95%88%E6%9E%9C/">https://www.himmy.cn/2019/07/06/hexo博客next主题下添加文章边框阴影效果/</a></p>
+</li>
+<li><p>参考-2（贴吧大神新版）：<a href="https://tieba.baidu.com/p/6365333284">https://tieba.baidu.com/p/6365333284</a></p>
+</li>
+</ul>
+<h2 id="9-Hexo-自动添加-Read-More-标记（未实现）"><a href="#9-Hexo-自动添加-Read-More-标记（未实现）" class="headerlink" title="9.Hexo 自动添加 Read More 标记（未实现）"></a>9.Hexo 自动添加 Read More 标记（未实现）</h2><ul>
+<li>官方说明：<a href="http://theme-next.iissnan.com/faqs.html#read-more">http://theme-next.iissnan.com/faqs.html#read-more</a></li>
+<li>参考：<a href="https://twiceyuan.com/2014/05/25/hexo%E8%87%AA%E5%8A%A8%E6%B7%BB%E5%8A%A0readmore%E6%A0%87%E8%AE%B0/">https://twiceyuan.com/2014/05/25/hexo自动添加readmore标记/</a></li>
+</ul>
+<h2 id="10-字数和阅读时间统计"><a href="#10-字数和阅读时间统计" class="headerlink" title="10.字数和阅读时间统计"></a>10.字数和阅读时间统计</h2><p>安装：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> hexo-symbols-<span class="keyword">count</span>-<span class="built_in">time</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Hexo 的 _ config.yml 中添加 Hexo-symbols-count-time 选项：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">exclude_codeblock:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">300</span></span><br><span class="line">  <span class="attr">suffix:</span> <span class="string">&quot;mins.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>来源：<a href="https://github.com/theme-next/hexo-symbols-count-time">https://github.com/theme-next/hexo-symbols-count-time</a></li>
+</ul>
+<h2 id="11-访问统计"><a href="#11-访问统计" class="headerlink" title="11.访问统计"></a>11.访问统计</h2><p>使用 leancloud_visitors 经常不显示，改用不算子。</p>
+<p>在主题的配置文件中搜索<code>busuanzi_count</code>，将下面的enable属性设为true即可。不算子的缺点是统计不是很准（只多不少，很容易刷数据），将就着用吧。</p>
+<h2 id="12-版权声明"><a href="#12-版权声明" class="headerlink" title="12.版权声明"></a>12.版权声明</h2><p>修改主题配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">creative_commons:</span></span><br><span class="line">  <span class="attr">license:</span> <span class="string">by-nc-sa</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">post:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">language:</span> <span class="string">zh-CN</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="13-修改选中文本颜色"><a href="#13-修改选中文本颜色" class="headerlink" title="13.修改选中文本颜色"></a>13.修改选中文本颜色</h2><p>1.在next文件夹下找到themes\next\source\css\ _common\components\post下的post.styl</p>
+<p>2.添加相应样式如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 修改选中字符的颜色</span><br><span class="line"><span class="comment">/* webkit, opera, IE9 */</span></span><br><span class="line"><span class="selector-pseudo">::selection</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#00c4b6</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f7f7f7</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* firefox */</span></span><br><span class="line"><span class="selector-pseudo">::-moz-selection</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#00c4b6</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f7f7f7</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a href="https://www.jianshu.com/p/2a8d399f1266">https://www.jianshu.com/p/2a8d399f1266</a></p>
+<p>RGB查询：<a href="https://www.fontke.com/tool/rgb/f7f7f7/">https://www.fontke.com/tool/rgb/f7f7f7/</a></p>
+<h2 id="14-代码高亮"><a href="#14-代码高亮" class="headerlink" title="14.代码高亮"></a>14.代码高亮</h2><p>站点配置文件<code>_config.yml</code>中，设置如下</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>主题配置文件中：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span></span><br><span class="line">  <span class="comment"># See: https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">  <span class="attr">highlight_theme:</span> <span class="string">galactic</span></span><br><span class="line">  <span class="comment"># Add copy button on codeblock</span></span><br><span class="line">  <span class="attr">copy_button:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># Show text copy result.</span></span><br><span class="line">    <span class="attr">show_result:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># Available values: default | flat | mac</span></span><br><span class="line">    <span class="attr">style:</span> <span class="string">mac</span></span><br></pre></td></tr></table></figure>
+
+<p>有个坑：选中代码文本显示黑色，和黑色背景很不搭配</p>
+<p>修改：<code>next--&gt;source--&gt;css--&gt;_common--&gt;scaffolding--&gt;highlight </code> 中的 <code>theme.styl</code>文件，找到想要修改的那个主题，参考“修改选中文本颜色”部分修改即可。</p>
+<p>自动识别代码语言高亮（貌似）：<a href="https://eggsywelsh.github.io/2016/11/10/hexo%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/">https://eggsywelsh.github.io/2016/11/10/hexo代码高亮/</a></p>
+<h2 id="15-其他设置具体看主题配置文件"><a href="#15-其他设置具体看主题配置文件" class="headerlink" title="15.其他设置具体看主题配置文件"></a>15.其他设置具体看主题配置文件</h2><p>如：阅读进度栏</p>
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图床</title>
+    <url>/2020/12/01/%E5%BB%BA%E7%AB%99%E4%B9%8B-%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<p>草稿</p>
+<a id="more"></a>
+
+<p>思想：Typora + PicGo 后台实现自动上传。</p>
+<h1 id="配置PicGo"><a href="#配置PicGo" class="headerlink" title="配置PicGo"></a>配置PicGo</h1><p>下载安装</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S picgo-appimage</span></span><br></pre></td></tr></table></figure>
+
+<p>默认程序路径应该在</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>appimages/picgo.AppImage</span><br></pre></td></tr></table></figure>
+
+<p>配置GitHUb图床：</p>
+<p>看教程吧</p>
+<p>配置代理、默认图床</p>
+<h1 id="配置Typora"><a href="#配置Typora" class="headerlink" title="配置Typora"></a>配置Typora</h1><p>选中程序路径：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>appimages/picgo.AppImage</span><br></pre></td></tr></table></figure>
+
+<p>确保 PicGo 的 Listing 端口正确，</p>
+<p>测试一下上传是否成功。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>编辑器之 Vim</title>
+    <url>/2020/12/02/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B-Vim/</url>
+    <content><![CDATA[<p>草稿</p>
+<a id="more"></a>
+
+<p>使用vim可以极大提高编辑效率，但难入门是vim的另一大特征。本视频介绍了新手如何快速上手vim。看完本视频后，你可以直接在之前ide中将vim用起来。</p>
+<p><a href="https://www.bilibili.com/video/av77938936">https://www.bilibili.com/video/av77938936</a></p>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>输入模式(insert)、命令模式(normal)</p>
+<p>w e b移动到单词头单词尾下一个单词头</p>
+<p>hl左右</p>
+<p>jk下上</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line">vimtutor <span class="built_in">zh</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>配置文件：<code>.vimrc</code></p>
+<p>ide里面安装的vim插件，配置文件在<code>.ideavimrc</code></p>
+<h1 id="抛弃上下左右键"><a href="#抛弃上下左右键" class="headerlink" title="抛弃上下左右键"></a>抛弃上下左右键</h1><p>为什么：方向键不在主键盘区</p>
+<p>如何强制禁用：键位映射</p>
+<p>在.vimrc下，添加：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">imap</span> <span class="symbol">&lt;Up&gt;</span> <span class="symbol">&lt;Nop&gt;</span>		# <span class="keyword">imap</span>是插入模式，<span class="symbol">&lt;Nop&gt;</span>相当于空</span><br><span class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;Up&gt;</span> <span class="symbol">&lt;Nop&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">imap</span> <span class="symbol">&lt;Down&gt;</span> <span class="symbol">&lt;Nop&gt;</span>		</span><br><span class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;Down&gt;</span> <span class="symbol">&lt;Nop&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">imap</span> <span class="symbol">&lt;Left&gt;</span> <span class="symbol">&lt;Nop&gt;</span>	</span><br><span class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;Left&gt;</span> <span class="symbol">&lt;Nop&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">imap</span> <span class="symbol">&lt;Right&gt;</span> <span class="symbol">&lt;Nop&gt;</span>	</span><br><span class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;Right&gt;</span> <span class="symbol">&lt;Nop&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>强迫你切换到 <code>normal mode</code> 来操作</p>
+<p>也可以把Esc映射到主键盘区</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">imap</span> jk <span class="symbol">&lt;Esc&gt;</span>	# 在<span class="keyword">insert</span>模式下jk连按不常用，也可以jj</span><br></pre></td></tr></table></figure>
+
+<p>其他常用的映射应该可以百度到</p>
+<p>方便且个性化</p>
+<h4 id="9-4-1-超强vim配置"><a href="#9-4-1-超强vim配置" class="headerlink" title="9.4.1 超强vim配置"></a>9.4.1 超强vim配置</h4><p>项目地址：<a href="https://github.com/elinuxboy/vim-deprecated">https://github.com/elinuxboy/vim-deprecated</a></p>
+<p>使用下面的命令自动安装配置：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">wget -qO- https:<span class="regexp">//</span>raw.githubusercontent.com<span class="regexp">/elinuxboy/</span>vim-deprecated<span class="regexp">/master/</span>setup.sh | sh -x</span><br></pre></td></tr></table></figure>
+
+<p>或者用另一种方式自动安装：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>wget https:<span class="regexp">//</span>raw.githubusercontent.com<span class="regexp">/elinuxboy/</span>vim-deprecated<span class="regexp">/master/</span>setup.sh</span><br><span class="line"><span class="number">2</span>chmod +x setup.sh</span><br><span class="line"><span class="number">3</span>./setup.sh</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>编辑器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编辑器之 Sublime Text</title>
+    <url>/2020/11/29/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B-Sublime-Text/</url>
+    <content><![CDATA[<p>草稿</p>
+<a id="more"></a>
+
+<h1 id="1-基本配置"><a href="#1-基本配置" class="headerlink" title="1.基本配置"></a>1.基本配置</h1><p>配置代理：<a href="https://blog.csdn.net/hamov/article/details/89576904">https://blog.csdn.net/hamov/article/details/89576904</a></p>
+<p>更改channel：<a href="https://blog.csdn.net/qq_43557758/article/details/105061956">https://blog.csdn.net/qq_43557758/article/details/105061956</a></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;bootstrapped&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    </span><br><span class="line">	<span class="attr">&quot;channels&quot;</span>:</span><br><span class="line">	[</span><br><span class="line">		<span class="string">&quot;~/.config/sublime-text-3/channel_v3.json&quot;</span></span><br><span class="line">	],</span><br><span class="line">    </span><br><span class="line">	<span class="attr">&quot;http_proxy&quot;</span>: <span class="string">&quot;http://127.0.0.1:1089&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;https_proxy&quot;</span>: <span class="string">&quot;http://127.0.0.1:1089&quot;</span>,</span><br><span class="line">    </span><br><span class="line">	<span class="attr">&quot;in_process_packages&quot;</span>:</span><br><span class="line">	[</span><br><span class="line">	],</span><br><span class="line">	<span class="attr">&quot;installed_packages&quot;</span>:</span><br><span class="line">	[</span><br><span class="line">		<span class="string">&quot;Package Control&quot;</span></span><br><span class="line">	]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;channels&quot;: [</span><br><span class="line">        <span class="string">&quot;http://cst.stu.126.net/u/json/cms/channel_v3.json&quot;</span></span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="2-开启代码块折叠功能"><a href="#2-开启代码块折叠功能" class="headerlink" title="2.开启代码块折叠功能"></a>2.开启代码块折叠功能</h1><p><a href="https://www.cnblogs.com/eedc/p/6186393.html">https://www.cnblogs.com/eedc/p/6186393.html</a></p>
+<h1 id="3-作为终端命令"><a href="#3-作为终端命令" class="headerlink" title="3.作为终端命令"></a>3.作为终端命令</h1><p><a href="https://blog.csdn.net/Cinderella_hou/article/details/82392139">https://blog.csdn.net/Cinderella_hou/article/details/82392139</a></p>
+<p>两种方法：<br>一、            open -a Sublime\ Text 文件</p>
+<p>二、        ln  /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</p>
+<h1 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h1><p>因为第二种方法。 我的出现了错误，<br>所以曲线救国：<br>    去    sudo vim ~/.zshrc<br>    加一个 alias sublime=‘open -a Sublime\ Text’</p>
+<p>第一件事就是安装 Package Control 这个插件：<br>    1.设置SSR全局代理<br>    2.左Shift + cmd + P。 搜索Install Package Control，回车/鼠标左键</p>
+<p>第二件事就是改channels地址:（这个不做有时候也没事，代理给力的情况下）<br>    教程：<a href="https://www.jianshu.com/p/c2f41ef12834">https://www.jianshu.com/p/c2f41ef12834</a><br>    地址：<a href="https://github.com/JavenZ/channel_v3/raw/master/channel_v3.json">https://github.com/JavenZ/channel_v3/raw/master/channel_v3.json</a></p>
+<p>第三件事就是设置Package Control的代理地址：<br>    教程：<a href="https://blog.csdn.net/hamov/article/details/89576904">https://blog.csdn.net/hamov/article/details/89576904</a><br>    注意：那个文件的语法，比如逗号，还有嗲里的端口 127.0.0.1:1089</p>
+<p>然后就可以尽情享受了</p>
+]]></content>
+      <tags>
+        <tag>编辑器</tag>
+        <tag>Sublime</tag>
+        <tag>代码</tag>
+        <tag>IDE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArchLinux 打造生产力系统</title>
+    <url>/2020/10/01/ArchLinux-%E6%89%93%E9%80%A0%E7%94%9F%E4%BA%A7%E5%8A%9B%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3531939864,671832250&fm=26&gp=0.jpg" alt="img"></p>
+<a id="more"></a>
+
+<h2 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 WPS</span></span><br><span class="line">yay -S --noconfirm wps-office-cn wps-office-mui-zh-cn ttf-wps-fonts</span><br><span class="line"><span class="comment"># 下载工具</span></span><br><span class="line">yay -S freedownloadmanager</span><br><span class="line"><span class="comment"># 代码 &amp; 开发</span></span><br><span class="line">yay -S code </span><br><span class="line">yay -S gparted</span><br><span class="line"><span class="comment"># kde主题及一些可能需要的依赖</span></span><br><span class="line">sudo pacman -S papirus-icon-theme breeze fuse gnome-settings-daemon devilspie2 gparted kcm-fcitx</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Windows字体缺失"><a href="#Windows字体缺失" class="headerlink" title="Windows字体缺失"></a>Windows字体缺失</h2><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cd <span class="regexp">/usr/</span>share/fonts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> windows</span><br></pre></td></tr></table></figure>
+
+<p>把字体复制到Windows目录下（宋体、微软雅黑）</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo mkfontscale</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo mkfontdir</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo fc-cache -fv</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://blog.csdn.net/fdd096030079/article/details/107928672">WPS在linux下字体缺失，或者显示有问题_fdd096030079的博客-CSDN博客</a></p>
+<p><a href="https://www.limstash.com/articles/202004/1582">Archlinux 字体美化——微软字体 | Limstash的博客</a></p>
+<h2 id="挂载分区免除输入密码"><a href="#挂载分区免除输入密码" class="headerlink" title="挂载分区免除输入密码"></a>挂载分区免除输入密码</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/polkit-1/rules.d/49-nopasswd_global.rules</span><br></pre></td></tr></table></figure>
+
+<p>[然后输入]</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">/* Allow members of the wheel group to execute any actions</span><br><span class="line"> * without password authentication, similar to <span class="string">&quot;sudo NOPASSWD:&quot;</span></span><br><span class="line"> */</span><br><span class="line">polkit.addRule(<span class="keyword">function</span>(action, subject) &#123;</span><br><span class="line">    <span class="keyword">if</span> (subject.isInGroup(<span class="string">&quot;users&quot;</span>)) &#123;</span><br><span class="line">        <span class="built_in">return</span> polkit.Result.YES;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>users</code>指的是当前用户所在用户组，用<code>groups</code>命令查看。</p>
+<p>来源：<a href="https://www.jianshu.com/p/5e7726d1cb16">Leiloxee雷有情</a>、<a href="https://tieba.baidu.com/p/6319102235?red_tag=3444949793">枕边书</a>提供方法。</p>
+<h2 id="设置默认文件管理器"><a href="#设置默认文件管理器" class="headerlink" title="设置默认文件管理器"></a>设置默认文件管理器</h2><h4 id="Nemo"><a href="#Nemo" class="headerlink" title="Nemo"></a>Nemo</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S nemo</span></span><br></pre></td></tr></table></figure>
+
+<p>在中文源中找到 <a href="https://www.archlinux.org/packages/?q=nemo">https://www.archlinux.org/packages/?q=nemo</a> 里面有一个<code>cinnamon-translations</code></p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">yay -S nemo-data nemo-qt-components nemo-qt-seahorse nemo-seahorse nemo-<span class="keyword">sharre </span>nemo-<span class="keyword">share</span></span><br><span class="line"><span class="keyword">yay </span>-S cinnamon-translations 	<span class="comment"># 中文语言包</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Nautilus"><a href="#Nautilus" class="headerlink" title="Nautilus"></a>Nautilus</h4><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">sudo pacman -S nautilus</span><br><span class="line">yay -S nautilus-<span class="built_in">open</span>-<span class="keyword">any</span>-terminal    <span class="comment"># 在文件夹内打开终端插件</span></span><br></pre></td></tr></table></figure>
+
+<p>进入某一文件夹，按下<code>Ctrl+D</code>可将该文件夹添加至侧边栏收藏夹（也可拖拽添加），分区也可以添加。</p>
+<h4 id="Thunar"><a href="#Thunar" class="headerlink" title="Thunar"></a>Thunar</h4><figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">sudo pacman -S thunar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加搜索文件功能</span></span><br><span class="line">sudo pacman -S catfish</span><br><span class="line"></span><br><span class="line">thunar--&gt;编辑--&gt;配置自定义动作--&gt;添加</span><br><span class="line">	名称(必填)<span class="symbol">:</span>搜索</span><br><span class="line">	描述(非必填)<span class="symbol">:</span>搜索文件及文件夹</span><br><span class="line">	命令(必填)<span class="symbol">:catfish</span> %f</span><br><span class="line">	快捷键(非必填,文件管理器内有效)<span class="symbol">:</span></span><br><span class="line">	</span><br><span class="line">	出现条件勾选“目录”（参考终端项设置）</span><br><span class="line">	最后把它置顶才会显示（可能是Bug）</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a href="https://cuizhe.me/201812/350.cz">https://cuizhe.me/201812/350.cz</a></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="开机自动挂载分区"><a href="#开机自动挂载分区" class="headerlink" title="开机自动挂载分区"></a>开机自动挂载分区</h2><p>摸索出来的三种方法。</p>
+<!--more-->
+
+<h4 id="方式一：修改-fstab"><a href="#方式一：修改-fstab" class="headerlink" title="方式一：修改 fstab"></a>方式一：修改 fstab</h4><p>创建想挂载到的目录</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo midir <span class="regexp">/mnt/</span>SSD高速盘</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>fstab</code> 文件</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>fstab</span><br></pre></td></tr></table></figure>
+
+<p>添加：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"># <span class="regexp">/dev/</span>nvme0n1p5	根据实际情况修改：分区 &amp; 目录</span><br><span class="line"><span class="regexp">/dev/</span>nvme0n1p5	<span class="regexp">/mnt/</span>SSD高速盘	exfat	defaults	<span class="number">0</span>	<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>错误修正</p>
+<p>如果开机出现错误，按下 <code>Ctrl+Alt+F4</code> 进入 <code>tty</code> ，直接编辑 <code>fstab</code> 文件即可。</p>
+<p>缺点</p>
+<p>分区内存在权限问题，比如 <code>Hexo</code> 目录下无法部署。</p>
+<h4 id="方式二：自动执行脚本"><a href="#方式二：自动执行脚本" class="headerlink" title="方式二：自动执行脚本"></a>方式二：自动执行脚本</h4><p>创建service：</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">sudo gedit /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">auto_run</span>.<span class="title">service</span></span></span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=<span class="string">&quot;Run /etc/auto_run.local on Startup&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">ExecStart</span>=/etc/auto_run.local start</span><br><span class="line"><span class="attr">TimeoutSec</span>=<span class="number">0</span></span><br><span class="line"><span class="attr">StandardInput</span>=tty</span><br><span class="line"><span class="attr">RemainAfterExit</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attr">SysVStartPriority</span>=<span class="number">99</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>创建脚本：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/etc/</span>auto_run.local</span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh -e</span></span><br><span class="line"><span class="comment"># 将 username 修改成你的用户名</span></span><br><span class="line"><span class="regexp">/bin/</span>su - username -c <span class="string">&quot;udisksctl mount --block-device=/dev/nvme0n1p5&quot;</span></span><br><span class="line"><span class="keyword">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>启用服务：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo systemctl <span class="builtin-name">enable</span> auto_run.service</span><br></pre></td></tr></table></figure>
+
+<p>注意：若不添加<code>/bin/su - username -c</code> ，分区将被挂载到<code>/run/media/root</code>下。</p>
+<p>提供参考：<a href="https://wiki.archlinux.org/index.php/Autostarting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Autostarting-WiKi</a> 之 <a href="https://wiki.archlinux.org/index.php?title=Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&printable=yes">systemd/User</a> 、 <a href="https://blog.csdn.net/weixin_33810302/article/details/92117030">su 用法</a> 。</p>
+<h4 id="方式三：创建-Desktop-启动器"><a href="#方式三：创建-Desktop-启动器" class="headerlink" title="方式三：创建 Desktop 启动器"></a>方式三：创建 Desktop 启动器</h4><p>创建AutoStart启动器：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">sudo gedit ~/.config/<span class="built_in">auto</span>start/<span class="built_in">auto</span>-mount.desktop</span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Encoding</span>=UTF-<span class="number">8</span></span><br><span class="line"><span class="attr">Name</span>=auto-mount</span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Exec</span>=udisksctl mount --block-device=/dev/nvme0n1p5</span><br><span class="line"><span class="attr">Hidden</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Categories</span>=Application<span class="comment">;</span></span><br><span class="line"><span class="attr">Icon</span>=applications-system</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a href="https://unix.stackexchange.com/questions/394320/what-command-does-nemo-use-to-mount-drives#comment703482_394320">https://unix.stackexchange.com/questions/394320/what-command-does-nemo-use-to-mount-drives#comment703482_394320</a></p>
+<p><a href="https://wiki.archlinux.org/index.php/Udisks_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Udisks_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)</a></p>
+</blockquote>
+<blockquote>
+<p>开机启动Wiki：<a href="https://wiki.archlinux.org/index.php/autostarting#On_user_login_/_logout">Autostarting - ArchWiki</a></p>
+<p><a href="https://wiki.archlinux.org/index.php/Systemd/User#Service_example">systemd/User - ArchWiki</a></p>
+<p><a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">systemd (简体中文) - ArchWiki</a></p>
+<p><a href="https://arashmilani.com/post?id=86">Run a script during Arch Linux boot process</a></p>
+</blockquote>
+<h2 id="写博客——Hexo"><a href="#写博客——Hexo" class="headerlink" title="写博客——Hexo"></a>写博客——Hexo</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo pacman -S nodejs</span><br><span class="line">sudo pacman -S npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面安装并使用淘宝源：</span></span><br><span class="line">sudo npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br><span class="line">sudo cnpm install -g hexo-cli </span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试：</span></span><br><span class="line">hexo server </span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署网站要用到</span></span><br><span class="line">npm install --save hexo-deployer-git (未成功)</span><br><span class="line">https://blog.csdn.net/weixin_36401046/article/details/52940313</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;邮箱&quot;</span></span><br><span class="line">cat .ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="向日葵远程控制"><a href="#向日葵远程控制" class="headerlink" title="向日葵远程控制"></a>向日葵远程控制</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S sunloginclient</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> runsunloginclient</span><br></pre></td></tr></table></figure>
+
+<p> 重启生效</p>
+<h2 id="两种虚拟机"><a href="#两种虚拟机" class="headerlink" title="两种虚拟机"></a>两种虚拟机</h2><h3 id="VMWare-Workstation"><a href="#VMWare-Workstation" class="headerlink" title="VMWare Workstation"></a>VMWare Workstation</h3><h4 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h4><p><a href="https://wiki.archlinux.org/index.php/VMware_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%89%E8%A3%85">一定要参考这个：Arch Wiki - VMware_(简体中文)</a></p>
+<p>下载最新的 <a href="https://www.vmware.com/go/tryworkstation">VMware Workstation Pro</a> 或<a href="https://www.vmware.com/go/downloadplayer">Player</a> (或者<a href="https://communities.vmware.com/community/vmtn/beta">beta</a>版，如果有的话)。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"># <span class="selector-tag">sh</span> <span class="selector-tag">VMware-edition-version</span><span class="selector-class">.release</span><span class="selector-class">.architecture</span><span class="selector-class">.bundle</span></span><br></pre></td></tr></table></figure>
+
+<p>当安装程序询问 <code>System service scripts directory</code> 的设置时，输入 <code>/etc/init.d</code> 即可。</p>
+<p>安装的时候会提示：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">You must manually <span class="builtin-name">add</span> the necessary links <span class="keyword">to</span> ensure that the vmware<span class="built_in"> service </span>at /etc/init.d/vmware is automatically started <span class="keyword">and</span> stopped on startup <span class="keyword">and</span> shutdown.</span><br></pre></td></tr></table></figure>
+
+<p>这是说<code>/etc/init.d/vmware</code>中的服务可以自行创建<code>Service</code>来自启，实际上也可以用<a href="https://wiki.archlinux.org/index.php/AUR">AUR</a>中的<a href="https://aur.archlinux.org/packages/vmware-systemd-services/">vmware-systemd-services</a>包实现。</p>
+<h4 id="AUR安装"><a href="#AUR安装" class="headerlink" title="AUR安装"></a>AUR安装</h4><figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">yay -S vmware-workstation	# 一键搞定,但是不知道 <span class="regexp">/etc/i</span>nit.d/vmware 被放到了在哪里</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="出现vmmon内核模块问题"><a href="#出现vmmon内核模块问题" class="headerlink" title="出现vmmon内核模块问题"></a>出现vmmon内核模块问题</h4><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/vmware start</span><br></pre></td></tr></table></figure>
+
+<p>如果这条命令执行有失败，则</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo vmware-modconfig --console --install-all</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a href="https://blog.csdn.net/xujin0/article/details/84985305">https://blog.csdn.net/xujin0/article/details/84985305</a></p>
+</blockquote>
+<h4 id="在macOS平台VMFusion下的使用"><a href="#在macOS平台VMFusion下的使用" class="headerlink" title="在macOS平台VMFusion下的使用"></a>在macOS平台VMFusion下的使用</h4><p>关闭虚拟机，进入设置，显示器设置，取消勾选Retina高分辨率屏，否则字体会渲染很小。</p>
+<p>关闭虚拟机，进入设置，高级，禁用侧通道缓解，降低安全性、提高性能。</p>
+<h4 id="安装Windows-7"><a href="#安装Windows-7" class="headerlink" title="安装Windows 7"></a>安装Windows 7</h4><ul>
+<li>32位不支持UEFI</li>
+<li>安装增强工具——设备菜单下</li>
+<li>开启Aero效果：设置-&gt;显示-&gt;启用3D，显存设置成128MB</li>
+</ul>
+<p>参考：</p>
+<p><a href="https://blog.csdn.net/u014025444/article/details/94151354">archlinux安装virtualbox_星兮博客-这个靠谱</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/164571424">在Arch Linux上安装VMware Workstation - 知乎</a></p>
+<p><a href="https://wiki.archlinux.org/index.php/VMware_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97">VMware (简体中文) - ArchWiki</a></p>
+<p><a href="https://blog.csdn.net/pannubi/article/details/107886538">VMware vmmon问题-CSDN博客</a></p>
+<p><a href="https://www.cnblogs.com/zhangshaojian/p/3702247.html">修复：”Failed to start Load Kernel Modules” - 张绍建 - 博客园</a></p>
+<p><a href="https://blog.csdn.net/xujin0/article/details/84985305">在ubuntu16.04中安装、卸载Vmware14，以及遇到的问题_xujin0的博客-CSDN博客</a></p>
+<p><a href="https://computingforgeeks.com/install-vmware-workstation-on-arch-linux-manjaro/">How to Install VMware Workstation on Arch Linux / Manjaro | ComputingForGeeks</a></p>
+<h3 id="VirtualBox"><a href="#VirtualBox" class="headerlink" title="VirtualBox"></a>VirtualBox</h3><p>安装VirtualBox</p>
+<p>1、安装基本包</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S virtualbox</span> </span><br></pre></td></tr></table></figure>
+
+<p>选择<code>virtualbox-host-modules-arch</code>模块</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S virtualbox-guest-iso</span></span><br></pre></td></tr></table></figure>
+
+<p>2、加载 VirtualBox 内核模块</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sudo modprobe vboxdrv vboxnetadp vboxnetflt</span></span><br></pre></td></tr></table></figure>
+
+<p><code>vboxdrv</code>驱动模块<br><code>vboxnetadp</code> 桥接网络<br><code>vboxnetflt</code>host-only 网络<br><code>vboxpci</code>：若要让虚拟机使用主体机的 PCI 设备，那么就需要这个模块。</p>
+<p>3、安装扩展包</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S virtualbox-ext-oracle</span></span><br></pre></td></tr></table></figure>
+
+<p>4、把当前用户组添加到vboxusers里面</p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">sudo usermod -G vboxusers -<span class="keyword">a</span> 用户名</span><br></pre></td></tr></table></figure>
+
+<p>来源：<a href="https://blog.csdn.net/u014025444/article/details/94151354">https://blog.csdn.net/u014025444/article/details/94151354</a></p>
+<h2 id="安装QuartusⅡ"><a href="#安装QuartusⅡ" class="headerlink" title="安装QuartusⅡ"></a>安装QuartusⅡ</h2><p>下载、sudo安装</p>
+<p>安装证书License：使用Windows证书、加以修改网卡地址即可。</p>
+<p>创建快捷方式</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>quartus.desktop</span><br><span class="line">[Desktop Entry]</span><br><span class="line">Type=Application</span><br><span class="line">Name=Quartus II <span class="number">18.0</span> (<span class="number">64</span>-bit)</span><br><span class="line">Comment=Quartus II <span class="number">18.0</span> (<span class="number">64</span>-bit)</span><br><span class="line">Icon=<span class="regexp">/usr/</span>local<span class="regexp">/quartus-18.0/</span>quartus<span class="regexp">/adm/</span>quartusii.png</span><br><span class="line">Exec=sudo <span class="regexp">/usr/</span>local<span class="regexp">/quartus-18.0/</span>quartus<span class="regexp">/bin/</span>quartus --<span class="number">64</span>bit      </span><br><span class="line">Terminal=<span class="keyword">false</span>  </span><br><span class="line">Path=<span class="regexp">/usr/</span>local/quartus-<span class="number">18.0</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S libpng12		<span class="comment"># 启动依赖</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a href="https://blog.csdn.net/xforce_zuoxiang/article/details/24530329">https://blog.csdn.net/xforce_zuoxiang/article/details/24530329</a></p>
+</blockquote>
+<p>安装Devices</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cd <span class="regexp">/usr/</span>local<span class="regexp">/quartus-18.0/</span>quartus<span class="regexp">/common/</span>devinfo/dev_install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以root权限</span></span><br><span class="line">sudo ./dev_install.run</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://wiki.archlinux.org/index.php/Altera_Design_Software#Launching_Quartus_Prime">Altera Design Software - ArchWiki</a></p>
+<p><a href="https://blog.csdn.net/xforce_zuoxiang/article/details/24530329">ubuntu14.04 64bit 安装 &amp;&amp; 破解quartus13.0 记录_liangzuoxiang的专栏-CSDN博客</a></p>
+<h2 id="安装MATLAB"><a href="#安装MATLAB" class="headerlink" title="安装MATLAB"></a>安装MATLAB</h2><h3 id="安装过程略"><a href="#安装过程略" class="headerlink" title="安装过程略"></a>安装过程略</h3><h3 id="创建快捷方式"><a href="#创建快捷方式" class="headerlink" title="创建快捷方式"></a>创建快捷方式</h3><figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/M</span>atlab.desktop</span><br><span class="line">[Desktop Entry]</span><br><span class="line">Type=Application</span><br><span class="line">Name=Matlab</span><br><span class="line">GenericName=Matlab R2018a</span><br><span class="line">Comment=Matlab:The Language of Technical Computing</span><br><span class="line">Exec=sh <span class="regexp">/usr/</span>local<span class="regexp">/MATLAB/</span>R2018a<span class="regexp">/bin/m</span>atlab -desktop</span><br><span class="line">Icon=<span class="regexp">/usr/</span>local<span class="regexp">/MATLAB/</span>R2018a<span class="regexp">/bin/g</span>lnxa64<span class="regexp">/cef_resources/m</span>atlab_icon.png</span><br><span class="line">Terminal=<span class="keyword">false</span></span><br><span class="line">sudo ln -s <span class="regexp">/usr/M</span>ATLAB<span class="regexp">/R2018a/</span>bin<span class="regexp">/matlab /u</span>sr<span class="regexp">/local/</span>bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a>中文乱码</h3><p>Matlab中文乱码的原因是它的图形界面是用java写的，换句话说，我们要做的实际上就是搞定java的中文显示。</p>
+<ol>
+<li><p>首先找到并进入自己的<code>JRE</code>目录。</p>
+<p>我自己的是：/usr/local/matlab/sys/java/jre/glnx86/jre/，大家需要根据自己的安装目录和matlab版本来确定。</p>
+</li>
+<li><p>在/usr/local/matlab/sys/java/jre/glnx86/jre/lib/fonts/目录下建立新的文件夹fallback。</p>
+</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> fallback</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>把字体复制或链接到fallback目录：</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/fonts/</span>truetype<span class="regexp">/wpy/</span>wqy-zenhei.ttc . </span><br></pre></td></tr></table></figure>
+
+<p>我用的是Win的微软雅黑，你也可以用别的支持中文的字体</p>
+<blockquote>
+<p>注：如果下载字体不太方面，也比较推荐Ubuntu自带的文泉驿正黑，默认存放路径是<code>/usr/share/fonts/truetype/wpy/wqy-zenhei.ttc</code></p>
+</blockquote>
+<ol>
+<li><p>进入fallback目录，执行 <code>mkfontscale</code> 命令</p>
+<p>这时候可以使用<code>ls</code>命令，可以看到/fonts/目录下除了刚才拷进来的/msyh.ttf以外，还多了一个名叫fonts.scale的文件，我们下面要对她动手脚了。</p>
+</li>
+<li><p>字体的最终配置</p>
+<p>将上一步生成的文件[就是那个fonts.scale]添加到 <code>lib/fonts/fonts.dir</code>文件中，可用以下命令完成，当然也可以用编辑器复制粘贴</p>
+</li>
+</ol>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> fallback/fonts.scale &gt;&gt; fonts.<span class="keyword">dir</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>至此Matlab的Java环境中文支持安装完了。</p>
+</li>
+<li><p>进入Matlab，选择 General 菜单下最下方二选一项中的中文，然后载 File&gt;&gt;Preferences&gt;&gt;Fonts 选择安装的中文字体，至此Matlab应该可以正常显示中文了。</p>
+<blockquote>
+<p>如果下拉框里没有相应的字体，请把fallback下的字体加上可读属性：$ chmod a+r fallback/*</p>
+</blockquote>
+</li>
+<li><p>在 <code>字体</code> 设置项中可以把自己想要的字体调大，比默认设置看得更清晰。</p>
+</li>
+</ol>
+<blockquote>
+<p>来源：<a href="https://www.douban.com/note/277522539/">linux matlab中文乱码</a></p>
+</blockquote>
+<h3 id="快捷键失效问题"><a href="#快捷键失效问题" class="headerlink" title="快捷键失效问题"></a>快捷键失效问题</h3><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">预设` - `键盘` - 最上方设置项由`Emacs默认集`改成`Windows默认集</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/m0_37775034/article/details/80876362">linux安装MATLAB R2018a步骤</a></p>
+<p><a href="https://jingyan.baidu.com/article/5225f26ba786fbe6fa09088b.html">matlab怎样设置中文界面-百度经验</a></p>
+</blockquote>
+<h2 id="ios设备文件传输"><a href="#ios设备文件传输" class="headerlink" title="ios设备文件传输"></a>ios设备文件传输</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S ifuse libimobiledevice-git</span><br></pre></td></tr></table></figure>
+
+<p>连接 iPad ，选择“信任”，然后在 Arch 文件管理器即可看到 iPad 的相册和文件。</p>
+<h2 id="蓝牙图形化管理"><a href="#蓝牙图形化管理" class="headerlink" title="蓝牙图形化管理"></a>蓝牙图形化管理</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S blueman</span><br></pre></td></tr></table></figure>
+
+<p>应用程序菜单会出现“蓝牙”，里面可以传输文件之类。</p>
+<h2 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h2><h4 id="Gnome自带"><a href="#Gnome自带" class="headerlink" title="Gnome自带"></a>Gnome自带</h4><p>​    gnome-screenshot配合Gnome快捷键使用，nice！</p>
+<h4 id="Scrot截屏工具"><a href="#Scrot截屏工具" class="headerlink" title="Scrot截屏工具"></a><strong>Scrot截屏工具</strong></h4><p>1.默认截下整个桌面保存到当前目录</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">scrot</span></span><br></pre></td></tr></table></figure>
+
+<p>2.指定保存目标文件夹和截图文件名。</p>
+<figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line">scrot ~<span class="regexp">/Pictures/my</span>_desktop.png</span><br></pre></td></tr></table></figure>
+
+<p>3.截取特定窗口或矩形区域</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">scrot -s</span></span><br></pre></td></tr></table></figure>
+
+<p>4.将截取的截屏传递给其它命令</p>
+<figure class="highlight cos"><table><tr><td class="code"><pre><span class="line">scrot -e ‘<span class="keyword">mv</span> <span class="built_in">$f</span> ~/screenshots’</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="OCR-识别——tesseract"><a href="#OCR-识别——tesseract" class="headerlink" title="OCR 识别——tesseract"></a>OCR 识别——tesseract</h2><p>1.安装</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo pacman -S tesseract</span><br></pre></td></tr></table></figure>
+
+<p>2.安装中文字库</p>
+<p>​    对应语言的字库下载地址：<a href="https://github.com/tesseract-ocr/tessdata">https://github.com/tesseract-ocr/tessdata</a></p>
+<p>​    下载完成之后把.traineddata字库文件放到tessdata目录下，默认路径是/usr/share/tesseract-ocr/4.00/tessdata</p>
+<p>3.使用方法（待补充）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">man</span> <span class="string">tesseract</span></span><br><span class="line"><span class="number">627</span>  <span class="string">yay</span> <span class="string">-S</span> <span class="string">xclip</span></span><br><span class="line"><span class="number">628</span>  <span class="string">xclip</span></span><br><span class="line"><span class="number">629</span>  <span class="string">tesseract</span></span><br><span class="line"><span class="number">630</span>  <span class="string">tesseract</span> <span class="string">a.png</span> <span class="string">~/Desktop</span> <span class="string">&amp;&gt;</span> <span class="string">/dev/null</span> <span class="string">-l</span> <span class="string">eng+chi1</span></span><br><span class="line"><span class="number">631</span>  <span class="string">tesseract</span> <span class="string">a.png</span> <span class="string">~/Desktop/a.txt</span></span><br><span class="line"><span class="number">632</span>  <span class="string">tesseract</span> <span class="string">b.png</span> <span class="string">~/Desktop/b.txt</span> <span class="string">-l</span> <span class="string">chi1</span></span><br><span class="line"><span class="number">633</span>  <span class="string">ls</span> <span class="string">/usr/share/tessdata</span></span><br><span class="line"><span class="number">634</span>  <span class="string">tesseract</span> <span class="string">b.png</span> <span class="string">~/Desktop/b.txt</span> <span class="string">-l</span> <span class="string">chi_sim</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/mc-r/p/11371590.html">ArchLinux安装截图工具 - 看不见的R - 博客园</a></p>
+<p><a href="https://blog.csdn.net/qq_40451749/article/details/83866327">安装深度截图</a></p>
+<p><a href="https://docs.qq.com/doc/DWGtmV1RuSG9IY0V6">Ubuntu-OCR</a></p>
+</blockquote>
+<h2 id="科学上网-clash-core"><a href="#科学上网-clash-core" class="headerlink" title="科学上网 clash-core"></a>科学上网 clash-core</h2><h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h4><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S clash</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h4><p>安装好后，shell运行clash，会在<code>/home/当前用户ID/.config/clash</code>文件夹，生成两个文件 <code>config.yml</code> 和 <code>Country.mmdb</code>。</p>
+<p>把<code>config.yml</code>干掉，在Shell里面运行<code>clash -d &quot;~/.config/clash&quot;</code>，会提示<code>Can&#39;t find config, create a initial config file</code>，然后可以发现一个新的<code>config.yaml</code>。</p>
+<p>把BridgeV的配置文件copy过来，复制全部，粘贴到刚创建的配置文件里。看里面的设置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">port:</span> <span class="number">7890</span>					<span class="comment"># http代理端口</span></span><br><span class="line"><span class="attr">socks-port:</span> <span class="number">7891</span>			<span class="comment"># socks5端口</span></span><br><span class="line"><span class="attr">allow-lan:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">mode:</span> <span class="string">rule</span></span><br><span class="line"><span class="attr">log-level:</span> <span class="string">info</span></span><br><span class="line"><span class="attr">external-controller:</span> <span class="string">&#x27;127.0.0.1:9090&#x27;</span>	<span class="comment"># 外部控制端口</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器进入<a href="http://clash.razord.top/%EF%BC%8C%E8%BE%93%E5%85%A59090%EF%BC%8C%E5%AF%86%E9%92%A5%E4%B8%8D%E7%94%A8%EF%BC%8C%E8%BF%9B%E5%85%A5%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF%E3%80%82">http://clash.razord.top/，输入9090，密钥不用，进入控制面板。</a></p>
+<p>浏览器ProxySwitchyOmega添加情景模式：<code>socks5：127.0.0.1：7891</code>正常使用</p>
+<p>问题：http端口不知被谁占用了</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">ERRO[0000] Start HTTP<span class="built_in"> server </span>error: listen tcp 127.0.0.1:7890: bind:<span class="built_in"> address </span>already <span class="keyword">in</span> use </span><br><span class="line"><span class="builtin-name">INFO</span>[0000]<span class="built_in"> SOCKS proxy </span>listening at: 127.0.0.1:7891     </span><br><span class="line"><span class="builtin-name">INFO</span>[0000] RESTful API listening at: 127.0.0.1:9090</span><br></pre></td></tr></table></figure>
+
+<p>用<code>lsof -i:7890</code>命令也没查出是哪个程序，估计是安装了clashy、Clash-Pro又卸载掉了的缘故。</p>
+<p>重启后这个问题解决了，而且创建启动图标后开机自动启动（估计是之前<a href="https://www.jianshu.com/p/1f711db26f34">创建</a>并开启了systenctl enable clash.service）。</p>
+<h4 id="3-创建应用程序启动图标"><a href="#3-创建应用程序启动图标" class="headerlink" title="3.创建应用程序启动图标"></a>3.创建应用程序启动图标</h4><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo nano <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>clash.desktop</span><br></pre></td></tr></table></figure>
+
+<p>写入如下：（自行修改，比如图标可以自己下载一个放到想要的目录）</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Encoding</span>=UTF-<span class="number">8</span></span><br><span class="line"><span class="attr">Version</span>=<span class="number">1.1</span>.<span class="number">0</span></span><br><span class="line"><span class="attr">Name</span>=Clash</span><br><span class="line"><span class="attr">Comment</span>=A rule-based tunnel in Go</span><br><span class="line"><span class="attr">Exec</span>=/usr/bin.clash</span><br><span class="line"><span class="attr">Icon</span>=applications-system</span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Categories</span>=Network</span><br></pre></td></tr></table></figure>
+
+<p>然后打开启动器，搜索clash，就可以看见clash的图标了。</p>
+<h3 id="快速查找文件-or-程序"><a href="#快速查找文件-or-程序" class="headerlink" title="快速查找文件 or 程序"></a>快速查找文件 or 程序</h3><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay</span> -S mcloate		<span class="comment"># 安装locate</span></span><br><span class="line">sudo updatedb 		<span class="comment"># 更新数据库</span></span><br><span class="line">lotate xxx			<span class="comment"># 查找（速度很快）</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S catfish</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="KDE-Connect-设备互联"><a href="#KDE-Connect-设备互联" class="headerlink" title="KDE Connect 设备互联"></a>KDE Connect 设备互联</h3><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo pacman -S kdeconnect</span><br></pre></td></tr></table></figure>
+
+<p>手机在 <code>Google-Play</code> 安装，记得进入APP后开启权限。</p>
+<p>手机传送到Linux下的文件会出存在<code>/下载</code>文件夹。</p>
+<p>期待 MFiles 出 Linux 版~</p>
+<h3 id="出现missing-firmware错误"><a href="#出现missing-firmware错误" class="headerlink" title="出现missing firmware错误"></a>出现<code>missing firmware</code>错误</h3><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">==&gt; WARNING: Possibly missing<span class="built_in"> firmware </span><span class="keyword">for</span> module: wd719x</span><br><span class="line">==&gt; WARNING: Possibly missing<span class="built_in"> firmware </span><span class="keyword">for</span> module: aic94xx</span><br><span class="line">==&gt; WARNING: Possibly missing<span class="built_in"> firmware </span><span class="keyword">for</span> module: xhci_pci</span><br></pre></td></tr></table></figure>
+
+<p>解决办法来自：<a href="https://tieba.baidu.com/p/5256219016?red_tag=1188799096">https://tieba.baidu.com/p/5256219016?red_tag=1188799096</a></p>
+<p>这些驱动程序不是运行系统所必需的，在某些时候它们被排除在内核之外。</p>
+<p>如果这些你有强迫症，那么可以从aur下载安装它们。</p>
+<p><code>wd719x</code> 是 <code>“Western Digital WD7193，WD7197和WD7296 SCSI卡”</code> 的驱动程序<br><code>aic94xx </code>是 <code>“Adaptec SAS 44300,48300,58300 Sequencer” </code>的驱动程序。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yaourt</span> -S aic<span class="number">94</span>xx-firmware wd<span class="number">719</span>x-firmware</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.limstash.com/articles/202004/1582">https://www.limstash.com/articles/202004/1582</a>)</p>
+<h2 id="指纹尝试"><a href="#指纹尝试" class="headerlink" title="指纹尝试"></a>指纹尝试</h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">yay -S usbutils</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">lsusb</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://ywnz.com/linuxjc/5122.html">https://ywnz.com/linuxjc/5122.html</a></p>
+<p><a href="https://blog.csdn.net/qq_29343201/article/details/79832442">https://blog.csdn.net/qq_29343201/article/details/79832442</a></p>
+<p><a href="https://ywnz.com/linuxjc/4518.html">https://ywnz.com/linuxjc/4518.html</a></p>
+<p><a href="https://wiki.archlinux.org/index.php/Fprint">https://wiki.archlinux.org/index.php/Fprint</a></p>
+<p><a href="https://aur.archlinux.org/packages/libfprint-2-tod1-xps9300-bin/">https://aur.archlinux.org/packages/libfprint-2-tod1-xps9300-bin/</a></p>
+<p><a href="https://askubuntu.com/questions/1182758/how-to-use-27c6538d-goodix-fingerprint-dell-inspiron-5490-dell-vostro-5590">https://askubuntu.com/questions/1182758/how-to-use-27c6538d-goodix-fingerprint-dell-inspiron-5490-dell-vostro-5590</a></p>
+<h2 id="附：常用软件"><a href="#附：常用软件" class="headerlink" title="附：常用软件"></a>附：常用软件</h2><hr>
+<p>title: ArchLinux 番外之常用软件分类清单<br>date: 2020-11-18 12:35:59<br>tags:<br>    - Arch<br>    - Linux</p>
+<hr>
+<p>仅供参考</p>
+<!--more-->
+
+<h3 id="1-硬件相关"><a href="#1-硬件相关" class="headerlink" title="1.硬件相关"></a>1.硬件相关</h3><p>exfat-utils</p>
+<p>apfs-fuse-git</p>
+<p>broadcom-wl-dkms</p>
+<p>ntfs-3g</p>
+<p>filelight    磁盘使用情况</p>
+<p>vulkan-intel    显卡驱动</p>
+<p>nvidia    nvidia-settings</p>
+<p>partitionmanager    KDE分区管理器</p>
+<p>gparted</p>
+<p>wpa_supplicant</p>
+<h3 id="2-国产软件"><a href="#2-国产软件" class="headerlink" title="2.国产软件"></a>2.国产软件</h3><p>baidunetdisk-bin</p>
+<p>deepin-wine-wechat</p>
+<p>deepin.com.qq.im</p>
+<p>deepin.com.qq.im.light</p>
+<p>deepin.com.qq.office</p>
+<p>wps-office-cn    wps-office-mui-zh-cn</p>
+<p>360zip（AUR）</p>
+<h3 id="3-系统工具-amp-运行环境"><a href="#3-系统工具-amp-运行环境" class="headerlink" title="3.系统工具 &amp; 运行环境"></a>3.系统工具 &amp; 运行环境</h3><p>zsh</p>
+<p>ark</p>
+<p>cairo-dock</p>
+<p>conky</p>
+<p>latte-dock</p>
+<p>ocs-url</p>
+<p>deepin-screenshot</p>
+<p>deepin-wine</p>
+<p>deepin-wine5</p>
+<p>docker</p>
+<p>gtk-engine-murrine<br>gtk-engines</p>
+<p>fcitx<br>fcitx-cloudpinyin<br>fcitx-configtool<br>fcitx-googlepinyin<br>fcitx-qt5<br>fcitx-sogouimebs</p>
+<p>gnome-settings-daemon</p>
+<p>git</p>
+<p>nautilus    nautilus-open-any-terminal</p>
+<p>nemo    nemo-qt-components    nemo-seahorse    nemo-share</p>
+<h3 id="4-代码编辑器"><a href="#4-代码编辑器" class="headerlink" title="4.代码编辑器"></a>4.代码编辑器</h3><p>atom</p>
+<p>code</p>
+<p>gedit</p>
+<p>nano</p>
+<p>pycharm-community-edition</p>
+<h3 id="5-科学上网"><a href="#5-科学上网" class="headerlink" title="5.科学上网"></a>5.科学上网</h3><p>clash<br>v2ray<br>qv2ray</p>
+<h3 id="6-下载器"><a href="#6-下载器" class="headerlink" title="6.下载器"></a>6.下载器</h3><p>uget</p>
+<p>wget</p>
+<p>motrix-git    </p>
+<p>freedownloadmanager</p>
+<h3 id="7-神器"><a href="#7-神器" class="headerlink" title="7.神器"></a>7.神器</h3><p>flameshot 火焰截图</p>
+<p>gpicview   图片查看</p>
+<p>freefilesync-bin    文件备份</p>
+<p>imwheel    鼠标优化</p>
+<p>kdeconnect    设备互联</p>
+<p>scrot    截图</p>
+<p>neofetch    screenfetch        系统信息，装B</p>
+<p>hugo    博客</p>
+<p>konsole    终端</p>
+<p>netease-cloud-music    网易云</p>
+<p>numlockx    小键盘</p>
+<p>spotify    听音乐</p>
+<p>teamviewer    远程</p>
+<p>thunar    文件管理器</p>
+<p>thunderbird    thunderbird-i18n-zh-cn    邮件</p>
+<p>tilix    终端</p>
+<p>typora    写作</p>
+<p>virtualbox    虚拟机</p>
+<h3 id="8-媒体"><a href="#8-媒体" class="headerlink" title="8.媒体"></a>8.媒体</h3><p>mpv<br>vlc</p>
+<h3 id="9-浏览器"><a href="#9-浏览器" class="headerlink" title="9.浏览器"></a>9.浏览器</h3><p>microsoft-edge-dev-bin</p>
+<p>google-chrome</p>
+<p>firefox    firefox-i18n-zh-cn</p>
+<h3 id="10-AUR助手"><a href="#10-AUR助手" class="headerlink" title="10.AUR助手"></a>10.AUR助手</h3><p>yaourt<br>yay</p>
+]]></content>
+      <tags>
+        <tag>Arch</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+</search>
