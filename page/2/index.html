@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-13 08:27:49" itemprop="dateModified" datetime="2020-12-13T08:27:49+08:00">2020-12-13</time>
+                <time title="修改时间：2021-01-02 08:56:09" itemprop="dateModified" datetime="2021-01-02T08:56:09+08:00">2021-01-02</time>
               </span>
 
           <br>
@@ -253,112 +253,14 @@
 
       
           <p><img src="https://s3.ax1x.com/2020/11/26/D0r2dK.jpg" alt="img"></p>
-<h2 id="安装Gnome桌面"><a href="#安装Gnome桌面" class="headerlink" title="安装Gnome桌面"></a>安装Gnome桌面</h2><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S xorg xorg-server xorg-xinit</span></span><br><span class="line"></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S gnome</span></span><br><span class="line"></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S gdm </span></span><br><span class="line"></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl enable gdm.service</span></span><br><span class="line"><span class="comment"># 安装必备工具，以防进入系统什么都没有</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">pacman -S tilix nano</span></span><br></pre></td></tr></table></figure>
-
-<p>开机启动<code>gdm</code>后黑屏，死活不显示桌面，通过安装NVIDIA显卡驱动解决：</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S nvidia</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="在Gnome桌面添加图标"><a href="#在Gnome桌面添加图标" class="headerlink" title="在Gnome桌面添加图标"></a>在Gnome桌面添加图标</h2><p>Gnome 3.28 版本桌面图标无法通过 <code>gnome-tweak-tool</code> 显示；</p>
-<p>Nautilus 3.28 完全移除了桌面图标的显示</p>
-<p><strong>方法1: 使用Nemo作为默认文件管理器（推荐）</strong></p>
-<p>a) 安装<code>nemo</code></p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo pacman -S nemo</span><br><span class="line"><span class="variable">$ </span>sudo pacman -S cinnamon-translations 			<span class="comment"># 中文语言包</span></span><br></pre></td></tr></table></figure>
-
-<p>b) 添加<code>nemo-desktop</code>自启动</p>
-<p>创建nemo.desktop文件，将文件复制到~/.config/autostart目录下，内容如下：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Name</span>=Desktop Icons</span><br><span class="line"><span class="attr">Exec</span>=nemo-desktop</span><br><span class="line"><span class="attr">OnlyShowIn</span>=GNOME<span class="comment">;</span></span><br><span class="line"><span class="attr">NoDisplay</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">X-GNOME-Autostart-Phase</span>=Desktop</span><br><span class="line"><span class="attr">X-GNOME-Autostart-Notify</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">X-GNOME-AutoRestart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">X-GNOME-Provides</span>=filemanager</span><br></pre></td></tr></table></figure>
-
-<p>c) 显示桌面图标</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">安装完成，设置Nemo作为默认的文件管理器，并让 nemo 处理桌面图标：</span><br><span class="line">xdg-mime<span class="built_in"> default </span>nemo.desktop inode/directory application/x-gnome-saved-search</span><br><span class="line">gsettings <span class="builtin-name">set</span> org.gnome.desktop.background show-desktop-icons <span class="literal">false</span></span><br><span class="line">gsettings <span class="builtin-name">set</span> org.nemo.desktop show-desktop-icons <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line">恢复原来设置：</span><br><span class="line">xdg-mime<span class="built_in"> default </span>nautilus.desktop inode/directory application/x-gnome-saved-search</span><br><span class="line">gsettings <span class="builtin-name">set</span> org.nemo.desktop show-desktop-icons <span class="literal">false</span></span><br><span class="line">gsettings <span class="builtin-name">set</span> org.gnome.desktop.background show-desktop-icons <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">gsettings <span class="builtin-name">set</span> org.nemo.desktop show-desktop-icons <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>d) 注销账户重新登陆</p>
-<blockquote>
-<p>参阅 AUR 和 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Nemo#Installation">Nemo - ArchWiki</a> 。</p>
-</blockquote>
-<p><strong>方法2: 安装<code>Desktop Icons NG</code>插件</strong></p>
-<p>地址：<a target="_blank" rel="noopener" href="https://extensions.gnome.org/extension/2087/desktop-icons-ng-ding/">https://extensions.gnome.org/extension/2087/desktop-icons-ng-ding/</a></p>
-<p>缺点：没有汉化。</p>
-<h2 id="安装-Gnome-Shell-插件"><a href="#安装-Gnome-Shell-插件" class="headerlink" title="安装 Gnome Shell 插件"></a>安装 Gnome Shell 插件</h2><h3 id="安装gnome-tweaks工具"><a href="#安装gnome-tweaks工具" class="headerlink" title="安装gnome-tweaks工具"></a>安装<code>gnome-tweaks</code>工具</h3><p>注意！注意！注意！</p>
-<p>重要的事情说三遍！</p>
-<p>此处应安装 <code>git</code> 版本的 <code>gnome-tweaks</code>，就可以免于标题栏按钮放到左边后本身出现问题。</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S gnome-tweaks-git</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="①在线一键安装（推荐）"><a href="#①在线一键安装（推荐）" class="headerlink" title="①在线一键安装（推荐）"></a>①在线一键安装（推荐）</h3><p>通过安装<code>浏览器插件 + 本地连接器</code>来实现</p>
-<p><strong>步骤 1： 安装 浏览器附加组件</strong></p>
-<ul>
-<li>对于 Google Chrome、Chromium 和 Vivaldi： <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep">Chrome Web 商店</a></li>
-<li>对于 Firefox： <a target="_blank" rel="noopener" href="https://addons.mozilla.org/en/firefox/addon/gnome-shell-integration/">Mozilla Addons</a></li>
-<li>对于 Opera： <a target="_blank" rel="noopener" href="https://addons.opera.com/en/extensions/details/gnome-shell-integration/">Opera Addons</a></li>
-</ul>
-<p><strong>步骤 2： 安装本地连接器</strong></p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S chrome-gnome-<span class="keyword">shell</span><span class="bash">					<span class="comment"># ArchLinux</span></span></span><br><span class="line">sudo apt install chrome-gnome-<span class="keyword">shell</span><span class="bash">					   <span class="comment"># Ubuntu</span></span></span><br></pre></td></tr></table></figure>
-
-<p>不要担心包名中的 “chrome” 前缀，它与 Chrome 无关，你无需再次安装 Firefox 或 Opera 的单独软件包。</p>
-<h3 id="②手动下载安装"><a href="#②手动下载安装" class="headerlink" title="②手动下载安装"></a>②手动下载安装</h3><ol>
-<li><p>去 GNOME 扩展网站下载最新版本的扩展。</p>
-</li>
-<li><p>解压下载的文件，将该文件夹复制到 <code>~/.local/share/gnome-shell/extensions</code> 目录。</p>
-<blockquote>
-<p>注：按 <code>Ctrl+H</code> 显示隐藏的文件夹</p>
-</blockquote>
-</li>
-<li><p>进入插件文件夹并打开 <code>metadata.json</code> 文件，寻找 <code>uuid</code> 的值。</p>
-</li>
-<li><p>将插件文件夹重命名为 <code>uuid</code> 的值。</p>
-</li>
-<li><p>重新启动 GNOME Shell： 按 <code>Alt+F2</code> 并输入 <code>r</code> 重新启动 GNOME Shell。</p>
-</li>
-<li><p>用<code>GNOME Tweaks Tool</code>管理手动安装的 GNOME 扩展。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://linux.cn/article-9447-1.html">https://linux.cn/article-9447-1.html</a></p>
-</li>
-</ol>
-<p>查看Gnome3版本</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gnome-<span class="keyword">shell</span><span class="bash"> --version</span></span><br></pre></td></tr></table></figure>
-
-<p>Gnome Shell Extensions 下载网站：<a target="_blank" rel="noopener" href="https://extensions.gnome.org/">https://extensions.gnome.org/</a></p>
-<h2 id="真·macOS主题化"><a href="#真·macOS主题化" class="headerlink" title="真·macOS主题化"></a>真·macOS主题化</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">优化` - `外观</span><br></pre></td></tr></table></figure>
-
-<p><code>应用程序</code> <a target="_blank" rel="noopener" href="https://www.opendesktop.org/p/1403328">WhiteSur-light</a></p>
-<p><code>光标</code> <a target="_blank" rel="noopener" href="https://www.opendesktop.org/p/1355701">McMojave-cursors</a></p>
-<p><code>图标</code> <a target="_blank" rel="noopener" href="https://www.opendesktop.org/p/1400021">Mkos-Big-Sur</a></p>
-<p><code>Shell</code> Mojave-dark（顶栏）</p>
-<p><code>声音</code> Default</p>
-<p><code>图像</code> <a target="_blank" rel="noopener" href="https://tieba.baidu.com/p/6771579022">BigSur壁纸</a></p>
-<p><code>Plank-Dock</code> <a target="_blank" rel="noopener" href="https://www.opendesktop.org/s/Gnome/p/1248226/">全程参考：Mojave</a></p>
-<p>另一类似主题：</p>
-<p><a target="_blank" rel="noopener" href="https://www.opendesktop.org/s/Gnome/p/1399398/">https://www.opendesktop.org/s/Gnome/p/1399398/</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.opendesktop.org/s/Gnome/p/1408781/">https://www.opendesktop.org/s/Gnome/p/1408781/</a></p>
-<p>1.先安装Plank：</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S plank</span></span><br></pre></td></tr></table></figure>
-
-<p>2.再下载Plank主题：<code>Download</code> - <code>mcOS_Mojave_BS_White.zip</code> - <code>解压 </code>- 复制解压出的文件夹到<code>~/.local/share/plank/themes</code>，就可以设置主题了</p>
-<p>3.添加最左端Launcher：<code>Download</code> - 下载第一个<code>Launchpad-ICON-for-Palnk</code> - 复制到<code>~/.local/share/applications</code>，不要关闭文件管理器，直接拖到Dock上即可。</p>
-<h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><h3 id="禁用多个工作区"><a href="#禁用多个工作区" class="headerlink" title="禁用多个工作区"></a>禁用多个工作区</h3><p>优化 - 工作区 - 静态工作区 - 数目从4设置为1</p>
-<h3 id="关闭烦人的左上触发角"><a href="#关闭烦人的左上触发角" class="headerlink" title="关闭烦人的左上触发角"></a>关闭烦人的左上触发角</h3><p><a target="_blank" rel="noopener" href="https://www.zmonster.me/2014/07/26/turn-off-hot-corner-in-gnome-shell.html">https://www.zmonster.me/2014/07/26/turn-off-hot-corner-in-gnome-shell.html</a> 无效</p>
-<p>安装这个插件即可，什么都不用设置。</p>
-<p><a target="_blank" rel="noopener" href="https://extensions.gnome.org/extension/1362/custom-hot-corners/">https://extensions.gnome.org/extension/1362/custom-hot-corners/</a></p>
-<h3 id="启用系统程序托盘"><a href="#启用系统程序托盘" class="headerlink" title="启用系统程序托盘"></a>启用系统程序托盘</h3><p>效果更好：<a target="_blank" rel="noopener" href="https://extensions.gnome.org/extension/2890/tray-icons-reloaded/">https://extensions.gnome.org/extension/2890/tray-icons-reloaded/</a></p>
-<p>安装<code>Topicons Plus</code>插件： <a target="_blank" rel="noopener" href="https://extensions.gnome.org/extension/1031/topicons/">https://extensions.gnome.org/extension/1031/topicons/</a></p>
-<p><code>优化</code> 里面设置一下位置右对齐、托盘偏移量调到4</p>
-<h3 id="截屏快捷键设置"><a href="#截屏快捷键设置" class="headerlink" title="截屏快捷键设置"></a>截屏快捷键设置</h3><p>系统设置 - 键盘快捷键 - 已经有<code>截图</code>项 - 自行更改即可</p>
-<blockquote>
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/shuaijiasanshao/article/details/51123155">https://blog.csdn.net/shuaijiasanshao/article/details/51123155</a></p>
-</blockquote>
-<h3 id="fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）"><a href="#fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）" class="headerlink" title="fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）"></a>fcitx输入法突然抽风，没任何反应了（可能是Wayland引发的）</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39465823/article/details/85158605">https://blog.csdn.net/weixin_39465823/article/details/85158605</a></p>
-<p>将在<code>xprofile</code>文件里的那三句加入到<code>/etc/environment</code>里面去，即：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/profile</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">GTK_IM_MODULE</span>=fcitx </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">QT_IM_MODULE</span>=fcitx </span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">XMODIFIERS</span>=<span class="string">&quot;@im=fcitx&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="设置缩放"><a href="#设置缩放" class="headerlink" title="设置缩放"></a>设置缩放</h3><p>设置 - 显示器 里面只有100 和 200 的选项，而<code>优化</code> 工具貌似只能放大文字。</p>
-<p>根据网上的说法，Wayland可以恢复<code>1.25</code>、<code>1.50</code>、<code>1.75</code>等值，而X11不行。幸运的是，新版Gnome用的应该都是Wayland，具体可以在登录界面（密码框）右下角设置按钮，默认选择的是<code>Gnome</code>，而不是<code>Gnome on Xorg</code>。</p>
-<p>于是运行命令：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gsettings</span> <span class="selector-tag">set</span> <span class="selector-tag">org</span><span class="selector-class">.gnome</span><span class="selector-class">.mutter</span> <span class="selector-tag">experimental-features</span> &quot;<span class="selector-attr">[<span class="string">&#x27;scale-monitor-framebuffer&#x27;</span>]</span>&quot;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>参考：</strong><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/HiDPI#GNOME">ArchWiki</a>、<a target="_blank" rel="noopener" href="https://www.omgubuntu.co.uk/2019/06/enable-fractional-scaling-ubuntu-19-04">论坛-1</a>、<a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1029436/enable-fractional-scaling-for-ubuntu-18-04">论坛-2</a></p>
-<p>运行<code>xrandr --output eDP1 --scale 1.25x1.25</code>这种命令极不靠谱（强行缩放，1x1是原始、1.25x1.25是缩小）</p>
-</blockquote>
-<h2 id="附：Anarchy版Gnome桌面（参考）"><a href="#附：Anarchy版Gnome桌面（参考）" class="headerlink" title="附：Anarchy版Gnome桌面（参考）"></a>附：Anarchy版Gnome桌面（参考）</h2><p>Anarchy 用的是 <code>LightDM</code>，但是<code>gdm</code>一样好用（考虑到切换Xorg与Classic）。</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">~ » pacman -Q<span class="string">q | grep xorg-server</span></span><br><span class="line"><span class="string">xorg-server</span></span><br><span class="line"><span class="string">xorg-server-common</span></span><br><span class="line"><span class="string">xorg-server-xwayland</span></span><br><span class="line"><span class="string">~ » pacman -Qq |</span> <span class="keyword">grep</span> xf86                                                        </span><br><span class="line">libxxf86vm</span><br><span class="line">xf86-input-libinput</span><br><span class="line">xf86-video-intel</span><br><span class="line">~ » pacman -Q<span class="string">q | grep vulkan                                                      </span></span><br><span class="line"><span class="string">vulkan-icd-loader</span></span><br><span class="line"><span class="string">~ » pacman -Qq |</span> <span class="keyword">grep</span> gdm                                                          </span><br><span class="line">gdm</span><br><span class="line">libgdm</span><br><span class="line">~ » pacman -Q<span class="string">q | grep gnome-session                                                </span></span><br><span class="line"><span class="string">gnome-session</span></span><br><span class="line"><span class="string">cat ~/.xinitrc</span></span><br><span class="line"><span class="string">exec gnome-session</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/01/%E5%B0%86Gnome%E6%A1%8C%E9%9D%A2%E6%8D%8F%E6%88%90%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%E5%BD%A2%E7%8A%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
