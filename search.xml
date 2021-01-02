@@ -203,6 +203,8 @@
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>/opt/deepinwine/apps/Deepin-QQ</code> 是启动用的目录；</p>
 <p><code>~/.deepinwine/Deepin-QQ/</code> 是exe程序安装目录。</p>
 <p>重新安装：删除已安装的QQ目录 <code>rm -rf ~/.deepinwine/Deepin-QQ</code>之后，再点击启动器图标即可。</p>
+<a id="more"></a>
+
 <h1 id="wine环境配置"><a href="#wine环境配置" class="headerlink" title="wine环境配置"></a>wine环境配置</h1><h2 id="安装wine"><a href="#安装wine" class="headerlink" title="安装wine"></a>安装wine</h2><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S wine</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="安装deepin-wine"><a href="#安装deepin-wine" class="headerlink" title="安装deepin-wine"></a>安装deepin-wine</h2><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yay -S deepin-wine</span></span><br></pre></td></tr></table></figure>
