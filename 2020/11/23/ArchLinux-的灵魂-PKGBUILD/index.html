@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"xuedao01.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="这学期开始真正使用 Archlinux ，由于最近AUR移除了deepin-wine这个包，对我安装QQ&amp;WeChat造成了些许困扰，因此不得不真正研究一下PKGBUILD。 首先声明一下，这文章大部分是抄的，再加上自己的理解与修改，形成此文。来源已标明。">
+  <meta name="description" content="AUR移除deepin-wine包，安装QQ&amp;WeChat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ArchLinux 的灵魂 - PKGBUILD">
 <meta property="og:url" content="http://xuedao01.github.io/2020/11/23/ArchLinux-%E7%9A%84%E7%81%B5%E9%AD%82-PKGBUILD/index.html">
 <meta property="og:site_name" content="学道之人">
-<meta property="og:description" content="这学期开始真正使用 Archlinux ，由于最近AUR移除了deepin-wine这个包，对我安装QQ&amp;WeChat造成了些许困扰，因此不得不真正研究一下PKGBUILD。 首先声明一下，这文章大部分是抄的，再加上自己的理解与修改，形成此文。来源已标明。">
+<meta property="og:description" content="AUR移除deepin-wine包，安装QQ&amp;WeChat">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-23T11:13:32.000Z">
-<meta property="article:modified_time" content="2020-12-28T15:11:30.000Z">
+<meta property="article:modified_time" content="2021-01-04T02:46:06.000Z">
 <meta property="article:author" content="「xuedao01」">
 <meta name="twitter:card" content="summary">
 
@@ -201,7 +201,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="「xuedao01」">
-      <meta itemprop="description" content="信念这玩意不是说出来的，是做出来的。">
+      <meta itemprop="description" content="如果这是你的路,你愿意来老A吗?">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 23:11:30" itemprop="dateModified" datetime="2020-12-28T23:11:30+08:00">2020-12-28</time>
+                <time title="修改时间：2021-01-04 10:46:06" itemprop="dateModified" datetime="2021-01-04T10:46:06+08:00">2021-01-04</time>
               </span>
 
           
@@ -242,7 +242,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.4k</span>
+              <span>9.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -261,8 +261,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>这学期开始真正使用 Archlinux ，由于最近AUR移除了deepin-wine这个包，对我安装QQ&amp;WeChat造成了些许困扰，因此不得不真正研究一下PKGBUILD。</p>
-<p>首先声明一下，这文章大部分是抄的，再加上自己的理解与修改，形成此文。来源已标明。</p>
+        <p>AUR移除deepin-wine包，安装QQ&amp;WeChat</p>
 <a id="more"></a>
 
 <h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/PKGBUILD_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">PKGBUILD（简体中文）</a></p>
@@ -464,21 +463,21 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">「xuedao01」</p>
-  <div class="site-description" itemprop="description">信念这玩意不是说出来的，是做出来的。</div>
+  <div class="site-description" itemprop="description">如果这是你的路,你愿意来老A吗?</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -522,12 +521,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">57k</span>
+    <span title="站点总字数">58k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:34</span>
+    <span title="站点阅读时长">1:37</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

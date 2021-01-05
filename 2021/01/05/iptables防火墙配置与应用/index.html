@@ -20,21 +20,25 @@
     var CONFIG = {"hostname":"xuedao01.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="背景随着systemctl的出现，开机自启动脚本rc.local从archlinux上消失了；但有的时候我们也想在开机时（尤其是有root权限时）进行一些配置。我们可以把执行这样的一个脚本rc.local做成一个“服务”的形式，这样就可以同时使用systemctl和rc.local了。">
+  <meta name="description" content="草稿·学习·”四表五链“">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ArchLinux 番外之开机自动执行脚本">
-<meta property="og:url" content="http://xuedao01.github.io/2020/10/07/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:title" content="iptables防火墙配置与应用">
+<meta property="og:url" content="http://xuedao01.github.io/2021/01/05/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="学道之人">
-<meta property="og:description" content="背景随着systemctl的出现，开机自启动脚本rc.local从archlinux上消失了；但有的时候我们也想在开机时（尤其是有root权限时）进行一些配置。我们可以把执行这样的一个脚本rc.local做成一个“服务”的形式，这样就可以同时使用systemctl和rc.local了。">
+<meta property="og:description" content="草稿·学习·”四表五链“">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-10-07T07:39:03.000Z">
-<meta property="article:modified_time" content="2020-10-17T08:24:50.000Z">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192058276-752439770.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192222073-1011363533.png">
+<meta property="article:published_time" content="2021-01-05T14:33:35.000Z">
+<meta property="article:modified_time" content="2021-01-05T15:42:38.000Z">
 <meta property="article:author" content="「xuedao01」">
-<meta property="article:tag" content="Arch">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="防火墙">
+<meta property="article:tag" content="代理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192058276-752439770.png">
 
-<link rel="canonical" href="http://xuedao01.github.io/2020/10/07/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC/">
+<link rel="canonical" href="http://xuedao01.github.io/2021/01/05/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/">
 
 
 <script id="page-configurations">
@@ -47,7 +51,7 @@
   };
 </script>
 
-  <title>ArchLinux 番外之开机自动执行脚本 | 学道之人</title>
+  <title>iptables防火墙配置与应用 | 学道之人</title>
   
 
 
@@ -198,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xuedao01.github.io/2020/10/07/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="http://xuedao01.github.io/2021/01/05/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -211,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ArchLinux 番外之开机自动执行脚本
+          iptables防火墙配置与应用
         </h1>
 
         <div class="post-meta">
@@ -220,16 +224,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-10-07 15:39:03" itemprop="dateCreated datePublished" datetime="2020-10-07T15:39:03+08:00">2020-10-07</time>
+              <time title="创建时间：2021-01-05 22:33:35 / 修改时间：23:42:38" itemprop="dateCreated datePublished" datetime="2021-01-05T22:33:35+08:00">2021-01-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-17 16:24:50" itemprop="dateModified" datetime="2020-10-17T16:24:50+08:00">2020-10-17</time>
-              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -244,14 +242,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -263,15 +261,79 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>随着systemctl的出现，开机自启动脚本rc.local从archlinux上消失了；但有的时候我们也想在开机时（尤其是有root权限时）进行一些配置。<br>我们可以把执行这样的一个脚本rc.local做成一个“服务”的形式，这样就可以同时使用systemctl和rc.local了。</p>
+        <p>草稿·学习·”四表五链“</p>
 <a id="more"></a>
 
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>创建rclocal.service服务，用于开机执行rc.local脚本</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/listener_ri/article/details/45458119">CSDN教程</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42573248/article/details/102822126">教程-2</a></p>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h4 id="1-创建一个文件-setup-sh"><a href="#1-创建一个文件-setup-sh" class="headerlink" title="1.创建一个文件 setup.sh"></a>1.创建一个文件 setup.sh</h4><h4 id="2-将下面的内容复制进-setup-sh"><a href="#2-将下面的内容复制进-setup-sh" class="headerlink" title="2.将下面的内容复制进 setup.sh"></a>2.将下面的内容复制进 setup.sh</h4><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建rc-local服务文件</span></span><br><span class="line"><span class="comment"># 有的教程是	/etc/systemd/system/rclocal.service</span></span><br><span class="line">sudo touch /usr/lib/systemd/system/rc-local.service</span><br><span class="line"><span class="built_in">echo</span> 创建服务文件成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># echo一大段代码到rc-local.service脚本</span></span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&#x27;&#x27;</span><span class="string">&#x27;[Unit]</span></span><br><span class="line"><span class="string">Description=&quot;/etc/rc.local Compatibility&quot; </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Type=forking</span></span><br><span class="line"><span class="string">ExecStart=/etc/rc.local start</span></span><br><span class="line"><span class="string">TimeoutSec=0</span></span><br><span class="line"><span class="string">StandardInput=tty</span></span><br><span class="line"><span class="string">RemainAfterExit=yes</span></span><br><span class="line"><span class="string">SysVStartPriority=99</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target&#x27;</span><span class="string">&#x27;&#x27;</span> &gt;  /usr/lib/systemd/system/rc-local.service</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> rc-local.service</span><br><span class="line"><span class="built_in">echo</span> 启用rc-local服务成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建rc.local文件</span></span><br><span class="line">sudo touch  /etc/rc.local</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#x27;</span><span class="string">&#x27;#!/bin/sh -e</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># rc.local</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># This script is executed at the end of each multiuser runlevel.</span></span><br><span class="line"><span class="string"># Make sure that the script will &quot;exit 0&quot; on success or any other</span></span><br><span class="line"><span class="string"># value on error.</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># In order to enable or disable this script just change the execution</span></span><br><span class="line"><span class="string"># bits.</span></span><br><span class="line"><span class="string">#</span></span><br><span class="line"><span class="string"># By default this script does nothing.</span></span><br><span class="line"><span class="string"># -----------替换横杠间的内容为需要开机执行的命令---------------</span></span><br><span class="line"><span class="string">echo 123 &gt; /123.txt   # 测试rc.local文件</span></span><br><span class="line"><span class="string"># -----------替换横杠间的内容为需要开机执行的命令---------------</span></span><br><span class="line"><span class="string">exit 0&#x27;</span><span class="string">&#x27;&#x27;</span> &gt; /etc/rc.local</span><br><span class="line"><span class="built_in">echo</span> 创建rc.local文件成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 请输入密码进行授权：</span><br><span class="line">sudo chmod +x /etc/rc.local</span><br><span class="line"></span><br><span class="line"><span class="comment"># echo 测试rc.local</span></span><br><span class="line"><span class="comment"># sudo sh /etc/rc.local</span></span><br></pre></td></tr></table></figure>
+<h2 id="Linux防火墙与iptables"><a href="#Linux防火墙与iptables" class="headerlink" title="Linux防火墙与iptables"></a>Linux防火墙与iptables</h2><p>iptables只是<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux">Linux</a>防火墙的管理工具而已。真正实现防火墙功能的是netfilter，它是Linux内核中实现包过滤的内部结构。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192058276-752439770.png" alt="img"></p>
+<h2 id="四表五链"><a href="#四表五链" class="headerlink" title="四表五链"></a>四表五链</h2><p><strong>表</strong>里面有<strong>链</strong>（），链里面有一条条<strong>策略规则</strong>，规则决定<strong>采取的动作</strong></p>
+<p><img src="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192222073-1011363533.png" alt="img"></p>
+<h3 id="表（Tables）"><a href="#表（Tables）" class="headerlink" title="表（Tables）"></a>表（Tables）</h3><p>iptables 包含 4 张表（tables）:</p>
+<blockquote>
+<ul>
+<li><code>raw</code> 决定数据包是否被状态跟踪机制处理，<code>raw</code> 中的数据包不会被系统跟踪。</li>
+<li><code>filter</code>存放所有与防火墙相关操作的默认表，过滤数据包。</li>
+<li><code>nat</code> 用于网络地址转换（例如：端口转发）。</li>
+<li><code>mangle</code> 修改特定数据包</li>
+</ul>
+</blockquote>
+<p>大部分情况仅需要使用 <strong>filter</strong> 和 <strong>nat</strong>。</p>
+<p>每一张表都由链组成，链是一些按顺序排列的规则。</p>
+<p>例如，默认的 <code>filter</code> 表包含 <code>INPUT</code>、 <code>OUTPUT</code> 和 <code>FORWARD</code> 3条内建的链：</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo iptables -L</span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)		<span class="comment">#括号里是这条链的默认策略规则</span></span><br><span class="line">target     prot opt <span class="built_in">source</span>               destination         </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt <span class="built_in">source</span>               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt <span class="built_in">source</span>               destination</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-在setup-sh的路径下打开终端"><a href="#3-在setup-sh的路径下打开终端" class="headerlink" title="3.在setup.sh的路径下打开终端"></a>3.在setup.sh的路径下打开终端</h4><h4 id="4-在终端中执行-chmod-x-setup-sh"><a href="#4-在终端中执行-chmod-x-setup-sh" class="headerlink" title="4.在终端中执行 chmod +x setup.sh"></a>4.在终端中执行 chmod +x setup.sh</h4><h4 id="5-然后-再运行脚本-setup-sh"><a href="#5-然后-再运行脚本-setup-sh" class="headerlink" title="5.然后 再运行脚本 ./setup.sh"></a>5.然后 再运行脚本 ./setup.sh</h4><blockquote>
-<p>说明：经实测，脚本执行时还是有权限问题，只能手动创建编辑。</p>
+
+
+<h3 id="链（Chains）"><a href="#链（Chains）" class="headerlink" title="链（Chains）"></a>链（Chains）</h3><blockquote>
+<ul>
+<li><code>PRE-ROUTING</code>——在进行路由选择前处理数据包</li>
+<li><code>INPUT</code>——处理流入的数据包</li>
+<li><code>OUTPUT</code>——处理流出的数据包</li>
+<li><code>FORWARD</code>——处理转发的数据包</li>
+<li><code>POST-ROUTING</code>——在进行路由选择后处理数据包</li>
+</ul>
+</blockquote>
+<p>链由一些按顺序排列的规则组成。</p>
+<p>默认情况下，链的规则通常设置为 <code>ACCEPT</code>，此时链中无其他规则。</p>
+<p>用户可以向链中添加自己想用的规则。更可以创建自己定义的链，从而使规则集更有效并且易于修改。</p>
+<p>把某一条<strong>链</strong>（比如INPUT）的默认<strong>策略规则</strong>设置成拒绝：</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo iptables -P INPUT DROP</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>① 链的默认拒绝动作只能是DROP而不能是REJECT</p>
+<p>② 防火墙策略规则是按照从上到下的顺序匹配的，因此一定要把允许动作放到拒绝动作前面，否则所有的流量就将被拒绝掉</p>
+<h3 id="规则-（Rules）"><a href="#规则-（Rules）" class="headerlink" title="规则 （Rules）"></a>规则 （Rules）</h3><p>根据流量的源地址、目的地址、传输协议、服务类型等信息进行匹配，以及匹配所有条件后的动作。</p>
+<p>这些动作有：</p>
+<blockquote>
+<p><code>ACCEPT</code>：允许流量通过</p>
+<p><code>REJECT</code>：拒绝流量通过，返回“拒绝”信息</p>
+<p><code>LOG</code>：记录日志信息</p>
+<p><code>DROP</code>：拒绝流量通过，丢包，不返回任何值</p>
+</blockquote>
+<p>比如在您居住的社区内，物业管理公司有两条 <strong>规定</strong> <strong>（<code>策略规则</code>）</strong>：</p>
+<ul>
+<li>禁止小商小贩进入社区；</li>
+<li>各种车辆在进入社区时都要登记。</li>
+</ul>
+<p>那么根据防火墙策略的匹配顺序，保安会对来访人员执行不同 <strong>动作</strong>：</p>
+<ul>
+<li><input disabled="" type="checkbox"> 比如来访人员是小商小贩，则直接会被物业公司的保安拒之门外<strong>（<code>REJECT</code>）</strong>。</li>
+<li><input disabled="" type="checkbox"> 如果来访人员乘坐一辆汽车进入社区正门，则“禁止小商小贩进入社区”的第一条规则就没有被匹配到，因此按照顺序匹配第二条策略，即需要对车辆进行登记<strong>（<code>LOG</code>）</strong>。</li>
+<li><input disabled="" type="checkbox"> 如果是社区居民要进入正门，则这两条规定都不会匹配到，因此会执行默认的放行策略<strong>（ACCEPT）</strong>。</li>
+</ul>
+<h2 id="配置并运行-iptables"><a href="#配置并运行-iptables" class="headerlink" title="配置并运行 iptables"></a>配置并运行 iptables</h2><p>iptables 是一个 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Systemd">Systemd</a> 服务，因此可以这样启动：</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># systemctl start iptables</span></span><br></pre></td></tr></table></figure>
+
+<p>但是，除非有 <code>/etc/iptables/iptables.rules</code> 文件，否则服务不会启动。</p>
+<p>请特别注意，使用<code>iptables</code>命令配置的防火墙规则默认会在系统下一次重启时失效，如果想让配置的防火墙策略永久生效，还要执行保存命令：</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo service iptables save</span><br><span class="line">iptables: Saving firewall rules to /etc/sysconfig/iptables: [ OK ]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考来源"><a href="#参考来源" class="headerlink" title="参考来源"></a>参考来源</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Iptables_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Iptables_(简体中文)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxprobe.com/chapter-08.html">《Linux就该这么学》第8章 Iptables与Firewalld防火墙</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/clouders/p/6544584.html">iptables之四表五链 - 云行者 - 博客园</a></p>
 </blockquote>
 
     </div>
@@ -288,7 +350,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xuedao01.github.io/2020/10/07/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC/" title="ArchLinux 番外之开机自动执行脚本">http://xuedao01.github.io/2020/10/07/ArchLinux-番外之开机自动执行脚本/</a>
+    <a href="http://xuedao01.github.io/2021/01/05/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/" title="iptables防火墙配置与应用">http://xuedao01.github.io/2021/01/05/iptables防火墙配置与应用/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -299,8 +361,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Arch/" rel="tag"># Arch</a>
               <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" rel="tag"># 防火墙</a>
+              <a href="/tags/%E4%BB%A3%E7%90%86/" rel="tag"># 代理</a>
           </div>
 
         
@@ -309,13 +372,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/01/%E5%B0%86Plasma%E6%A1%8C%E9%9D%A2%E6%8D%8F%E6%88%90%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84%E5%BD%A2%E7%8A%B6/" rel="prev" title="将Plasma桌面捏成我喜欢的形状">
-      <i class="fa fa-chevron-left"></i> 将Plasma桌面捏成我喜欢的形状
+    <a href="/2020/12/02/%E7%BC%96%E8%BE%91%E5%99%A8%E4%B9%8B-Vim/" rel="prev" title="编辑器之 Vim">
+      <i class="fa fa-chevron-left"></i> 编辑器之 Vim
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/10/08/ArchLinux-%E7%95%AA%E5%A4%96%E4%B9%8B%E5%BE%AE%E4%BF%A1&QQ/" rel="next" title="ArchLinux 番外之微信&QQ">
-      ArchLinux 番外之微信&QQ <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -374,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6-setup-sh"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.创建一个文件 setup.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%B0%86%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E8%BF%9B-setup-sh"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.将下面的内容复制进 setup.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%9C%A8setup-sh%E7%9A%84%E8%B7%AF%E5%BE%84%E4%B8%8B%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.在setup.sh的路径下打开终端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%89%A7%E8%A1%8C-chmod-x-setup-sh"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.在终端中执行 chmod +x setup.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%84%B6%E5%90%8E-%E5%86%8D%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC-setup-sh"><span class="nav-number">3.0.5.</span> <span class="nav-text">5.然后 再运行脚本 .&#x2F;setup.sh</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E9%98%B2%E7%81%AB%E5%A2%99%E4%B8%8Eiptables"><span class="nav-number">1.</span> <span class="nav-text">Linux防火墙与iptables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E8%A1%A8%E4%BA%94%E9%93%BE"><span class="nav-number">2.</span> <span class="nav-text">四表五链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%EF%BC%88Tables%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">表（Tables）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%EF%BC%88Chains%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">链（Chains）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%84%E5%88%99-%EF%BC%88Rules%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">规则 （Rules）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%B9%B6%E8%BF%90%E8%A1%8C-iptables"><span class="nav-number">3.</span> <span class="nav-text">配置并运行 iptables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%9D%A5%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">参考来源</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

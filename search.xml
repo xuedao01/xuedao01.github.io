@@ -304,8 +304,7 @@
   <entry>
     <title>ArchLinux 的灵魂 - PKGBUILD</title>
     <url>/2020/11/23/ArchLinux-%E7%9A%84%E7%81%B5%E9%AD%82-PKGBUILD/</url>
-    <content><![CDATA[<p>这学期开始真正使用 Archlinux ，由于最近AUR移除了deepin-wine这个包，对我安装QQ&amp;WeChat造成了些许困扰，因此不得不真正研究一下PKGBUILD。</p>
-<p>首先声明一下，这文章大部分是抄的，再加上自己的理解与修改，形成此文。来源已标明。</p>
+    <content><![CDATA[<p>AUR移除deepin-wine包，安装QQ&amp;WeChat</p>
 <a id="more"></a>
 
 <h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><p><a href="https://wiki.archlinux.org/index.php/PKGBUILD_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">PKGBUILD（简体中文）</a></p>
@@ -1436,6 +1435,90 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
       <tags>
         <tag>Arch</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>iptables防火墙配置与应用</title>
+    <url>/2021/01/05/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[<p>草稿·学习·”四表五链“</p>
+<a id="more"></a>
+
+<h2 id="Linux防火墙与iptables"><a href="#Linux防火墙与iptables" class="headerlink" title="Linux防火墙与iptables"></a>Linux防火墙与iptables</h2><p>iptables只是<a href="http://lib.csdn.net/base/linux">Linux</a>防火墙的管理工具而已。真正实现防火墙功能的是netfilter，它是Linux内核中实现包过滤的内部结构。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192058276-752439770.png" alt="img"></p>
+<h2 id="四表五链"><a href="#四表五链" class="headerlink" title="四表五链"></a>四表五链</h2><p><strong>表</strong>里面有<strong>链</strong>（），链里面有一条条<strong>策略规则</strong>，规则决定<strong>采取的动作</strong></p>
+<p><img src="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192222073-1011363533.png" alt="img"></p>
+<h3 id="表（Tables）"><a href="#表（Tables）" class="headerlink" title="表（Tables）"></a>表（Tables）</h3><p>iptables 包含 4 张表（tables）:</p>
+<blockquote>
+<ul>
+<li><code>raw</code> 决定数据包是否被状态跟踪机制处理，<code>raw</code> 中的数据包不会被系统跟踪。</li>
+<li><code>filter</code>存放所有与防火墙相关操作的默认表，过滤数据包。</li>
+<li><code>nat</code> 用于网络地址转换（例如：端口转发）。</li>
+<li><code>mangle</code> 修改特定数据包</li>
+</ul>
+</blockquote>
+<p>大部分情况仅需要使用 <strong>filter</strong> 和 <strong>nat</strong>。</p>
+<p>每一张表都由链组成，链是一些按顺序排列的规则。</p>
+<p>例如，默认的 <code>filter</code> 表包含 <code>INPUT</code>、 <code>OUTPUT</code> 和 <code>FORWARD</code> 3条内建的链：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo iptables -L</span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)		<span class="comment">#括号里是这条链的默认策略规则</span></span><br><span class="line">target     prot opt <span class="built_in">source</span>               destination         </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt <span class="built_in">source</span>               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt <span class="built_in">source</span>               destination</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="链（Chains）"><a href="#链（Chains）" class="headerlink" title="链（Chains）"></a>链（Chains）</h3><blockquote>
+<ul>
+<li><code>PRE-ROUTING</code>——在进行路由选择前处理数据包</li>
+<li><code>INPUT</code>——处理流入的数据包</li>
+<li><code>OUTPUT</code>——处理流出的数据包</li>
+<li><code>FORWARD</code>——处理转发的数据包</li>
+<li><code>POST-ROUTING</code>——在进行路由选择后处理数据包</li>
+</ul>
+</blockquote>
+<p>链由一些按顺序排列的规则组成。</p>
+<p>默认情况下，链的规则通常设置为 <code>ACCEPT</code>，此时链中无其他规则。</p>
+<p>用户可以向链中添加自己想用的规则。更可以创建自己定义的链，从而使规则集更有效并且易于修改。</p>
+<p>把某一条<strong>链</strong>（比如INPUT）的默认<strong>策略规则</strong>设置成拒绝：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo iptables -P INPUT DROP</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>① 链的默认拒绝动作只能是DROP而不能是REJECT</p>
+<p>② 防火墙策略规则是按照从上到下的顺序匹配的，因此一定要把允许动作放到拒绝动作前面，否则所有的流量就将被拒绝掉</p>
+<h3 id="规则-（Rules）"><a href="#规则-（Rules）" class="headerlink" title="规则 （Rules）"></a>规则 （Rules）</h3><p>根据流量的源地址、目的地址、传输协议、服务类型等信息进行匹配，以及匹配所有条件后的动作。</p>
+<p>这些动作有：</p>
+<blockquote>
+<p><code>ACCEPT</code>：允许流量通过</p>
+<p><code>REJECT</code>：拒绝流量通过，返回“拒绝”信息</p>
+<p><code>LOG</code>：记录日志信息</p>
+<p><code>DROP</code>：拒绝流量通过，丢包，不返回任何值</p>
+</blockquote>
+<p>比如在您居住的社区内，物业管理公司有两条 <strong>规定</strong> <strong>（<code>策略规则</code>）</strong>：</p>
+<ul>
+<li>禁止小商小贩进入社区；</li>
+<li>各种车辆在进入社区时都要登记。</li>
+</ul>
+<p>那么根据防火墙策略的匹配顺序，保安会对来访人员执行不同 <strong>动作</strong>：</p>
+<ul>
+<li><input disabled="" type="checkbox"> 比如来访人员是小商小贩，则直接会被物业公司的保安拒之门外<strong>（<code>REJECT</code>）</strong>。</li>
+<li><input disabled="" type="checkbox"> 如果来访人员乘坐一辆汽车进入社区正门，则“禁止小商小贩进入社区”的第一条规则就没有被匹配到，因此按照顺序匹配第二条策略，即需要对车辆进行登记<strong>（<code>LOG</code>）</strong>。</li>
+<li><input disabled="" type="checkbox"> 如果是社区居民要进入正门，则这两条规定都不会匹配到，因此会执行默认的放行策略<strong>（ACCEPT）</strong>。</li>
+</ul>
+<h2 id="配置并运行-iptables"><a href="#配置并运行-iptables" class="headerlink" title="配置并运行 iptables"></a>配置并运行 iptables</h2><p>iptables 是一个 <a href="https://wiki.archlinux.org/index.php/Systemd">Systemd</a> 服务，因此可以这样启动：</p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta"># systemctl start iptables</span></span><br></pre></td></tr></table></figure>
+
+<p>但是，除非有 <code>/etc/iptables/iptables.rules</code> 文件，否则服务不会启动。</p>
+<p>请特别注意，使用<code>iptables</code>命令配置的防火墙规则默认会在系统下一次重启时失效，如果想让配置的防火墙策略永久生效，还要执行保存命令：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo service iptables save</span><br><span class="line">iptables: Saving firewall rules to /etc/sysconfig/iptables: [ OK ]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考来源"><a href="#参考来源" class="headerlink" title="参考来源"></a>参考来源</h2><blockquote>
+<p><a href="https://wiki.archlinux.org/index.php/Iptables_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Iptables_(简体中文)</a></p>
+<p><a href="https://www.linuxprobe.com/chapter-08.html">《Linux就该这么学》第8章 Iptables与Firewalld防火墙</a></p>
+<p><a href="https://www.cnblogs.com/clouders/p/6544584.html">iptables之四表五链 - 云行者 - 博客园</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>防火墙</tag>
+        <tag>代理</tag>
       </tags>
   </entry>
 </search>
