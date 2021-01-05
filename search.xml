@@ -1443,7 +1443,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
     <content><![CDATA[<p>草稿·学习·”四表五链“</p>
 <a id="more"></a>
 
-<h2 id="Linux防火墙与iptables"><a href="#Linux防火墙与iptables" class="headerlink" title="Linux防火墙与iptables"></a>Linux防火墙与iptables</h2><p>iptables只是<a href="http://lib.csdn.net/base/linux">Linux</a>防火墙的管理工具而已。真正实现防火墙功能的是netfilter，它是Linux内核中实现包过滤的内部结构。</p>
+<h2 id="Linux防火墙与iptables"><a href="#Linux防火墙与iptables" class="headerlink" title="Linux防火墙与iptables"></a>Linux防火墙与iptables</h2><p>iptables只是Linux防火墙的管理工具而已。真正实现防火墙功能的是netfilter，它是Linux内核中实现包过滤的内部结构。</p>
 <p><img src="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192058276-752439770.png" alt="img"></p>
 <h2 id="四表五链"><a href="#四表五链" class="headerlink" title="四表五链"></a>四表五链</h2><p><strong>表</strong>里面有<strong>链</strong>（），链里面有一条条<strong>策略规则</strong>，规则决定<strong>采取的动作</strong></p>
 <p><img src="https://images2015.cnblogs.com/blog/1124877/201703/1124877-20170313192222073-1011363533.png" alt="img"></p>
