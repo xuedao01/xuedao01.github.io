@@ -1439,7 +1439,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
   <entry>
     <title>iptables防火墙配置与应用</title>
     <url>/2021/01/05/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/</url>
-    <content><![CDATA[<p>草稿·学习·”四表五链“</p>
+    <content><![CDATA[<p>仅作学习与记录。</p>
 <a id="more"></a>
 
 <h2 id="Linux防火墙与iptables"><a href="#Linux防火墙与iptables" class="headerlink" title="Linux防火墙与iptables"></a>Linux防火墙与iptables</h2><p>iptables只是Linux防火墙的管理工具而已。真正实现防火墙功能的是netfilter，它是Linux内核中实现包过滤的内部结构。</p>
@@ -1508,7 +1508,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
 
 
 
-<h2 id="应用——真·全局代理"><a href="#应用——真·全局代理" class="headerlink" title="应用——真·全局代理"></a>应用——真·全局代理</h2><h3 id="问题思路："><a href="#问题思路：" class="headerlink" title="问题思路："></a>问题思路：</h3><ul>
+<h2 id="应用——Linux-真·全局代理"><a href="#应用——Linux-真·全局代理" class="headerlink" title="应用——Linux 真·全局代理"></a>应用——Linux 真·全局代理</h2><h3 id="问题思路："><a href="#问题思路：" class="headerlink" title="问题思路："></a>问题思路：</h3><ul>
 <li><p>要发送的所有数据包，都通过配置iptables防火墙，送往<code>redsocks</code>的端口31338</p>
 </li>
 <li><p>然后redsocks把这些数据包送往<code>Qv2Ray</code>的代理端口1088</p>
@@ -1549,10 +1549,32 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
 
 </details>
 
+<h3 id="配置-REDSOCKS-Qv2Ray-全局代理"><a href="#配置-REDSOCKS-Qv2Ray-全局代理" class="headerlink" title="配置 REDSOCKS + Qv2Ray 全局代理"></a>配置 <code>REDSOCKS</code> + <code>Qv2Ray</code> 全局代理</h3><p>修改 <code>/etc/redsocks.conf</code>的转发端口为<code>Qv2Ray</code> 的<code>Listen</code>端口</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">ip = 127.0.0.1;</span><br><span class="line">port = 1088;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注释掉 redudp&#123;&#125;、redudp&#123;&#125; 两个函数，因为用不到</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>/etc/iptables/redsocks.rules</code> 使防火墙将所有流量转发至 <code>REDSOCKS</code> 的 <code>Listen </code>端口</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># import shadowsocks server ip ---------忽略shadowsocks发送给代理服务器的包</span></span><br><span class="line">-A REDSOCKS -d xxx.xxx.xxx.xxx -j RETURN</span><br><span class="line"></span><br><span class="line"><span class="comment"># shadowsocks server port --------------忽略发送给本地shadowsocks的数据包</span></span><br><span class="line">-A REDSOCKS -p tcp --dport 1088 -j RETURN</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Redirect everything else to redsocks port-----其余所有数据包端口重定向至redsocks</span></span><br><span class="line">-A REDSOCKS -p tcp -j REDIRECT --to-ports 31338</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>开启redsocks和iptables服务，并让它们开机自启:</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo systemctl start redsocks.service iptables.service</span><br></pre></td></tr></table></figure>
+
+<p>当你需要进入全局代理时，简单地导入<code>redsocks.rules</code>就行:</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo iptables-restore &lt; /etc/iptables/redsocks.rules</span><br></pre></td></tr></table></figure>
+
+<p>当你需要退出全局代理环境，只需要清空iptables规则，redsocks可以让他一直运行:</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">$ sudo /usr/lib/systemd/scripts/iptables-flush</span><br></pre></td></tr></table></figure>
+
+<p>redsocks和iptables服务可以设置成开机自启，一直在后台运行。由 iptables 规则决定是否开启全局代理。</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> redsocks.service iptables.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="快捷启动"><a href="#快捷启动" class="headerlink" title="快捷启动"></a>快捷启动</h3><p>往 .zshrc文件里写入两个函数：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">iptables_on</span></span>() &#123;</span><br><span class="line">    sudo systemctl start redsocks.service iptables.service</span><br><span class="line">    sudo iptables-restore &lt; /etc/iptables/redsocks.rules</span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;已开启iptables全局代理。&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;请检查/etc/iptables/redsocks.rules中远程代理服务器地址。&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;请检查 Qv2Ray - “连接设置”中 “绕过中国大陆”已关闭。&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">iptables_off</span></span>() &#123;</span><br><span class="line">    sudo /usr/lib/systemd/scripts/iptables-flush</span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;已关闭iptables全局代理。&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="参考来源"><a href="#参考来源" class="headerlink" title="参考来源"></a>参考来源</h2><blockquote>
 <p><a href="https://wiki.archlinux.org/index.php/Iptables_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Iptables_(简体中文)</a></p>
 <p><a href="https://www.linuxprobe.com/chapter-08.html">《Linux就该这么学》第8章 Iptables与Firewalld防火墙</a></p>
 <p><a href="https://www.cnblogs.com/clouders/p/6544584.html">iptables之四表五链 - 云行者 - 博客园</a></p>
+<p><a href="http://briteming.hatenablog.com/entry/2018/11/29/215116">使用redsocks把shadowsocks转为全局代理</a></p>
 </blockquote>
 ]]></content>
       <tags>
