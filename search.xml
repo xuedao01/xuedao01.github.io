@@ -380,7 +380,6 @@
 <p>​    postinst，在解包数据后运行的脚本；</p>
 <p>​    prerm，卸载时， 在删除文件之前运行的脚本；</p>
 <p>​    postrm，在删除文件之后运行的脚本。</p>
-<p>![2020-12-19 22-30-29 的屏幕截图](/home/jwpan/Pictures/2020-12-19 22-30-29 的屏幕截图.png)</p>
 <h2 id="解压control-tar-xz"><a href="#解压control-tar-xz" class="headerlink" title="解压control.tar.xz"></a>解压<code>control.tar.xz</code></h2><figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line">tar -Jxvf control.tar.xz</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight zsh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 出现</span></span><br><span class="line">./control</span><br><span class="line">./md5sums</span><br></pre></td></tr></table></figure>
