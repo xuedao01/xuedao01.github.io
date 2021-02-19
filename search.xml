@@ -1436,4 +1436,38 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
         <tag>Linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>OpenWRT之内网穿透</title>
+    <url>/2021/02/19/OpenWRT%E4%B9%8B%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
+    <content><![CDATA[<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic4.zhimg.com%2Fv2-21a4209e094ab0508d44ad8bf2d2250f_1200x500.jpg&refer=http%3A%2F%2Fpic4.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616295965&t=cebfd96c69b51b3987229f97c09e8899" alt="img"></p>
+<a id="more"></a>
+
+<h2 id="0-简介"><a href="#0-简介" class="headerlink" title="0.简介"></a>0.简介</h2><p>​    内网穿透，也即 NAT 穿透，是为了使具有某一个特定<strong>源 IP 地址和源端口号</strong>的数据包不被 NAT 设备屏蔽而正确路由到内网之中的某一台主机。家用宽带通常不具备公网IP，而是处在小区或者社区内网中，仅拥有局域网IP，这一点通过路由器管理界面不难验证。而若想通过外网访问家用设备，就可以用到内网穿透。</p>
+<p>​    据我所知，内网穿透的原理很简单，就是用一台处在内网中的设备，向一台具有公网IP的服务器不断发送数据包（不够准确），使得可以从外网访问内网设备。内网穿透工具有若干种，最常用的可能是frp。本文章仅记录通过frp内网穿透实现从外网访问家用路由器OpenWRT管理界面的过程。</p>
+<h2 id="1-服务器端部署frps"><a href="#1-服务器端部署frps" class="headerlink" title="1.服务器端部署frps"></a>1.服务器端部署frps</h2><p>想办法弄一台服务器，运行一键安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget --no-check-certificate https://raw.githubusercontent.com/clangcn/onekey-install-shell/master/frps/install-frps.sh -O ./install-frps.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chmod 700 ./install-frps.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./install-frps.sh install		<span class="comment"># install是参数，查看脚本可知还有unstall参数</span></span><br></pre></td></tr></table></figure>
+
+<p>一键部署完成后，会显示服务端信息，做好记录。</p>
+<p><img src="https://raw.githubusercontent.com/xuedao01/image-host/master/img/20210219112114.JPG"></p>
+<p>若下载很慢，请科学上网。</p>
+<p><img src="https://raw.githubusercontent.com/xuedao01/image-host/master/img/%E4%B8%8B%E8%BD%BD%E8%BF%87%E7%A8%8B.JPG"></p>
+<p><strong>重点：</strong><u>记得设置防火墙放行端口！！！记得设置防火墙放行端口！！！记得设置防火墙放行端口！！！</u></p>
+<p><img src="https://raw.githubusercontent.com/xuedao01/image-host/master/img/%E9%98%B2%E7%81%AB%E5%A2%99%E8%AE%BE%E7%BD%AE.JPG"></p>
+<h2 id="2-客户端部署frpc"><a href="#2-客户端部署frpc" class="headerlink" title="2.客户端部署frpc"></a>2.客户端部署frpc</h2><p>在OpenWRT上安装frpc插件。</p>
+<p>按照服务器端信息进行配置：</p>
+<p><img src="https://raw.githubusercontent.com/xuedao01/image-host/master/img/%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE.JPG"></p>
+<p>检测日志是否成功：</p>
+<p><img src="https://raw.githubusercontent.com/xuedao01/image-host/master/img/%E6%97%A5%E5%BF%97%E6%98%BE%E7%A4%BA%E8%BF%9E%E6%8E%A5%E6%88%90%E5%8A%9F.JPG"></p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p><a href="https://blog.csdn.net/nicepainkiller/article/details/102954908">frpc 云服务器 Openwrt 软路由 实现 内网穿透</a></p>
+<p><a href="https://www.bilibili.com/read/cv3744395/">OpenWrt/LEDE使用frp内网穿透访问内网设备</a></p>
+]]></content>
+      <tags>
+        <tag>OpneWRT</tag>
+        <tag>内网穿透</tag>
+      </tags>
+  </entry>
 </search>
