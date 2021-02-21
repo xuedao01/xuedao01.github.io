@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言&#x2F;opt&#x2F;deepinwine&#x2F;apps&#x2F;Deepin-QQ 是启动用的目录； ~&#x2F;.deepinwine&#x2F;Deepin-QQ&#x2F; 是exe程序安装目录。 重新安装：删除已安装的QQ目录 rm -rf ~&#x2F;.deepinwine&#x2F;Deepin-QQ之后，再点击启动器图标即可。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-08T11:13:32.000Z">
-<meta property="article:modified_time" content="2021-01-02T00:45:48.000Z">
+<meta property="article:modified_time" content="2021-02-21T00:07:50.000Z">
 <meta property="article:author" content="「xuedao01」">
 <meta property="article:tag" content="Arch">
 <meta property="article:tag" content="Linux">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-02 08:45:48" itemprop="dateModified" datetime="2021-01-02T08:45:48+08:00">2021-01-02</time>
+                <time title="修改时间：2021-02-21 08:07:50" itemprop="dateModified" datetime="2021-02-21T08:07:50+08:00">2021-02-21</time>
               </span>
 
           
@@ -244,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -268,7 +268,7 @@
 <p>重新安装：删除已安装的QQ目录 <code>rm -rf ~/.deepinwine/Deepin-QQ</code>之后，再点击启动器图标即可。</p>
 <a id="more"></a>
 
-<h1 id="wine环境配置"><a href="#wine环境配置" class="headerlink" title="wine环境配置"></a>wine环境配置</h1><h2 id="安装wine"><a href="#安装wine" class="headerlink" title="安装wine"></a>安装wine</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S wine</span></span><br></pre></td></tr></table></figure>
+<h1 id="wine环境配置方法记录"><a href="#wine环境配置方法记录" class="headerlink" title="wine环境配置方法记录"></a>wine环境配置方法记录</h1><h2 id="安装wine"><a href="#安装wine" class="headerlink" title="安装wine"></a>安装wine</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S wine</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="安装deepin-wine"><a href="#安装deepin-wine" class="headerlink" title="安装deepin-wine"></a>安装deepin-wine</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S deepin-wine</span></span><br></pre></td></tr></table></figure>
 
@@ -280,18 +280,24 @@
 <p><code>deepin-wine-wechat</code>依赖<code>Multilib</code>仓库中的<code>wine</code>，<code>wine-gecko</code>和<code>wine-mono</code>，Archlinux默认没有开启<code>Multilib</code>仓库，需要编辑<code>/etc/pacman.conf</code>，取消对应行前面的注释(<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Official_repositories#multilib">Archlinux wiki</a>):</p>
 <figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># If you want to run 32 bit applications on your x86_64 system,</span></span><br><span class="line"><span class="meta"># enable the multilib repositories as required here.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#[multilib-testing]</span></span><br><span class="line"><span class="meta">#Include = /etc/pacman.d/mirrorlist</span></span><br></pre></td></tr></table></figure>
 </blockquote>
-<h1 id="Spark版"><a href="#Spark版" class="headerlink" title="Spark版"></a>Spark版</h1><h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S com.qq.weixin.spark</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env WINEPREFIX=<span class="string">&quot;$HOME/.deepinwine/Spark-WeChat&quot;</span> <span class="regexp">/usr/</span>bin/deepin-wine5 winecfg</span><br></pre></td></tr></table></figure>
-
-<p>基于 <code>deepin-wine5</code></p>
 <h2 id="TIM"><a href="#TIM" class="headerlink" title="TIM"></a>TIM</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">com</span><span class="selector-class">.qq</span><span class="selector-class">.tim</span><span class="selector-class">.spark</span></span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="微信-1"><a href="#微信-1" class="headerlink" title="微信"></a>微信</h1><h2 id="从AUR安装"><a href="#从AUR安装" class="headerlink" title="从AUR安装"></a>从AUR安装</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S deepin-wine-wechat</span></span><br></pre></td></tr></table></figure>
+<h1 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h1><h2 id="方案一：UOS版"><a href="#方案一：UOS版" class="headerlink" title="方案一：UOS版"></a>方案一：UOS版</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S wechat-uos</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="修改启动脚本："><a href="#修改启动脚本：" class="headerlink" title="修改启动脚本："></a>修改启动脚本：</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-WeChat/run.sh</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="方案二：Spark版"><a href="#方案二：Spark版" class="headerlink" title="方案二：Spark版"></a>方案二：Spark版</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S com.qq.weixin.spark</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env WINEPREFIX=<span class="string">&quot;$HOME/.deepinwine/Spark-WeChat&quot;</span> <span class="regexp">/usr/</span>bin/deepin-wine5 winecfg</span><br></pre></td></tr></table></figure>
+
+<p>基于 <code>deepin-wine5</code></p>
+<h2 id="方案三：普通deepin-wine版"><a href="#方案三：普通deepin-wine版" class="headerlink" title="方案三：普通deepin-wine版"></a>方案三：普通deepin-wine版</h2><p>从AUR安装</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S deepin-wine-wechat</span></span><br></pre></td></tr></table></figure>
+
+<p>修改启动脚本：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-WeChat/run.sh</span><br></pre></td></tr></table></figure>
 
 <p>将<code>WINE_CMD=&quot;wine&quot;</code>修改成：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">WINE_CMD</span>=<span class="string">&quot;deepin-wine5&quot;</span></span><br></pre></td></tr></table></figure>
@@ -300,13 +306,66 @@
 <blockquote>
 <p>经实测，在KDE下，微信2.9.5.56版本 完美运行（中文字体、无拖影、内置浏览器等）</p>
 </blockquote>
-<h2 id="另一版本（推荐）："><a href="#另一版本（推荐）：" class="headerlink" title="另一版本（推荐）："></a>另一版本（推荐）：</h2><figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S com.qq.tim.spark</span><br></pre></td></tr></table></figure>
+<h1 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h1><h2 id="方案一：官方版linuxqq"><a href="#方案一：官方版linuxqq" class="headerlink" title="方案一：官方版linuxqq"></a>方案一：官方版linuxqq</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yay -S linuxqq</span></span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="QQ-amp-TIM"><a href="#QQ-amp-TIM" class="headerlink" title="QQ &amp; TIM"></a>QQ &amp; TIM</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="QQ和TIM有两个版本。"><a href="#QQ和TIM有两个版本。" class="headerlink" title="QQ和TIM有两个版本。"></a>QQ和TIM有两个版本。</h3><p>①<code>deepin-wine-qq</code>，地址：<a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-qq-arch">https://github.com/countstarlight/deepin-wine-qq-arch</a></p>
+<h2 id="方案二：QQ轻聊版"><a href="#方案二：QQ轻聊版" class="headerlink" title="方案二：QQ轻聊版"></a>方案二：QQ轻聊版</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.im</span><span class="selector-class">.light</span></span><br></pre></td></tr></table></figure>
+
+<p>QQ轻聊版客户端版本是7.9</p>
+<p>无法输入中文：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit <span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-QQLight/run.sh</span><br></pre></td></tr></table></figure>
+
+<p>添加</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">LC_ALL</span>=zh_CN.UTF-8</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">GTK_IM_MODULE</span>=fcitx</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">QT_IM_MODULE</span>=fcitx</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">XMODIFIERS</span>=<span class="string">&quot;@im=fcitx&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/ff411625d1e63a12e48237d5.html">https://jingyan.baidu.com/article/ff411625d1e63a12e48237d5.html</a></p>
+<h2 id="方案三：普通deepin-wine版-1"><a href="#方案三：普通deepin-wine版-1" class="headerlink" title="方案三：普通deepin-wine版"></a>方案三：普通deepin-wine版</h2><p><strong>有两个版本</strong></p>
+<p>①<code>deepin-wine-qq</code>，地址：<a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-qq-arch">https://github.com/countstarlight/deepin-wine-qq-arch</a></p>
 <p>②<code>deepin.com.qq.im</code>，地址：<a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/deepin.com.qq.im/">https://aur.archlinux.org/packages/deepin.com.qq.im/</a></p>
-<h3 id="非-GNOME-桌面需要额外依赖"><a href="#非-GNOME-桌面需要额外依赖" class="headerlink" title="非 GNOME 桌面需要额外依赖"></a>非 GNOME 桌面需要额外依赖</h3><p>需要安装 <code>xsettingsd</code>：</p>
+<h3 id="deepin-wine-qq"><a href="#deepin-wine-qq" class="headerlink" title="deepin-wine-qq"></a><code>deepin-wine-qq</code></h3><p>根据提供的<a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-qq-arch#%E5%85%BC%E5%AE%B9%E6%80%A7%E8%AE%B0%E5%BD%95">兼容性列表</a>，推荐使用手动安装旧版本。</p>
+<p>旧版<code>deepin-wine-qq-9.3.7.27301-1-x86_64.pkg.tar.zst</code> 的 <a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-qq-arch/releases/tag/v9.3.7.27301-1">下载地址</a>。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> pacman -U	<span class="comment">#下载的包名</span></span><br></pre></td></tr></table></figure>
+
+<p>修改启动脚本（可跳过）</p>
+<p>修改 <code>/opt/deepinwine/apps/Deepin-TIM/run.sh</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更改</span></span><br><span class="line"><span class="string">WINE_CMD=&quot;deepin-wine5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="string">RunApp()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">if</span> [[ <span class="string">-z</span> <span class="string">&quot;$(ps -e | grep -o xsettingsd)&quot;</span> ]]</span><br><span class="line"> 	<span class="string">then</span></span><br><span class="line"> 		<span class="string">/usr/bin/xsettingsd</span> <span class="string">&amp;</span></span><br><span class="line"> 	<span class="string">fi</span></span><br><span class="line"> 		<span class="string">if</span> [ <span class="string">-d</span> <span class="string">&quot;$WINEPREFIX&quot;</span> ]<span class="string">;</span> <span class="string">then</span></span><br><span class="line"> 			<span class="string">UpdateApp</span></span><br><span class="line"> 		<span class="string">else</span></span><br><span class="line"> 			<span class="string">DeployApp</span></span><br><span class="line"> 		<span class="string">fi</span></span><br><span class="line"> 		<span class="string">CallApp</span> <span class="string">$1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="deepin-com-qq-im"><a href="#deepin-com-qq-im" class="headerlink" title="deepin.com.qq.im"></a><code>deepin.com.qq.im</code></h3><p><strong>1.安装</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.im</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2.配置说明</strong></p>
+<p><strong>理论上也可以修改启动脚本</strong>：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-QQ/run.sh</span><br></pre></td></tr></table></figure>
+
+<p>但是这个<code>run.sh</code>文件貌似引用的<code>/opt/deepinwine/tools/run_v2.sh</code>，所以修改后者为<code>deepin-wine5</code>理论上可行。只是经实测，无需修改即可正常运行。</p>
+<p><strong>3.本机编译安装方法</strong></p>
+<p><a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/deepin.com.qq.im/">AUR – deepin.com.qq.im</a> 提供了 Deepin-QQ 安装脚本</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/Software/AUR</span><br><span class="line">git clone http<span class="variable">s:</span>//aur.archlinux.org/deepin.<span class="keyword">com</span>.qq.<span class="keyword">im</span>.git</span><br><span class="line"><span class="keyword">cd</span> deepin.<span class="keyword">com</span>.qq.<span class="keyword">im</span></span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.limstash.com/articles/202004/1591">https://www.limstash.com/articles/202004/1591</a></p>
+</blockquote>
+<blockquote>
+<p>确保系统已安装<code>linux-headers</code> 和 <code>base-devel</code></p>
+</blockquote>
+<h1 id="TIM-1"><a href="#TIM-1" class="headerlink" title="TIM"></a>TIM</h1><h2 id="方案一：Spark版"><a href="#方案一：Spark版" class="headerlink" title="方案一：Spark版"></a>方案一：Spark版</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">com</span><span class="selector-class">.qq</span><span class="selector-class">.tim</span><span class="selector-class">.spark</span></span><br></pre></td></tr></table></figure>
+
+<p>基于deepin-wine5</p>
+<h2 id="方案二：普通deepin-wine版"><a href="#方案二：普通deepin-wine版" class="headerlink" title="方案二：普通deepin-wine版"></a>方案二：普通deepin-wine版</h2><p>与<code>deepin.com.qq.im</code>的安装完全类似。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.office</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>手动安装 TIM：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/deepin.com.qq.office/">AUR – deepin.com.qq.office</a> 提供了 Deepin-TIM 安装脚本</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/Software/AUR</span><br><span class="line">git clone http<span class="variable">s:</span>//aur.archlinux.org/deepin.<span class="keyword">com</span>.qq.office.git</span><br><span class="line"><span class="keyword">cd</span> deepin.<span class="keyword">com</span>.qq.office</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="非-GNOME-桌面需要额外依赖"><a href="#非-GNOME-桌面需要额外依赖" class="headerlink" title="非 GNOME 桌面需要额外依赖"></a>非 GNOME 桌面需要额外依赖</h2><p>需要安装 <code>xsettingsd</code>：</p>
 <p>1.根据 <a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-wechat-arch/issues/36#issuecomment-612001200">deepin-wine-wechat-arch#36</a>，由<a target="_blank" rel="noopener" href="https://github.com/Face-Smile">Face-Smile</a>提供的方法：</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo pacman -S xsettingsd</span></span><br></pre></td></tr></table></figure>
 
@@ -316,45 +375,17 @@
 <p>并在 <code>/opt/deepinwine/apps/Deepin-WeChat/run.sh</code> 文件开头插入一行</p>
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">gsd</span>-<span class="title">xsettings</span> &amp;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="中文字体方框解决："><a href="#中文字体方框解决：" class="headerlink" title="中文字体方框解决："></a><strong>中文字体方框解决</strong>：</h3><p>把<code>/usr/share/fonts/wenquanyi/wqy-microhei</code>里的<code>wqy-microhei.ttc</code></p>
+
+
+<h2 id="中文字体方框解决："><a href="#中文字体方框解决：" class="headerlink" title="中文字体方框解决："></a><strong>中文字体方框解决</strong>：</h2><p>把<code>/usr/share/fonts/wenquanyi/wqy-microhei</code>里的<code>wqy-microhei.ttc</code></p>
 <p>复制到 <code>~/.deepinwine/Deepin-QQ/drive_c/windows/Fonts</code> 文件夹即可。</p>
-<h3 id="更改分辨率-DPI-："><a href="#更改分辨率-DPI-：" class="headerlink" title="更改分辨率(DPI)："></a><strong>更改分辨率(DPI)：</strong></h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">env WINEPREFIX=<span class="string">&quot;$HOME/.deepinwine/Deepin-TIM&quot;</span> winecfg</span><br><span class="line">dpi` 改为`100` 或者 `120</span><br></pre></td></tr></table></figure>
+<h2 id="更改分辨率-DPI-："><a href="#更改分辨率-DPI-：" class="headerlink" title="更改分辨率(DPI)："></a><strong>更改分辨率(DPI)：</strong></h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">env WINEPREFIX=<span class="string">&quot;$HOME/.deepinwine/Deepin-TIM&quot;</span> winecfg</span><br><span class="line">dpi` 改为`100` 或者 `120</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="deepin-wine-qq"><a href="#deepin-wine-qq" class="headerlink" title="deepin-wine-qq"></a>deepin-wine-qq</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>对于<code>deepin-wine-qq</code> ，根据提供的<a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-qq-arch#%E5%85%BC%E5%AE%B9%E6%80%A7%E8%AE%B0%E5%BD%95">兼容性列表</a>，推荐使用手动安装旧版本。</p>
-<p>旧版<code>deepin-wine-qq-9.3.7.27301-1-x86_64.pkg.tar.zst</code> 的 <a target="_blank" rel="noopener" href="https://github.com/countstarlight/deepin-wine-qq-arch/releases/tag/v9.3.7.27301-1">下载地址</a>。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> pacman -U	<span class="comment">#下载的包名</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="修改启动脚本（可跳过）"><a href="#修改启动脚本（可跳过）" class="headerlink" title="修改启动脚本（可跳过）"></a>修改启动脚本（可跳过）</h3><p>修改 <code>/opt/deepinwine/apps/Deepin-TIM/run.sh</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更改</span></span><br><span class="line"><span class="string">WINE_CMD=&quot;deepin-wine5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="string">RunApp()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">if</span> [[ <span class="string">-z</span> <span class="string">&quot;$(ps -e | grep -o xsettingsd)&quot;</span> ]]</span><br><span class="line"> 	<span class="string">then</span></span><br><span class="line"> 		<span class="string">/usr/bin/xsettingsd</span> <span class="string">&amp;</span></span><br><span class="line"> 	<span class="string">fi</span></span><br><span class="line"> 		<span class="string">if</span> [ <span class="string">-d</span> <span class="string">&quot;$WINEPREFIX&quot;</span> ]<span class="string">;</span> <span class="string">then</span></span><br><span class="line"> 			<span class="string">UpdateApp</span></span><br><span class="line"> 		<span class="string">else</span></span><br><span class="line"> 			<span class="string">DeployApp</span></span><br><span class="line"> 		<span class="string">fi</span></span><br><span class="line"> 		<span class="string">CallApp</span> <span class="string">$1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="deepin-com-qq-im（推荐）"><a href="#deepin-com-qq-im（推荐）" class="headerlink" title="deepin.com.qq.im（推荐）"></a>deepin.com.qq.im（推荐）</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.im</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-配置说明"><a href="#2-配置说明" class="headerlink" title="2.配置说明"></a>2.配置说明</h3><p><strong>理论上也可以修改启动脚本</strong>：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/opt/</span>deepinwine<span class="regexp">/apps/</span>Deepin-QQ/run.sh</span><br></pre></td></tr></table></figure>
-
-<p>但是这个<code>run.sh</code>文件貌似引用的<code>/opt/deepinwine/tools/run_v2.sh</code>，所以修改后者为<code>deepin-wine5</code>理论上可行。只是经实测，无需修改即可正常运行。</p>
-<h3 id="3-本机编译安装方法"><a href="#3-本机编译安装方法" class="headerlink" title="3.本机编译安装方法"></a>3.本机编译安装方法</h3><p><a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/deepin.com.qq.im/">AUR – deepin.com.qq.im</a> 提供了 Deepin-QQ 安装脚本</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/Software/AUR</span><br><span class="line">git clone http<span class="variable">s:</span>//aur.archlinux.org/deepin.<span class="keyword">com</span>.qq.<span class="keyword">im</span>.git</span><br><span class="line"><span class="keyword">cd</span> deepin.<span class="keyword">com</span>.qq.<span class="keyword">im</span></span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>参考：<a target="_blank" rel="noopener" href="https://www.limstash.com/articles/202004/1591">https://www.limstash.com/articles/202004/1591</a></p>
-</blockquote>
-<blockquote>
-<p>确保系统已安装<code>linux-headers</code> 和 <code>base-devel</code></p>
-</blockquote>
-<h2 id="TIM-1"><a href="#TIM-1" class="headerlink" title="TIM"></a>TIM</h2><p>与<code>deepin.com.qq.im</code>的安装完全类似。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yay</span> <span class="selector-tag">-S</span> <span class="selector-tag">deepin</span><span class="selector-class">.com</span><span class="selector-class">.qq</span><span class="selector-class">.office</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>手动安装 TIM：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/deepin.com.qq.office/">AUR – deepin.com.qq.office</a> 提供了 Deepin-TIM 安装脚本</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/Software/AUR</span><br><span class="line">git clone http<span class="variable">s:</span>//aur.archlinux.org/deepin.<span class="keyword">com</span>.qq.office.git</span><br><span class="line"><span class="keyword">cd</span> deepin.<span class="keyword">com</span>.qq.office</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
-
-<h1 id="中文字体方框"><a href="#中文字体方框" class="headerlink" title="中文字体方框"></a>中文字体方框</h1><p>把<code>/usr/share/fonts/wenquanyi/wqy-microhei</code>里的<code>wqy-microhei.ttc</code></p>
-<p>复制到 <code>~/.deepinwine/Deepin-QQ/drive_c/windows/Fonts</code> 文件夹即可。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>一些参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41050631/article/details/102538649">https://blog.csdn.net/qq_41050631/article/details/102538649</a></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41050631/article/details/102538649">https://blog.csdn.net/qq_41050631/article/details/102538649</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33831360/article/details/90615494">https://blog.csdn.net/qq_33831360/article/details/90615494</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12p4y1i7XJ">https://www.bilibili.com/video/BV12p4y1i7XJ</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33831360/article/details/90615494">解决manjaro-kde下deepin-wine qq/wechat字体发虚问题_REWINE-CSDN博客</a></p>
@@ -459,7 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wine%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">wine环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85wine"><span class="nav-number">2.1.</span> <span class="nav-text">安装wine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deepin-wine"><span class="nav-number">2.2.</span> <span class="nav-text">安装deepin-wine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deepin-wine5"><span class="nav-number">2.3.</span> <span class="nav-text">安装deepin-wine5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark%E7%89%88"><span class="nav-number">3.</span> <span class="nav-text">Spark版</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1"><span class="nav-number">3.1.</span> <span class="nav-text">微信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIM"><span class="nav-number">3.2.</span> <span class="nav-text">TIM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1-1"><span class="nav-number">4.</span> <span class="nav-text">微信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8EAUR%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">从AUR安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">修改启动脚本：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E7%89%88%E6%9C%AC%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89%EF%BC%9A"><span class="nav-number">4.3.</span> <span class="nav-text">另一版本（推荐）：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QQ-amp-TIM"><span class="nav-number">5.</span> <span class="nav-text">QQ &amp; TIM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">5.1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#QQ%E5%92%8CTIM%E6%9C%89%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%E3%80%82"><span class="nav-number">5.1.1.</span> <span class="nav-text">QQ和TIM有两个版本。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E-GNOME-%E6%A1%8C%E9%9D%A2%E9%9C%80%E8%A6%81%E9%A2%9D%E5%A4%96%E4%BE%9D%E8%B5%96"><span class="nav-number">5.1.2.</span> <span class="nav-text">非 GNOME 桌面需要额外依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93%E6%96%B9%E6%A1%86%E8%A7%A3%E5%86%B3%EF%BC%9A"><span class="nav-number">5.1.3.</span> <span class="nav-text">中文字体方框解决：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%88%86%E8%BE%A8%E7%8E%87-DPI-%EF%BC%9A"><span class="nav-number">5.1.4.</span> <span class="nav-text">更改分辨率(DPI)：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deepin-wine-qq"><span class="nav-number">5.2.</span> <span class="nav-text">deepin-wine-qq</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">5.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%EF%BC%88%E5%8F%AF%E8%B7%B3%E8%BF%87%EF%BC%89"><span class="nav-number">5.2.2.</span> <span class="nav-text">修改启动脚本（可跳过）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deepin-com-qq-im%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">deepin.com.qq.im（推荐）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85"><span class="nav-number">5.3.1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">5.3.2.</span> <span class="nav-text">2.配置说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9C%AC%E6%9C%BA%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95"><span class="nav-number">5.3.3.</span> <span class="nav-text">3.本机编译安装方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIM-1"><span class="nav-number">5.4.</span> <span class="nav-text">TIM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93%E6%96%B9%E6%A1%86"><span class="nav-number">6.</span> <span class="nav-text">中文字体方框</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wine%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">wine环境配置方法记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85wine"><span class="nav-number">2.1.</span> <span class="nav-text">安装wine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deepin-wine"><span class="nav-number">2.2.</span> <span class="nav-text">安装deepin-wine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deepin-wine5"><span class="nav-number">2.3.</span> <span class="nav-text">安装deepin-wine5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIM"><span class="nav-number">2.4.</span> <span class="nav-text">TIM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1"><span class="nav-number">3.</span> <span class="nav-text">微信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9AUOS%E7%89%88"><span class="nav-number">3.1.</span> <span class="nav-text">方案一：UOS版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9ASpark%E7%89%88"><span class="nav-number">3.2.</span> <span class="nav-text">方案二：Spark版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9A%E6%99%AE%E9%80%9Adeepin-wine%E7%89%88"><span class="nav-number">3.3.</span> <span class="nav-text">方案三：普通deepin-wine版</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QQ"><span class="nav-number">4.</span> <span class="nav-text">QQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E5%AE%98%E6%96%B9%E7%89%88linuxqq"><span class="nav-number">4.1.</span> <span class="nav-text">方案一：官方版linuxqq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9AQQ%E8%BD%BB%E8%81%8A%E7%89%88"><span class="nav-number">4.2.</span> <span class="nav-text">方案二：QQ轻聊版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9A%E6%99%AE%E9%80%9Adeepin-wine%E7%89%88-1"><span class="nav-number">4.3.</span> <span class="nav-text">方案三：普通deepin-wine版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#deepin-wine-qq"><span class="nav-number">4.3.1.</span> <span class="nav-text">deepin-wine-qq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deepin-com-qq-im"><span class="nav-number">4.3.2.</span> <span class="nav-text">deepin.com.qq.im</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TIM-1"><span class="nav-number">5.</span> <span class="nav-text">TIM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9ASpark%E7%89%88"><span class="nav-number">5.1.</span> <span class="nav-text">方案一：Spark版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A%E6%99%AE%E9%80%9Adeepin-wine%E7%89%88"><span class="nav-number">5.2.</span> <span class="nav-text">方案二：普通deepin-wine版</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E-GNOME-%E6%A1%8C%E9%9D%A2%E9%9C%80%E8%A6%81%E9%A2%9D%E5%A4%96%E4%BE%9D%E8%B5%96"><span class="nav-number">6.1.</span> <span class="nav-text">非 GNOME 桌面需要额外依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93%E6%96%B9%E6%A1%86%E8%A7%A3%E5%86%B3%EF%BC%9A"><span class="nav-number">6.2.</span> <span class="nav-text">中文字体方框解决：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%88%86%E8%BE%A8%E7%8E%87-DPI-%EF%BC%9A"><span class="nav-number">6.3.</span> <span class="nav-text">更改分辨率(DPI)：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -529,7 +560,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:35</span>
+    <span title="站点阅读时长">1:36</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
