@@ -1509,6 +1509,8 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
     <title>Linux 的文件系统</title>
     <url>/2021/02/24/Linux-%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p><a href="https://www.cnblogs.com/sytfyf/p/6364691.html">Linux 下各个目录的作用及内容</a></p>
+<a id="more"></a>
+
 <p>在 Linux 下，我们看到的是文件夹（目录）：<img src="http://ww3.sinaimg.cn/mw690/78f9859egw1etbt8e0vtfj20pc0c7jsx.jpg" alt="img"> </p>
 <p>在早期的 UNIX 系统中，各个厂家各自定义了自己的 UNIX 系统文件目录，比较混乱。Linux 面世不久后，对文件目录进行了标准化，于1994年对根文件目录做了统一的规范，推出 <strong>FHS ( Filesystem Hierarchy Standard )</strong> 的 Linux 文件系统层次结构标准。FHS 标准规定了 Linux 根目录各文件夹的名称及作用，统一了Linux界命名混乱的局面。无论何种版本的 Linux 发行版，桌面、应用是 Linux 的外衣，文件组织、目录结构才是Linux的内心。</p>
 <p><code>FHS</code>（英文：<code>Filesystem Hierarchy Standard</code> ，中文：<code>文件系统层次结构标准</code>），多数 Linux 版本采用这种文件组织形式，FHS 定义了系统中每个区域的用途、所需要的最小构成的文件和目录同时还给出了例外处理与矛盾处理。</p>
